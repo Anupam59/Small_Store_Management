@@ -1,0 +1,14 @@
+.alert ul{
+    margin: 0;
+}
+.deleteIcon{
+    padding: 10px;
+    margin-left: 36px;
+    background: #ffe5e5;
+    border-radius: 50%;
+}
+.deleteIcon:hover{
+    padding: 10px;
+    background: #ffcfd3;
+    border-radius: 50%;
+}
