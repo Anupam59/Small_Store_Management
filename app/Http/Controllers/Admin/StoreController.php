@@ -60,7 +60,7 @@ class StoreController extends Controller
 
     public function StoreUpdate(Request $request, $id){
         $request->validate([
-            'store_name' => 'required',
+            'store_name' => 'required|unique:store,store_name,'. $id .',store_id'
         ]);
         $data =  array();
         $data['store_name'] = $request->store_name;

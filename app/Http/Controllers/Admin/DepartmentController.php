@@ -11,7 +11,7 @@ class DepartmentController extends Controller
     public function DepartmentIndex(){
         $Department = DepartmentModel::join('users', 'users.id', '=', 'department.modifier')
             ->select('users.name','department.*')
-            ->orderBy('department_id','asc')->paginate(2);
+            ->orderBy('department_id','asc')->paginate(10);
         return view('Admin/Pages/DepartmentPages/DepartmentListPage',compact('Department'));
     }
 
@@ -55,11 +55,9 @@ class DepartmentController extends Controller
     }
 
     public function DepartmentUpdate(Request $request, $id){
-
         $request->validate([
-            'department_name' => 'required',
+            'department_name' => 'required|unique:department,department_name,'. $id .',department_id'
         ]);
-
         $data =  array();
         $data['department_name'] = $request->department_name;
         $data['status'] = $request->status;

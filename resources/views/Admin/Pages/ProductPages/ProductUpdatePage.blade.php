@@ -12,7 +12,7 @@
                 <!--begin::Page title-->
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
-                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Consumer Type List</h1>
+                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Product Update</h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -27,7 +27,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Store Create</li>
+                        <li class="breadcrumb-item text-muted">Product Update</li>
                         <!--end::Item-->
 
                     </ul>
@@ -42,10 +42,10 @@
                     <div class="m-0">
                         <a href="#" class="btn btn-sm btn-flex bg-body btn-color-gray-700 btn-active-color-primary fw-bold" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
                         <span class="svg-icon svg-icon-6 svg-icon-muted me-1">
-                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z" fill="currentColor" />
-                                            </svg>
-                                        </span>Filter</a>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z" fill="currentColor" />
+                            </svg>
+                        </span>Filter</a>
                         <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true" id="kt_menu_63de6bfc33b19">
                             <div class="px-7 py-5">
                                 <div class="fs-5 text-dark fw-bold">Filter Options</div>
@@ -71,8 +71,6 @@
                                     <div>
                                         <select class="form-select form-select-solid" data-kt-select2="true" data-placeholder="Select option" data-dropdown-parent="#kt_menu_63de6bfc33b19" data-allow-clear="true">
                                             <option>Select Status</option>
-                                            <option value="1">Active</option>
-                                            <option value="2">Inactive</option>
                                         </select>
                                     </div>
                                 </div>
@@ -85,17 +83,12 @@
                                     <button type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Apply</button>
                                 </div>
                                 <!--end::Actions-->
-
-
                             </div>
                         </div>
                     </div>
-
-                    <a href="/store-list" class="btn btn-sm fw-bold btn-primary">Store List</a>
-
+                    <a href="/product-list" class="btn btn-sm fw-bold btn-primary">Create</a>
                 </div>
                 <!--end::Actions Filter-->
-
             </div>
             <!--end::Toolbar container-->
         </div>
@@ -119,18 +112,97 @@
                                     </ul>
                                 </div>
                             @endif
-                            <form action="{{ route('store.entry')}}" method="post" class="form" enctype="multipart/form-data">
+
+
+                            {{--                            <div class="mb-3">{!! DNS2D::getBarcodeHTML('Anupam Talukdar', 'QRCODE') !!}</div>--}}
+
+
+                                <form action="{{ url('/product-update/'.$Product->product_id)}}" method="post" class="form" enctype="multipart/form-data">
                                 @csrf
                                 <div class="separator"></div>
                                 <div class="row">
-                                    <div class="col-md-12">
+
+                                    <div class="col-md-6">
                                         <div class="fv-row mb-5 fv-plugins-icon-container">
                                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                <span class="required">Name</span>
+                                                <span class="required">Product Name</span>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" name="store_name" placeholder="" value="" required>
+                                            <input type="text" class="form-control form-control-lg form-control-solid" name="product_name" placeholder="" value="{{ $Product->product_name }}" required>
                                         </div>
                                     </div>
+
+
+                                    <div class="col-md-6">
+                                        <div class="fv-row mb-5 fv-plugins-icon-container">
+                                            <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                <span class="required">Status</span>
+                                            </label>
+                                            <select name="status" aria-label="Select a Timezone" data-control="select2" data-placeholder="Select Role" class="form-control form-control-lg form-control-solid" required>
+                                                <option value="1" @if($Product->status == "1") {{ 'selected' }} @endif>Active</option>
+                                                <option value="2" @if($Product->status == "2") {{ 'selected' }} @endif>Inactive</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="fv-row mb-5 fv-plugins-icon-container">
+                                            <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                <span class="required">Category</span>
+                                            </label>
+                                            <select name="category_id" aria-label="Select a Timezone" data-control="select2" data-placeholder="Select Category" class="form-control form-control-lg form-control-solid" required>
+                                                <option value="">Select Category</option>
+                                                @if(!$Category->isEmpty())
+                                                    @foreach($Category as $CatItem)
+                                                        <option value="{{ $CatItem->category_id }}" @if($CatItem->category_id == $Product->category_id) {{ 'selected' }} @endif>{{ $CatItem->category_name }}</option>
+                                                    @endforeach
+                                                @else
+
+                                                @endif
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-4">
+                                        <div class="fv-row mb-5 fv-plugins-icon-container">
+                                            <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                <span class="required">Store</span>
+                                            </label>
+                                            <select name="store_id" aria-label="Select a Timezone" data-control="select2" data-placeholder="Select Store" class="form-control form-control-lg form-control-solid" required>
+                                                <option value="">Select Store</option>
+                                                @if(!$Store->isEmpty())
+                                                    @foreach($Store as $StoreItem)
+                                                        <option value="{{ $StoreItem->store_id }}" @if($StoreItem->store_id == $Product->store_id) {{ 'selected' }} @endif>{{ $StoreItem->store_name }}</option>
+                                                    @endforeach
+                                                @else
+
+                                                @endif
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-4">
+                                        <div class="fv-row mb-5 fv-plugins-icon-container">
+                                            <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                <span class="required">Unite</span>
+                                            </label>
+                                            <select name="unite_id" aria-label="Select a Timezone" data-control="select2" data-placeholder="Select Unite" class="form-control form-control-lg form-control-solid" required>
+                                                <option value="">Select Unite</option>
+                                                @if(!$Unite->isEmpty())
+                                                    @foreach($Unite as $UniteItem)
+                                                        <option value="{{ $UniteItem->unite_id }}" @if($UniteItem->unite_id == $Product->unite_id) {{ 'selected' }} @endif>{{ $UniteItem->unite_name }}</option>
+                                                    @endforeach
+                                                @else
+
+                                                @endif
+                                            </select>
+                                        </div>
+                                    </div>
+
+
                                 </div>
                                 <div class="separator"></div>
                                 <input type="hidden" value="{{ Auth::user()->id }}" name="creator">
@@ -151,8 +223,6 @@
         <!--end::Content table -->
     </div>
     <!--end::Content wrapper-->
-
-
 
 @endsection
 

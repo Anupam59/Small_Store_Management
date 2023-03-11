@@ -61,7 +61,6 @@ class CustomAuthController extends Controller
 
 
 
-
     function dashboard()
     {
         if(Auth::check())

@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ConsumerTypeController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\FeaturesController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\PropertyTypeController;
 use App\Http\Controllers\Admin\StoreController;
+use App\Http\Controllers\Admin\UniteController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\CustomAuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
@@ -73,5 +76,26 @@ Route::middleware('isLoggedIn')->group(function (){
     Route::post('department-entry', [DepartmentController::class, 'DepartmentEntry'])->name('department.entry');
     Route::get('department-edit/{id}', [DepartmentController::class, 'DepartmentEdit']);
     Route::post('department-update/{id}', [DepartmentController::class, 'DepartmentUpdate']);
+
+
+    Route::get('category-list', [CategoryController::class, 'CategoryIndex'])->name('category.list');
+    Route::get('category-create', [CategoryController::class, 'CategoryCreate'])->name('category.create');
+    Route::post('category-entry', [CategoryController::class, 'CategoryEntry'])->name('category.entry');
+    Route::get('category-edit/{id}', [CategoryController::class, 'CategoryEdit']);
+    Route::post('category-update/{id}', [CategoryController::class, 'CategoryUpdate']);
+
+
+    Route::get('unite-list', [UniteController::class, 'UniteIndex'])->name('unite.list');
+    Route::get('unite-create', [UniteController::class, 'UniteCreate'])->name('unite.create');
+    Route::post('unite-entry', [UniteController::class, 'UniteEntry'])->name('unite.entry');
+    Route::get('unite-edit/{id}', [UniteController::class, 'UniteEdit']);
+    Route::post('unite-update/{id}', [UniteController::class, 'UniteUpdate']);
+
+
+    Route::get('product-list', [ProductController::class, 'ProductIndex'])->name('product.list');
+    Route::get('product-create', [ProductController::class, 'ProductCreate'])->name('product.create');
+    Route::post('product-entry', [ProductController::class, 'ProductEntry'])->name('product.entry');
+    Route::get('product-edit/{id}', [ProductController::class, 'ProductEdit']);
+    Route::post('product-update/{id}', [ProductController::class, 'ProductUpdate']);
 
 });

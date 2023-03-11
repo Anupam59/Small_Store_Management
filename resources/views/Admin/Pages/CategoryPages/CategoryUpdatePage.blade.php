@@ -12,7 +12,7 @@
                 <!--begin::Page title-->
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
-                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Consumer Type List</h1>
+                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Category Update</h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -27,7 +27,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Store Create</li>
+                        <li class="breadcrumb-item text-muted">Category Update</li>
                         <!--end::Item-->
 
                     </ul>
@@ -36,22 +36,26 @@
                 <!--end::Page title-->
 
 
-
                 <!--begin::Actions  Filter-->
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
                     <div class="m-0">
+
                         <a href="#" class="btn btn-sm btn-flex bg-body btn-color-gray-700 btn-active-color-primary fw-bold" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
                         <span class="svg-icon svg-icon-6 svg-icon-muted me-1">
                                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z" fill="currentColor" />
                                             </svg>
                                         </span>Filter</a>
+
                         <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true" id="kt_menu_63de6bfc33b19">
                             <div class="px-7 py-5">
                                 <div class="fs-5 text-dark fw-bold">Filter Options</div>
                             </div>
+
                             <div class="separator border-gray-200"></div>
+
                             <div class="px-7 py-5">
+
                                 <!--begin::Input group-->
                                 <div class="mb-10">
                                     <label class="form-label fw-semibold">Email:</label>
@@ -91,7 +95,7 @@
                         </div>
                     </div>
 
-                    <a href="/store-list" class="btn btn-sm fw-bold btn-primary">Store List</a>
+                    <a href="/category-create" class="btn btn-sm fw-bold btn-primary">Create</a>
 
                 </div>
                 <!--end::Actions Filter-->
@@ -110,6 +114,7 @@
                 <div class="row">
                     <div class="card mb-5 mb-xl-8">
                         <div class="card-body">
+
                             @if ($errors->any())
                                 <div class="alert alert-danger">
                                     <ul>
@@ -119,30 +124,53 @@
                                     </ul>
                                 </div>
                             @endif
-                            <form action="{{ route('store.entry')}}" method="post" class="form" enctype="multipart/form-data">
+
+                            <form action="{{ url('/category-update/'.$Category->category_id)}}" method="post" class="form" enctype="multipart/form-data">
                                 @csrf
                                 <div class="separator"></div>
+                                <!--begin::Details content-->
+
                                 <div class="row">
+
                                     <div class="col-md-12">
                                         <div class="fv-row mb-5 fv-plugins-icon-container">
                                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                 <span class="required">Name</span>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" name="store_name" placeholder="" value="" required>
+                                            <input type="text" class="form-control form-control-lg form-control-solid" name="category_name" placeholder="" value="{{ $Category->category_name }}" required>
                                         </div>
                                     </div>
+
+
+                                    <div class="col-md-12">
+                                        <div class="fv-row mb-5 fv-plugins-icon-container">
+                                            <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                                <span class="required">Status</span>
+                                            </label>
+                                            <select name="status" aria-label="Select a Timezone" data-control="select2" data-placeholder="Select Role" class="form-control form-control-lg form-control-solid" required>
+                                                <option value="1" @if($Category->status == "1") {{ 'selected' }} @endif>Active</option>
+                                                <option value="2" @if($Category->status == "2") {{ 'selected' }} @endif>Inactive</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
                                 </div>
-                                <div class="separator"></div>
+
                                 <input type="hidden" value="{{ Auth::user()->id }}" name="creator">
+
                                 <div class="row">
                                     <div class="col text-center">
-                                        <button type="submit" class="btn btn-primary">Create</button>
+                                        <button type="submit" class="btn btn-primary">Update</button>
                                     </div>
                                 </div>
+
                             </form>
+
                         </div>
                         <!--end::Card body-->
                     </div>
+
+
 
                 </div>
             </div>

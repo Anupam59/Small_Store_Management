@@ -88,7 +88,7 @@
                             </div>
                         </div>
                     </div>
-                    <a href="/department-create" class="btn btn-sm fw-bold btn-primary">Create</a>
+                    <a href="/department-list" class="btn btn-sm fw-bold btn-primary">Department List</a>
                 </div>
                 <!--end::Actions Filter-->
             </div>

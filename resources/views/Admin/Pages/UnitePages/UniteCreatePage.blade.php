@@ -12,7 +12,7 @@
                 <!--begin::Page title-->
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
-                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Consumer Type List</h1>
+                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Unite List</h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -27,7 +27,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Store Create</li>
+                        <li class="breadcrumb-item text-muted">Unite Create</li>
                         <!--end::Item-->
 
                     </ul>
@@ -85,17 +85,12 @@
                                     <button type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Apply</button>
                                 </div>
                                 <!--end::Actions-->
-
-
                             </div>
                         </div>
                     </div>
-
-                    <a href="/store-list" class="btn btn-sm fw-bold btn-primary">Store List</a>
-
+                    <a href="/unite-list" class="btn btn-sm fw-bold btn-primary">Unite List</a>
                 </div>
                 <!--end::Actions Filter-->
-
             </div>
             <!--end::Toolbar container-->
         </div>
@@ -119,7 +114,7 @@
                                     </ul>
                                 </div>
                             @endif
-                            <form action="{{ route('store.entry')}}" method="post" class="form" enctype="multipart/form-data">
+                            <form action="{{ route('unite.entry')}}" method="post" class="form" enctype="multipart/form-data">
                                 @csrf
                                 <div class="separator"></div>
                                 <div class="row">
@@ -128,7 +123,7 @@
                                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                 <span class="required">Name</span>
                                             </label>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" name="store_name" placeholder="" value="" required>
+                                            <input type="text" class="form-control form-control-lg form-control-solid" name="unite_name" placeholder="" value="" required>
                                         </div>
                                     </div>
                                 </div>
@@ -151,8 +146,6 @@
         <!--end::Content table -->
     </div>
     <!--end::Content wrapper-->
-
-
 
 @endsection
 
