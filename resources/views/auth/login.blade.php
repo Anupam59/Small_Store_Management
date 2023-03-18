@@ -30,7 +30,7 @@
                             @endif
                         </div>
 
-                        <div class="form-group row">
+                        <div class="form-group row d-none">
                             <div class="col-md-6 offset-md-4">
                                 <div class="checkbox">
                                     <label>

@@ -4,9 +4,9 @@
     <!--begin::Logo-->
     <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
         <!--begin::Logo image-->
-        <a href="#">
-            <img alt="Logo" src="{{asset('Admin/assets/media/logos/default-dark.svg')}}" class="h-25px app-sidebar-logo-default" />
-            <img alt="Logo" src="{{asset('Admin/assets/media/logos/default-small.svg')}}" class="h-20px app-sidebar-logo-minimize" />
+        <a href="/dashboard">
+            <img alt="Logo" src="{{asset('images/sr-logo.png')}}" class="h-50px app-sidebar-logo-default" />
+            <img alt="Logo" src="{{asset('images/logo-sm.png')}}" class="h-30px app-sidebar-logo-minimize" />
         </a>
         <!--end::Logo image-->
 
@@ -270,14 +270,9 @@
                 <!--end:Menu item-->
 
 
-
-
-
-
                 <!--begin:Menu item-->
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                    <!--begin:Menu link-->
-                    <span class="menu-link">
+                <div class="menu-item menu-accordion">
+                    <a class="menu-link" href="/product-purchase">
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-2">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -287,266 +282,81 @@
                             </span>
                             <!--end::Svg Icon-->
                         </span>
-                        <span class="menu-title">Property Type</span>
-                        <span class="menu-arrow"></span>
-                    </span>
-                    <!--end:Menu link-->
-
-                    <!--begin:Menu sub-->
-                    <div class="menu-sub menu-sub-accordion">
-
-                        <!--begin:Menu item-->
-                        <div class="menu-item">
-                            <a class="menu-link" href="/property-type-create">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Property Create</span>
-                            </a>
-                        </div>
-                        <!--end:Menu item-->
-
-                        <!--begin:Menu item-->
-                        <div class="menu-item">
-                            <a class="menu-link" href="/property-type-list">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Property List</span>
-                            </a>
-                        </div>
-                        <!--end:Menu item-->
-
-                    </div>
-                    <!--end:Menu sub-->
+                        <span class="menu-title">Purchase</span>
+                    </a>
                 </div>
                 <!--end:Menu item-->
 
 
-
-
-
                 <!--begin:Menu item-->
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                    <!--begin:Menu link-->
-                    <span class="menu-link">
-                            <span class="menu-icon">
-                                <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
-                                <span class="svg-icon svg-icon-2">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M11.2929 2.70711C11.6834 2.31658 12.3166 2.31658 12.7071 2.70711L15.2929 5.29289C15.6834 5.68342 15.6834 6.31658 15.2929 6.70711L12.7071 9.29289C12.3166 9.68342 11.6834 9.68342 11.2929 9.29289L8.70711 6.70711C8.31658 6.31658 8.31658 5.68342 8.70711 5.29289L11.2929 2.70711Z" fill="currentColor" />
-                                        <path d="M11.2929 14.7071C11.6834 14.3166 12.3166 14.3166 12.7071 14.7071L15.2929 17.2929C15.6834 17.6834 15.6834 18.3166 15.2929 18.7071L12.7071 21.2929C12.3166 21.6834 11.6834 21.6834 11.2929 21.2929L8.70711 18.7071C8.31658 18.3166 8.31658 17.6834 8.70711 17.2929L11.2929 14.7071Z" fill="currentColor" />
-                                        <path opacity="0.3" d="M5.29289 8.70711C5.68342 8.31658 6.31658 8.31658 6.70711 8.70711L9.29289 11.2929C9.68342 11.6834 9.68342 12.3166 9.29289 12.7071L6.70711 15.2929C6.31658 15.6834 5.68342 15.6834 5.29289 15.2929L2.70711 12.7071C2.31658 12.3166 2.31658 11.6834 2.70711 11.2929L5.29289 8.70711Z" fill="currentColor" />
-                                        <path opacity="0.3" d="M17.2929 8.70711C17.6834 8.31658 18.3166 8.31658 18.7071 8.70711L21.2929 11.2929C21.6834 11.6834 21.6834 12.3166 21.2929 12.7071L18.7071 15.2929C18.3166 15.6834 17.6834 15.6834 17.2929 15.2929L14.7071 12.7071C14.3166 12.3166 14.3166 11.6834 14.7071 11.2929L17.2929 8.70711Z" fill="currentColor" />
-                                    </svg>
-                                </span>
-                                <!--end::Svg Icon-->
+                <div class="menu-item menu-accordion">
+                    <a class="menu-link" href="/product-distribute">
+                        <span class="menu-icon">
+                            <span class="svg-icon svg-icon-2">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M20 14H18V10H20C20.6 10 21 10.4 21 11V13C21 13.6 20.6 14 20 14ZM21 19V17C21 16.4 20.6 16 20 16H18V20H20C20.6 20 21 19.6 21 19ZM21 7V5C21 4.4 20.6 4 20 4H18V8H20C20.6 8 21 7.6 21 7Z" fill="currentColor" />
+                                    <path opacity="0.3" d="M17 22H3C2.4 22 2 21.6 2 21V3C2 2.4 2.4 2 3 2H17C17.6 2 18 2.4 18 3V21C18 21.6 17.6 22 17 22ZM10 7C8.9 7 8 7.9 8 9C8 10.1 8.9 11 10 11C11.1 11 12 10.1 12 9C12 7.9 11.1 7 10 7ZM13.3 16C14 16 14.5 15.3 14.3 14.7C13.7 13.2 12 12 10.1 12C8.10001 12 6.49999 13.1 5.89999 14.7C5.59999 15.3 6.19999 16 7.39999 16H13.3Z" fill="currentColor" />
+                                </svg>
                             </span>
-                            <span class="menu-title">Account</span>
-                            <span class="menu-arrow"></span>
+                            <!--end::Svg Icon-->
                         </span>
-                    <!--end:Menu link-->
-                    <!--begin:Menu sub-->
-                    <div class="menu-sub menu-sub-accordion">
-                        <!--begin:Menu item-->
-                        <div class="menu-item">
-                            <!--begin:Menu link-->
-                            <a class="menu-link" href="#">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Overview</span>
-                            </a>
-                            <!--end:Menu link-->
-                        </div>
-                        <!--end:Menu item-->
-                        <!--begin:Menu item-->
-                        <div class="menu-item">
-                            <!--begin:Menu link-->
-                            <a class="menu-link" href="#">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Settings</span>
-                            </a>
-                            <!--end:Menu link-->
-                        </div>
-                        <!--end:Menu item-->
-                        <!--begin:Menu item-->
-                        <div class="menu-item">
-                            <!--begin:Menu link-->
-                            <a class="menu-link" href="#">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-                                <span class="menu-title">Security</span>
-                            </a>
-                            <!--end:Menu link-->
-                        </div>
-                        <!--end:Menu item-->
-                        <!--begin:Menu item-->
-                        <div class="menu-item">
-                            <!--begin:Menu link-->
-                            <a class="menu-link" href="#">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-                                <span class="menu-title">Activity</span>
-                            </a>
-                            <!--end:Menu link-->
-                        </div>
-                        <!--end:Menu item-->
-                        <!--begin:Menu item-->
-                        <div class="menu-item">
-                            <!--begin:Menu link-->
-                            <a class="menu-link" href="#">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-                                <span class="menu-title">Billing</span>
-                            </a>
-                            <!--end:Menu link-->
-                        </div>
-                        <!--end:Menu item-->
-                        <!--begin:Menu item-->
-                        <div class="menu-item">
-                            <!--begin:Menu link-->
-                            <a class="menu-link" href="#">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-                                <span class="menu-title">Statements</span>
-                            </a>
-                            <!--end:Menu link-->
-                        </div>
-                        <!--end:Menu item-->
-                        <!--begin:Menu item-->
-                        <div class="menu-item">
-                            <!--begin:Menu link-->
-                            <a class="menu-link" href="#">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-                                <span class="menu-title">Referrals</span>
-                            </a>
-                            <!--end:Menu link-->
-                        </div>
-                        <!--end:Menu item-->
-                        <!--begin:Menu item-->
-                        <div class="menu-item">
-                            <!--begin:Menu link-->
-                            <a class="menu-link" href="#">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-                                <span class="menu-title">API Keys</span>
-                            </a>
-                            <!--end:Menu link-->
-                        </div>
-                        <!--end:Menu item-->
-
-
-                    </div>
-                    <!--end:Menu sub-->
+                        <span class="menu-title">Distribute</span>
+                    </a>
                 </div>
                 <!--end:Menu item-->
 
 
 
-                <!--begin:Menu Title item-->
-                <div class="menu-item pt-5">
-                    <!--begin:Menu Title content-->
-                    <div class="menu-content">
-                        <span class="menu-heading fw-bold text-uppercase fs-7">App CoC</span>
-                    </div>
-                    <!--end:Menu Title content-->
-                </div>
-                <!--end:Menu Title item-->
 
-                <!--begin:Menu item-->
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                    <!--begin:Menu link-->
-                    <span class="menu-link">
-											<span class="menu-icon">
-												<!--begin::Svg Icon | path: icons/duotune/text/txt002.svg-->
-												<span class="svg-icon svg-icon-2">
-													<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-														<path d="M17 11H7C6.4 11 6 10.6 6 10V9C6 8.4 6.4 8 7 8H17C17.6 8 18 8.4 18 9V10C18 10.6 17.6 11 17 11ZM22 5V4C22 3.4 21.6 3 21 3H3C2.4 3 2 3.4 2 4V5C2 5.6 2.4 6 3 6H21C21.6 6 22 5.6 22 5Z" fill="currentColor" />
-														<path opacity="0.3" d="M21 16H3C2.4 16 2 15.6 2 15V14C2 13.4 2.4 13 3 13H21C21.6 13 22 13.4 22 14V15C22 15.6 21.6 16 21 16ZM18 20V19C18 18.4 17.6 18 17 18H7C6.4 18 6 18.4 6 19V20C6 20.6 6.4 21 7 21H17C17.6 21 18 20.6 18 20Z" fill="currentColor" />
-													</svg>
-												</span>
-                                                <!--end::Svg Icon-->
-											</span>
-											<span class="menu-title">Toolbars</span>
-											<span class="menu-arrow"></span>
-										</span>
-                    <!--end:Menu link-->
-                    <!--begin:Menu sub-->
-                    <div class="menu-sub menu-sub-accordion">
-                        <!--begin:Menu item-->
-                        <div class="menu-item">
-                            <!--begin:Menu link-->
-                            <a class="menu-link" href="../../demo1/dist/toolbars/classic.html">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-                                <span class="menu-title">Classic</span>
-                            </a>
-                            <!--end:Menu link-->
-                        </div>
-                        <!--end:Menu item-->
-                        <!--begin:Menu item-->
-                        <div class="menu-item">
-                            <!--begin:Menu link-->
-                            <a class="menu-link" href="../../demo1/dist/toolbars/saas.html">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-                                <span class="menu-title">SaaS</span>
-                            </a>
-                            <!--end:Menu link-->
-                        </div>
-                        <!--end:Menu item-->
-                        <!--begin:Menu item-->
-                        <div class="menu-item">
-                            <!--begin:Menu link-->
-                            <a class="menu-link" href="../../demo1/dist/toolbars/accounting.html">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-                                <span class="menu-title">Accounting</span>
-                            </a>
-                            <!--end:Menu link-->
-                        </div>
-                        <!--end:Menu item-->
-                        <!--begin:Menu item-->
-                        <div class="menu-item">
-                            <!--begin:Menu link-->
-                            <a class="menu-link" href="../../demo1/dist/toolbars/extended.html">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-                                <span class="menu-title">Extended</span>
-                            </a>
-                            <!--end:Menu link-->
-                        </div>
-                        <!--end:Menu item-->
-                        <!--begin:Menu item-->
-                        <div class="menu-item">
-                            <!--begin:Menu link-->
-                            <a class="menu-link" href="../../demo1/dist/toolbars/reports.html">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-                                <span class="menu-title">Reports</span>
-                            </a>
-                            <!--end:Menu link-->
-                        </div>
-                        <!--end:Menu item-->
-                    </div>
-                    <!--end:Menu sub-->
-                </div>
-                <!--end:Menu item-->
+
+
+{{--                <!--begin:Menu item-->--}}
+{{--                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">--}}
+{{--                    <!--begin:Menu link-->--}}
+{{--                    <span class="menu-link">--}}
+{{--                        <span class="menu-icon">--}}
+{{--                            <span class="svg-icon svg-icon-2">--}}
+{{--                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">--}}
+{{--                                    <path d="M20 14H18V10H20C20.6 10 21 10.4 21 11V13C21 13.6 20.6 14 20 14ZM21 19V17C21 16.4 20.6 16 20 16H18V20H20C20.6 20 21 19.6 21 19ZM21 7V5C21 4.4 20.6 4 20 4H18V8H20C20.6 8 21 7.6 21 7Z" fill="currentColor" />--}}
+{{--                                    <path opacity="0.3" d="M17 22H3C2.4 22 2 21.6 2 21V3C2 2.4 2.4 2 3 2H17C17.6 2 18 2.4 18 3V21C18 21.6 17.6 22 17 22ZM10 7C8.9 7 8 7.9 8 9C8 10.1 8.9 11 10 11C11.1 11 12 10.1 12 9C12 7.9 11.1 7 10 7ZM13.3 16C14 16 14.5 15.3 14.3 14.7C13.7 13.2 12 12 10.1 12C8.10001 12 6.49999 13.1 5.89999 14.7C5.59999 15.3 6.19999 16 7.39999 16H13.3Z" fill="currentColor" />--}}
+{{--                                </svg>--}}
+{{--                            </span>--}}
+{{--                            <!--end::Svg Icon-->--}}
+{{--                        </span>--}}
+{{--                        <span class="menu-title">Property Type</span>--}}
+{{--                        <span class="menu-arrow"></span>--}}
+{{--                    </span>--}}
+{{--                    <!--end:Menu link-->--}}
+
+{{--                    <!--begin:Menu sub-->--}}
+{{--                    <div class="menu-sub menu-sub-accordion">--}}
+
+{{--                        <!--begin:Menu item-->--}}
+{{--                        <div class="menu-item">--}}
+{{--                            <a class="menu-link" href="/property-type-create">--}}
+{{--                                <span class="menu-bullet">--}}
+{{--                                    <span class="bullet bullet-dot"></span>--}}
+{{--                                </span>--}}
+{{--                                <span class="menu-title">Property Create</span>--}}
+{{--                            </a>--}}
+{{--                        </div>--}}
+{{--                        <!--end:Menu item-->--}}
+
+{{--                        <!--begin:Menu item-->--}}
+{{--                        <div class="menu-item">--}}
+{{--                            <a class="menu-link" href="/property-type-list">--}}
+{{--                                <span class="menu-bullet">--}}
+{{--                                    <span class="bullet bullet-dot"></span>--}}
+{{--                                </span>--}}
+{{--                                <span class="menu-title">Property List</span>--}}
+{{--                            </a>--}}
+{{--                        </div>--}}
+{{--                        <!--end:Menu item-->--}}
+
+{{--                    </div>--}}
+{{--                    <!--end:Menu sub-->--}}
+{{--                </div>--}}
+{{--                <!--end:Menu item-->--}}
 
 
             </div>

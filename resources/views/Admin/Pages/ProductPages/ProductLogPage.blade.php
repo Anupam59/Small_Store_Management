@@ -11,7 +11,7 @@
                 <!--begin::Page title-->
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
-                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Product List</h1>
+                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Product Log</h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -26,7 +26,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Product</li>
+                        <li class="breadcrumb-item text-muted">Product Log</li>
                         <!--end::Item-->
 
                     </ul>
@@ -48,55 +48,31 @@
 												</svg>
 											</span>Filter</a>
 
-                        <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true" id="kt_menu_63de6bfc33b19">
+                        <div class="menu menu-sub menu-sub-dropdown w-250px w-md-700px" data-kt-menu="true" id="kt_menu_63de6bfc33b19">
                             <div class="px-7 py-5">
                                 <div class="fs-5 text-dark fw-bold">Filter Options</div>
                             </div>
-
                             <div class="separator border-gray-200"></div>
 
-                            <div class="px-7 py-5">
-
-                                <!--begin::Input group-->
-                                <div class="mb-10">
-                                    <label class="form-label fw-semibold">Email:</label>
-                                    <div>
-                                        <select class="form-select form-select-solid" data-kt-select2="true" data-placeholder="Select option" data-dropdown-parent="#kt_menu_63de6bfc33b19" data-allow-clear="true">
-                                            <option>Select Status</option>
-                                            <option value="1">Active</option>
-                                            <option value="2">Inactive</option>
-                                        </select>
-                                    </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    sdfnklsdfnlk
                                 </div>
-                                <!--end::Input group-->
-
-                                <!--begin::Input group-->
-                                <div class="mb-10">
-                                    <label class="form-label fw-semibold">Status:</label>
-                                    <div>
-                                        <select class="form-select form-select-solid" data-kt-select2="true" data-placeholder="Select option" data-dropdown-parent="#kt_menu_63de6bfc33b19" data-allow-clear="true">
-                                            <option>Select Status</option>
-                                            <option value="1">Active</option>
-                                            <option value="2">Inactive</option>
-                                        </select>
-                                    </div>
+                                <div class="col-md-4">
+                                    sdfnklsdfnlk
                                 </div>
-                                <!--end::Input group-->
-
-
-                                <!--begin::Actions-->
-                                <div class="d-flex justify-content-end">
-                                    <button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true">Reset</button>
-                                    <button type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Apply</button>
+                                <div class="col-md-4">
+                                    sdfnklsdfnlk
                                 </div>
-                                <!--end::Actions-->
-
-
                             </div>
+
+
                         </div>
                     </div>
 
-                    <a href="/product-create" class="btn btn-sm fw-bold btn-primary">Create</a>
+                    <a href="/product-create" class="btn btn-sm fw-bold btn-primary">Product Create</a>
+                    <a href="/product-purchase" class="btn btn-sm fw-bold btn-primary">Purchase</a>
+                    <a href="/product-distribute" class="btn btn-sm fw-bold btn-primary">Distribute</a>
 
                 </div>
                 <!--end::Actions Filter-->
@@ -112,7 +88,7 @@
             <!--begin::Content container-->
             <div id="kt_app_content_container" class="app-container container-xxl">
 
-            @if(!$Product->isEmpty())
+            @if(!$ProductLog->isEmpty())
                 <!--begin::Card-->
                     <div class="card">
                         <!--begin::Card body-->
@@ -120,40 +96,58 @@
                             <!--begin::Table-->
                             <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
                                 <!--begin::Table head-->
-                                <thead>
+                                <thead class="text-start">
                                 <!--begin::Table row-->
                                 <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                                     <th class="w-10px pe-2">Id</th>
                                     <th class="min-w-125px">Product</th>
-                                    <th class="min-w-125px">Modifier</th>
-                                    <th class="min-w-125px">Status</th>
-                                    <th class="min-w-125px">Created Date</th>
-                                    <th class="text-end min-w-100px">Actions</th>
+                                    <th class="min-w-125px">Mode</th>
+                                    <th class="min-w-125px">Quantity</th>
+                                    <th class="min-w-125px">Date</th>
+                                    <th class="min-w-125px">Reference</th>
+                                    <th class="min-w-100px">User Ref</th>
+                                    <th class="min-w-100px">Status</th>
+                                    <th class="text-end min-w-100px">Action</th>
                                 </tr>
                                 <!--end::Table row-->
                                 </thead>
                                 <!--end::Table head-->
                                 <!--begin::Table body-->
-                                <tbody class="text-gray-600 fw-semibold">
+                                <tbody class="text-gray-600 fw-semibold text-start">
 
-                                @foreach($Product as $ProductI)
+                                @foreach($ProductLog as $ProductLogI)
                                     <tr>
-                                        <td>{{ $ProductI->product_id }}</td>
+                                        <td>{{ $ProductLogI->product_log_id }}</td>
 
-                                        <td>{{ $ProductI->product_name }}</td>
+                                        <td>{{ $ProductLogI->product_id }}</td>
 
-                                        <td><div class="badge badge-light fw-bold">{{ $ProductI->name }}</div></td>
 
-                                        @if($ProductI->status == 1)
-                                            <td><div class="badge badge-light-success fw-bold">Active</div></td>
-                                        @elseif($ProductI->status == 2)
-                                            <td><div class="badge badge-light-danger fw-bold">Inactive</div></td>
+                                        @if($ProductLogI->product_mode == 1)
+                                            <td><div class="badge badge-light-success fw-bold">Initial-State</div></td>
+                                        @elseif($ProductLogI->product_mode == 2)
+                                            <td><div class="badge badge-light-primary fw-bold">Purchase</div></td>
+                                        @elseif($ProductLogI->product_mode == 3)
+                                            <td><div class="badge badge-light-danger fw-bold">Distribute</div></td>
                                         @endif
 
-                                        <td>{{ $ProductI->created_date }}</td>
+                                        <td><div class="badge badge-light fw-bold">{{ $ProductLogI->quantity }}</div></td>
+
+                                        <td>{{ date("d-m-Y", strtotime($ProductLogI->created_date)) }}</td>
+
+                                        <td>{{ $ProductLogI->reference }}</td>
+
+                                        <td>{{ $ProductLogI->user_ref }}</td>
+
+
+                                        @if($ProductLogI->status == 1)
+                                            <td><div class="badge badge-light-success fw-bold text-end">Active</div></td>
+                                        @elseif($ProductLogI->status == 2)
+                                            <td><div class="badge badge-light-danger fw-bold text-end">Inactive</div></td>
+                                        @endif
+
 
                                         <td class="text-end">
-                                            <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+                                            <a href="#" class="btn btn-light btn-active-light-primary btn-sm SmallAction" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                                                 <span class="svg-icon svg-icon-5 m-0">
 																<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 																	<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor" />
@@ -164,7 +158,7 @@
 
                                                 <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
-                                                    <a href="/product-edit/{{ $ProductI->product_id }}" class="menu-link px-3">Edit</a>
+                                                    <a href="/product-edit/{{ $ProductLogI->product_id }}" class="menu-link px-3">Edit</a>
                                                 </div>
                                                 <!--end::Menu item-->
 
@@ -189,7 +183,7 @@
                                 <div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">
                                     <div class="dataTables_paginate paging_simple_numbers" id="kt_table_users_paginate">
 
-                                        {{ $Product->onEachSide(3)->links('Admin.Common.Paginate') }}
+                                        {{ $ProductLog->onEachSide(3)->links('Admin.Common.Paginate') }}
 
                                     </div>
                                 </div>

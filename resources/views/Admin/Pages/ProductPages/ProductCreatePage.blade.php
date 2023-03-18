@@ -146,7 +146,7 @@
                                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                                 <span class="required">Reference</span>
                                             </label>
-                                            <input type="number" class="form-control form-control-lg form-control-solid" name="reference" placeholder="" value="" required>
+                                            <input type="text" class="form-control form-control-lg form-control-solid" name="reference" placeholder="" value="" required>
                                         </div>
                                     </div>
 
