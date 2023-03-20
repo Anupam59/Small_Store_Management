@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\FeaturesController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\PropertyTypeController;
+use App\Http\Controllers\Admin\PurchaseController;
+use App\Http\Controllers\Admin\RequisitionController;
 use App\Http\Controllers\Admin\StoreController;
 use App\Http\Controllers\Admin\UniteController;
 use App\Http\Controllers\Admin\UserController;
@@ -91,18 +93,27 @@ Route::middleware('isLoggedIn')->group(function (){
     Route::post('product-entry', [ProductController::class, 'ProductEntry'])->name('product.entry');
     Route::get('product-edit/{id}', [ProductController::class, 'ProductEdit']);
     Route::post('product-update/{id}', [ProductController::class, 'ProductUpdate']);
-
-    Route::get('product-purchase', [ProductController::class, 'ProductPurchaseIndex'])->name('product.purchase');
-    Route::post('product-purchase-entry', [ProductController::class, 'ProductPurchaseEntry'])->name('product.purchase.entry');
-
-    Route::get('product-distribute', [ProductController::class, 'ProductDistributeIndex'])->name('product.distribute');
-    Route::post('product-distribute-entry', [ProductController::class, 'ProductDistributeEntry'])->name('product.distribute.entry');
-
     Route::get('product-log-list', [ProductController::class, 'ProductLogIndex'])->name('product.log.list');
-    Route::post('product-purchase-cart', [ProductController::class, 'ProductPurchaseCart']);
-    Route::get('product-purchase-cart-show', [ProductController::class, 'ProductPurchaseCartShow']);
-    Route::post('product-quantity-increment', [ProductController::class, 'ProductQuantityIncrement']);
-    Route::post('product-quantity-decrement', [ProductController::class, 'ProductQuantityDecrement']);
-    Route::post('product-cart-delete', [ProductController::class, 'ProductCartDelete']);
 
+
+
+    Route::get('product-purchase', [PurchaseController::class, 'ProductPurchaseCreate']);
+    Route::post('product-purchase-cart', [PurchaseController::class, 'ProductPurchaseCart']);
+    Route::get('product-purchase-cart-show', [PurchaseController::class, 'ProductPurchaseCartShow']);
+    Route::post('product-quantity-increment', [PurchaseController::class, 'ProductQuantityIncrement']);
+    Route::post('product-quantity-decrement', [PurchaseController::class, 'ProductQuantityDecrement']);
+    Route::post('product-cart-delete', [PurchaseController::class, 'ProductCartDelete']);
+    Route::post('product-purchase-add', [PurchaseController::class, 'PurchaseAdd']);
+    Route::get('purchase-list', [PurchaseController::class, 'PurchaseList']);
+
+
+    Route::get('product-requisition', [RequisitionController::class, 'ProductRequisitionCreate']);
+    Route::post('product-requisition-cart', [RequisitionController::class, 'ProductRequisitionCart']);
+    Route::get('product-requisition-cart-show', [RequisitionController::class, 'ProductRequisitionCartShow']);
+    Route::post('requisition-quantity-increment', [RequisitionController::class, 'RequisitionQuantityIncrement']);
+    Route::post('requisition-quantity-decrement', [RequisitionController::class, 'RequisitionQuantityDecrement']);
+    Route::post('requisition-cart-delete', [RequisitionController::class, 'RequisitionCartDelete']);
+    Route::post('product-requisition-add', [RequisitionController::class, 'RequisitionAdd']);
+    Route::get('requisition-list', [RequisitionController::class, 'RequisitionList']);
+    Route::get('requisition-details/{id}', [RequisitionController::class, 'RequisitionDetails']);
 });

@@ -101,7 +101,7 @@
                     </div>
 
 
-                    <a href="#" class="btn btn-sm fw-bold btn-primary">Create</a>
+                    <a href="/user-create" class="btn btn-sm fw-bold btn-primary">Create</a>
 
                 </div>
                 <!--end::Actions Filter-->
@@ -134,7 +134,7 @@
                                 <thead>
                                 <!--begin::Table row-->
                                 <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-                                    <th class="w-10px pe-2">Id</th>
+                                    <th class="w-10px pe-2">SL</th>
                                     <th class="min-w-125px">Name</th>
                                     <th class="min-w-125px">Role</th>
                                     <th class="min-w-125px">Number</th>
@@ -148,10 +148,10 @@
                                 <!--begin::Table body-->
                                 <tbody class="text-gray-600 fw-semibold">
 
-                                @foreach($Users as $User)
+                                @foreach($Users as $key=>$User)
                                     <tr>
 
-                                        <td>1</td>
+                                        <td>{{ $key+1 }}</td>
                                         <td class="d-flex align-items-center">
                                             <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                                 <a href="#">
@@ -161,26 +161,24 @@
                                                 </a>
                                             </div>
                                             <div class="d-flex flex-column">
+
                                                 <a href="#" class="text-gray-800 text-hover-primary mb-1">{{ $User->name }}</a>
-                                                <span>{{ $User->email }}</span>
+                                                <small> <span>{{ $User->email }}</span> </small>
+
                                             </div>
                                         </td>
-
-                                        @if($User->role == 1)
-                                            <td>Super Admin</td>
-                                        @elseif($User->role == 2)
-                                            <td>Admin</td>
-                                        @elseif($User->role == 3)
-                                            <td>Department Admin</td>
-                                        @elseif($User->role == 3)
-                                            <td>Department AO</td>
-                                        @elseif($User->role == 3)
-                                            <td>Store Manager</td>
-                                        @else
-                                            <td>😢😢😢</td>
-                                        @endif
-
-                                        <td>{{$User->number}}</td>
+                                        <td>
+                                            <small>
+                                                @if($User->role == 1) Super Admin
+                                                @elseif($User->role == 2) Admin
+                                                @elseif($User->role == 3) Department Admin
+                                                @elseif($User->role == 4) Department AO
+                                                @elseif($User->role == 5) Store Manager
+                                                @else 😢😢😢
+                                                @endif
+                                            </small>
+                                        </td>
+                                        <td>  <small> {{$User->number}} </small></td>
 
                                         @if($User->status == 1)
                                             <td><div class="badge badge-light-success fw-bold">Active</div></td>
@@ -189,7 +187,7 @@
                                         @endif
 
 
-                                        <td>{{ $User->created_date }}</td>
+                                        <td> <small> {{ date('d M, Y', strtotime($User->created_date)) }} </small> </td>
 
                                         <td class="text-end">
                                             <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
@@ -203,11 +201,6 @@
                                                 <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
                                                     <a href="/user-edit/{{ $User->id }}" class="menu-link px-3">Edit</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3" id="UserDeleteSweetAlert">Delete</a>
                                                 </div>
                                                 <!--end::Menu item-->
                                             </div>

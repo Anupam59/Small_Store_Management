@@ -14,11 +14,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('purchase', function (Blueprint $table) {
-            $table->bigIncrements('purchase_id');
+        Schema::create('requisition', function (Blueprint $table) {
+            $table->bigIncrements('requisition_id');
             $table->string('total_quantity',100)->nullable();
-            $table->string('supplier',100)->nullable();
-            $table->string('memo_number',100)->nullable();
+
+            $table->unsignedInteger('department_id');
+            $table->foreign('department_id')->references('department_id')->on('department');
+
+            $table->integer('approved_by')->nullable();
+            $table->timestamp('approved_date')->nullable();
+
+            $table->integer('delivered_by')->nullable();
+            $table->timestamp('delivered_date')->nullable();
+
             $table->text('note')->nullable();
 
             $table->tinyInteger('status')->default(1);
@@ -36,6 +44,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('purchase');
+        Schema::dropIfExists('requisition');
     }
 };

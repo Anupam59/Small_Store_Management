@@ -5,7 +5,7 @@
 
     <!--begin::Content wrapper-->
     <div class="d-flex flex-column flex-column-fluid">
-        <input id="UserId" type="text" class="hidden" value="{{ Auth::user()->id }}">
+        <input id="UserId" type="text" class="d-none" value="{{ Auth::user()->id }}">
         <!--begin::Toolbar-->
         <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
             <!--begin::Toolbar container-->
@@ -87,7 +87,7 @@
                             </div>
                         </div>
                     </div>
-                    <a href="/product-log-list" class="btn btn-sm fw-bold btn-primary">Product Log</a>
+                    <a href="/purchase-list" class="btn btn-sm fw-bold btn-primary">Purchase List</a>
                 </div>
                 <!--end::Actions Filter-->
             </div>
@@ -118,9 +118,10 @@
                                 <div class="col-md-6">
                                     <div class="fv-row mb-5 fv-plugins-icon-container">
                                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                            <span class="required">Purchase Name</span>
+                                            <span class="required">Supplier Name</span>
                                         </label>
-                                        <input type="text" class="form-control form-control-lg form-control-solid" name="purchase_name" placeholder="Purchase Name" value="" required>
+                                        <input id="SupplierName" type="text" class="form-control form-control-lg form-control-solid" name="purchase_name" placeholder="Supplier Name">
+
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -128,7 +129,7 @@
                                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                             <span>Memo Number</span>
                                         </label>
-                                        <input type="text" class="form-control form-control-lg form-control-solid" name="purchase_name" placeholder="Memo Number" value="">
+                                        <input id="MemoNumber" type="text" class="form-control form-control-lg form-control-solid" name="purchase_name" placeholder="Memo Number" value="">
                                     </div>
                                 </div>
                             </div>
@@ -168,8 +169,7 @@
 
                     <div class="card mb-5 mb-xl-8">
                         <div class="card-body">
-                            <div class="row">
-
+                            <div class="row justify-content-center">
 
                                 <div class="col-md-12">
                                     <div class="fv-row mb-5 fv-plugins-icon-container">
@@ -194,11 +194,31 @@
 
                                                 </tbody>
                                                 <!--end::Table body-->
+                                                <tfoot>
+                                                <tr>
+                                                    <td class="pe-0"><div class="d-flex align-items-center"><span class="fw-bold text-gray-800 text-primary fs-6 me-1">Total Quantity</span></div></td>
+                                                    <th id="TotalQuantity" class="w-125px text-center totalQuantity"></th>
+                                                    <th class="w-60px"></th>
+                                                </tr>
+                                                </tfoot>
+
                                             </table>
                                             <!--end::Table-->
                                         </div>
 
+                                        <p id="PurItem" class="d-none"></p>
+
                                     </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="fv-row mb-5 fv-plugins-icon-container">
+                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                            <span>Purchase Note</span>
+                                        </label>
+                                        <textarea id="PurchaseNote" class="form-control form-control form-control-solid" placeholder="Purchase Note..." data-kt-autosize="true"></textarea>
+                                    </div>
+                                    <a id="PurchaseBtnId" class="btn btn-sm fw-bold btn-primary">Purchase</a>
                                 </div>
 
                             </div>
@@ -224,8 +244,13 @@
             axios.get('/product-purchase-cart-show').then(function (response) {
                 if(response.status==200){
                     var JsonData = response.data;
+                    var PurItem = 0;
+                    var TotalQuantity = 0;
                     $('#Pus_Table').empty();
                     $.each(JsonData, function (i, item) {
+
+                        TotalQuantity = TotalQuantity + JsonData[i].quantity;
+                        PurItem = PurItem + 1;
                         $('<tr data-kt-pos-element="item" data-kt-pos-item-price="33">').html(
                             '<td class="pe-0"><div class="d-flex align-items-center"><span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-6 me-1">'+JsonData[i].product_name+'</span></div></td>'+
                             '<td class="pe-0">'+
@@ -238,6 +263,9 @@
                             '<td class="text-end"><a type="button" data-id="'+JsonData[i].purchase_cart_id+'" class="btn btn-sm btn-icon btn-active-color-primary ProductDeleteBtn"><span class="svg-icon svg-icon-3"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor"></path><path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor"></path><path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor"></path></svg></span></a></td>'
                         ).appendTo('#Pus_Table');
                     });
+
+                    $('#TotalQuantity').html(TotalQuantity);
+                    $('#PurItem').html(PurItem);
 
 
 
@@ -280,8 +308,6 @@
             });
         });
 
-
-
         function ProductQuantityIncrement(Id) {
             let user_id = $('#UserId').val();
             axios.post('/product-quantity-increment',{
@@ -293,7 +319,6 @@
 
             });
         }
-
 
         function ProductQuantityDecrement(Id) {
             let user_id = $('#UserId').val();
@@ -317,6 +342,44 @@
             }).catch(function (error) {
 
             });
+        }
+
+
+
+        $('#PurchaseBtnId').click(function () {
+            let total_quantity = $('#TotalQuantity').html();
+            let supplier = $('#SupplierName').val();
+            let memo_number = $('#MemoNumber').val();
+            let note = $('#PurchaseNote').val();
+            let creator = $('#UserId').val();
+            let purItem = $('#PurItem').html();
+
+            if (supplier.length == 0){
+                toastr.warning("Supplier Name NoT Empty!");
+            }else if(purItem == 0){
+                toastr.warning("Please Some Product Add Now !");
+            }else{
+                axios.post('/product-purchase-add',{
+                    total_quantity:total_quantity,
+                    supplier:supplier,
+                    memo_number:memo_number,
+                    note:note,
+                    creator:creator,
+                }).then(function (response) {
+                    toastr.success("Purchase Successfully Done");
+                    ProductCartShow();
+                    PurchaseFileEmpty();
+                }).catch(function (error) {
+                    toastr.error("Something went to wrong ! try again");
+                });
+            }
+        });
+
+
+        function PurchaseFileEmpty() {
+            $('#SupplierName').val('');
+            $('#MemoNumber').val('');
+            $('#PurchaseNote').val('');
         }
 
 

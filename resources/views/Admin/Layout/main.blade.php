@@ -93,6 +93,7 @@
 <!--end::Vendors Javascript-->
 <!--begin::Custom Javascript(used for this page only)-->
 <script src="{{ asset('Admin/assets/js/widgets.bundle.js') }}"></script>
+<script src="{{ asset('Admin/assets/js/moment.min.js') }}"></script>
 <script src="{{ asset('Admin/assets/js/custom/widgets.js') }}"></script>
 <script src="{{ asset('Admin/assets/js/custom/apps/chat/chat.js') }}"></script>
 <script src="{{ asset('Admin/assets/js/custom/utilities/modals/upgrade-plan.js') }}"></script>

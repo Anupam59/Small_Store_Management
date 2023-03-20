@@ -15,3 +15,7 @@
 .SmallAction{
     padding: 10px !important;
 }
+.totalQuantity{
+    font-size: 19px !important;
+    font-weight: 500 !important;
+}

@@ -14,18 +14,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('purchase', function (Blueprint $table) {
-            $table->bigIncrements('purchase_id');
-            $table->string('total_quantity',100)->nullable();
-            $table->string('supplier',100)->nullable();
-            $table->string('memo_number',100)->nullable();
-            $table->text('note')->nullable();
+        Schema::create('requisition_log', function (Blueprint $table) {
+            $table->increments('requisition_log_id');
+
+            $table->unsignedInteger('product_id');
+            $table->foreign('product_id')->references('product_id')->on('product');
+
+            $table->tinyInteger('product_mode');
+            $table->integer('quantity');
+            $table->string('reference',200)->nullable();
+            $table->integer('user_ref');
 
             $table->tinyInteger('status')->default(1);
-            $table->integer('creator');
-            $table->integer('modifier');
             $table->timestamp('created_date')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->timestamp('modified_date')->default(DB::raw('CURRENT_TIMESTAMP'));
         });
     }
 
@@ -36,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('purchase');
+        Schema::dropIfExists('requisition_log');
     }
 };

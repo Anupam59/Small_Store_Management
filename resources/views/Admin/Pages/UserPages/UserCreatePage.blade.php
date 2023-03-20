@@ -235,7 +235,9 @@
                                                 <span class="required">Role</span>
                                             </label>
                                             <select id="UserRoleId" name="role" value="{{old('role')}}" aria-label="Select a Timezone" data-control="select2" data-placeholder="Select Role" class="form-control form-control-lg form-control-solid" required>
-                                                <option value="1">Super Admin</option>
+                                                @if(auth()->user()->role == 1)
+                                                    <option value="1">Super Admin</option>
+                                                @endif
                                                 <option value="2">Admin</option>
                                                 <option value="3">Department Admin</option>
                                                 <option value="4">Department AO</option>
