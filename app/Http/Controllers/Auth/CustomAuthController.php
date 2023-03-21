@@ -18,12 +18,10 @@ class CustomAuthController extends Controller
 
 
 
-
     function registration()
     {
         return view('auth.registration');
     }
-
 
 
 
@@ -44,7 +42,6 @@ class CustomAuthController extends Controller
     }
 
 
-
     function validate_login(Request $request)
     {
         $request->validate([
@@ -60,7 +57,6 @@ class CustomAuthController extends Controller
     }
 
 
-
     function dashboard()
     {
         if(Auth::check())
@@ -69,7 +65,6 @@ class CustomAuthController extends Controller
         }
         return redirect('login')->with('success', 'you are not allowed to access');
     }
-
 
 
     function logout()

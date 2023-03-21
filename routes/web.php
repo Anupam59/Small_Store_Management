@@ -94,8 +94,7 @@ Route::middleware('isLoggedIn')->group(function (){
     Route::get('product-edit/{id}', [ProductController::class, 'ProductEdit']);
     Route::post('product-update/{id}', [ProductController::class, 'ProductUpdate']);
     Route::get('product-log-list', [ProductController::class, 'ProductLogIndex'])->name('product.log.list');
-
-
+    Route::post('product-stock', [ProductController::class, 'ProductStock']);
 
     Route::get('product-purchase', [PurchaseController::class, 'ProductPurchaseCreate']);
     Route::post('product-purchase-cart', [PurchaseController::class, 'ProductPurchaseCart']);
@@ -110,10 +109,22 @@ Route::middleware('isLoggedIn')->group(function (){
     Route::get('product-requisition', [RequisitionController::class, 'ProductRequisitionCreate']);
     Route::post('product-requisition-cart', [RequisitionController::class, 'ProductRequisitionCart']);
     Route::get('product-requisition-cart-show', [RequisitionController::class, 'ProductRequisitionCartShow']);
+    Route::post('requisition-item-show', [RequisitionController::class, 'RequisitionItemShow']);
     Route::post('requisition-quantity-increment', [RequisitionController::class, 'RequisitionQuantityIncrement']);
     Route::post('requisition-quantity-decrement', [RequisitionController::class, 'RequisitionQuantityDecrement']);
     Route::post('requisition-cart-delete', [RequisitionController::class, 'RequisitionCartDelete']);
     Route::post('product-requisition-add', [RequisitionController::class, 'RequisitionAdd']);
     Route::get('requisition-list', [RequisitionController::class, 'RequisitionList']);
     Route::get('requisition-details/{id}', [RequisitionController::class, 'RequisitionDetails']);
+    Route::get('requisition-edit/{id}', [RequisitionController::class, 'RequisitionEdit']);
+
+    Route::post('req-update-quantity-increment', [RequisitionController::class, 'ReqUpdateQuantityIncrement']);
+    Route::post('req-update-quantity-decrement', [RequisitionController::class, 'ReqUpdateQuantityDecrement']);
+    Route::post('req-update-delete', [RequisitionController::class, 'ReqUpdateDelete']);
+
+    Route::post('req-total-quantity-update', [RequisitionController::class, 'RequisitionTotalQuantityUpdate']);
+    Route::post('requisition-approved', [RequisitionController::class, 'RequisitionApproved']);
+    Route::post('requisition-canceled', [RequisitionController::class, 'RequisitionCanceled']);
+
+    Route::post('requisition-delivered', [RequisitionController::class, 'RequisitionDelivered']);
 });

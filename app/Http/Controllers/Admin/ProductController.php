@@ -10,15 +10,27 @@ use App\Models\StoreModel;
 use App\Models\UniteModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
     public function ProductIndex(){
-        $Product = ProductModel::join('users', 'users.id', '=', 'product.modifier')
-            ->select('users.name','product.*')
-            ->orderBy('product_id','desc')->paginate(10);
+        $Product  =  ProductModel::select( 'product.*',DB::raw('(select total_quantity from product_log where product_log.product_id  =   product.product_id order by product_log_id DESC limit 1) as total_quantity'))
+            ->orderBy('product.product_id','desc')
+            ->paginate(10);
         return view('Admin/Pages/ProductPages/ProductListPage',compact('Product'));
     }
+
+//    public function ProductIndex(){
+//        $Product = ProductModel::join('users', 'users.id', '=', 'product.modifier')
+//            ->leftJoin('product_log', 'product_log.product_id', '=', 'product.product_id')
+//            ->select('users.name','product_log.total_quantity','product.*')
+//            ->orderBy('product.product_id','desc')
+//            ->orderBy('product_log.product_log_id','desc')
+//            ->paginate(10);
+//        return view('Admin/Pages/ProductPages/ProductListPage',compact('Product'));
+//    }
+
     public function ProductCreate(){
         $Category = CategoryModel::where('status',1)->get();
         $Store = StoreModel::where('status',1)->get();
@@ -47,6 +59,7 @@ class ProductController extends Controller
             $dataLog['product_id'] = $ProductId;
             $dataLog['product_mode'] = 1;
             $dataLog['quantity'] = $request->quantity;
+            $dataLog['total_quantity'] = $request->quantity;
             $dataLog['reference'] = $request->reference;
             $dataLog['user_ref'] = $request->creator;
             $dataLog['status'] = 1;
@@ -141,10 +154,12 @@ class ProductController extends Controller
         return view('Admin/Pages/ProductPages/ProductLogPage',compact('ProductLog','Category','Store'));
     }
 
-    public function ProductCount(Request $request){
+    public function ProductStock(Request $request){
         $ProductId = $request->input('product_id');
-        ProductLogModel::where('product_id',$ProductId)->where('product_mode',2)->sum('quantity');
-        ProductLogModel::where('product_id',$ProductId)->where('product_mode',3)->sum('quantity');
+        $purchase = ProductLogModel::where('product_id',$ProductId)->whereIn('product_mode',[1, 2])->sum('quantity');
+        $delivered = ProductLogModel::where('product_id',$ProductId)->where('product_mode',3)->sum('quantity');
+        $Stock = $purchase-$delivered;
+        return $Stock;
     }
 
 }

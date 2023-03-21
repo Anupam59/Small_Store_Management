@@ -27,6 +27,9 @@ return new class extends Migration
             $table->integer('delivered_by')->nullable();
             $table->timestamp('delivered_date')->nullable();
 
+            $table->integer('canceled_by')->nullable();
+            $table->timestamp('canceled_date')->nullable();
+
             $table->text('note')->nullable();
 
             $table->tinyInteger('status')->default(1);

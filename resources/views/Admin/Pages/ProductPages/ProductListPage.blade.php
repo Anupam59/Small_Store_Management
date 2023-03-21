@@ -127,6 +127,7 @@
                                     <th class="min-w-125px">Product</th>
                                     <th class="min-w-125px">Modifier</th>
                                     <th class="min-w-125px">Status</th>
+                                    <th class="min-w-125px">Stock</th>
                                     <th class="min-w-125px">Created Date</th>
                                     <th class="text-end min-w-100px">Actions</th>
                                 </tr>
@@ -150,7 +151,11 @@
                                             <td><div class="badge badge-light-danger fw-bold">Inactive</div></td>
                                         @endif
 
-                                        <td>{{ $ProductI->created_date }}</td>
+
+
+                                        <td>{{ $ProductI->total_quantity }}</td>
+
+                                        <td>{{ date("d M, Y", strtotime($ProductI->created_date)) }}</td>
 
                                         <td class="text-end">
                                             <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
@@ -215,6 +220,14 @@
 
 @section('script')
     <script>
+
+        function ProductStock(product_id) {
+            axios.post('/product-stock',{
+                product_id:product_id,
+            }).then(function (response) {
+                return response.data;
+            });
+        }
 
     </script>
 @endsection

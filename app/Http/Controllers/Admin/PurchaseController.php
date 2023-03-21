@@ -104,10 +104,13 @@ class PurchaseController extends Controller
             $user_ref = $creator;
             $status = 1;
             $created_date = date("Y-m-d h:i:s");
+            $lastData = ProductLogModel::where('product_id',$product_id)->orderBy('product_log_id','desc')->first();
+            $TotalQuantity = $lastData->total_quantity;
             $result = ProductLogModel::insert([
                 'product_id'=>$product_id,
                 'product_mode'=>$product_mode,
                 'quantity'=>$quantity,
+                'total_quantity'=>$TotalQuantity+$quantity,
                 'reference'=>$reference,
                 'user_ref'=>$user_ref,
                 'status'=>$status,

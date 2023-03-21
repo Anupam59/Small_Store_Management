@@ -4,6 +4,10 @@
 
     <!--begin::Content wrapper-->
     <div class="d-flex flex-column flex-column-fluid">
+
+        <p id="RequisitionId" class="d-none">{{ request()->route('id') }}</p>
+        <p id="UserId" class="d-none">{{ Auth::user()->id }}</p>
+
         <!--begin::Toolbar-->
         <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
             <!--begin::Toolbar container-->
@@ -103,7 +107,6 @@
                                                     <tbody class="fw-semibold text-gray-600">
 
                                                     @foreach($ReqProduct as $key => $Product)
-
                                                         <tr>
                                                             <td class="text-start">{{ $key+1 }}</td>
                                                             <td>
@@ -115,12 +118,7 @@
                                                             </td>
                                                             <td class="text-end">{{ $Product->quantity }}</td>
                                                         </tr>
-
                                                     @endforeach
-
-
-
-
 
                                                     <tr class="d-none">
                                                         <td colspan="2" class="text-end">Subtotal</td>
@@ -131,15 +129,17 @@
                                                     </tbody>
                                                 </table>
                                             @else
+
                                             @endif
-
-
 
                                         </div>
                                         <!--end::Table-->
 
-
-
+                                        @if($Requisition->status == 2)
+                                            <div class="col-md-12">
+                                                <a id="DeliveredBtnId" class="btn btn-sm fw-bold btn-primary">Delivered</a>
+                                            </div>
+                                        @endif
 
 
                                     </div>
@@ -179,4 +179,25 @@
     </div>
     <!--end::Content wrapper-->
 
+@endsection
+
+
+@section('script')
+    <script>
+
+        $('#DeliveredBtnId').click(function(){
+            let RequisitionId = $('#RequisitionId').html();
+            let UserId = $('#UserId').html();
+            axios.post('/requisition-delivered',{
+                requisition_id:RequisitionId,
+                user_id:UserId,
+            }).then(function (response) {
+                toastr.success("Requisition Delivered Successfully Done");
+                window.location.replace("/requisition-list");
+            }).catch(function (error) {
+
+            });
+        });
+
+    </script>
 @endsection

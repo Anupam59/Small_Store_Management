@@ -180,7 +180,8 @@
 
                                     <div class="separator"></div>
 
-                                    <div id="DepartmentAdmin" class="col-md-12">
+
+                                    <div id="DepartmentAdmin" class="col-md-12 d-none">
                                         <div class="fv-row mb-5 fv-plugins-icon-container">
                                             <label class="d-flex align-items-center fs-5 fw-semibold mb-3">
                                                 <span class="">Department Admin</span>
@@ -216,7 +217,9 @@
                                         </div>
                                     </div>
 
-                                    <div id="DepartmentAO" class="col-md-12">
+
+
+                                    <div id="DepartmentAO" class="col-md-12 d-none">
                                         <div class="fv-row mb-5 fv-plugins-icon-container">
                                             <label class="d-flex align-items-center fs-5 fw-semibold mb-3">
                                                 <span class="">Department AO</span>
@@ -254,7 +257,9 @@
                                         </div>
                                     </div>
 
-                                    <div id="StoreManager" class="col-md-12">
+
+
+                                    <div id="StoreManager" class="col-md-12 d-none">
                                         <div class="fv-row mb-5 fv-plugins-icon-container">
                                             <label class="d-flex align-items-center fs-5 fw-semibold mb-3">
                                                 <span class="">Store Manager</span>
@@ -340,8 +345,9 @@
 @section('script')
     <script>
 
-        var ID = $('#UserRoleId').val();
-        RoleChange(ID);
+        var roleId = $('#UserRoleId').val();
+        RoleChange(roleId);
+
         function RoleChange(roleId){
             if(roleId == 3){
                 $('#DepartmentAdmin').removeClass('d-none');
@@ -362,18 +368,12 @@
             }
         }
 
-        $('#UserRoleId').on('change',function (e){
+        $("#UserRoleId").change(function(e){
             var roleId = e.target.value;
             RoleChange(roleId);
         });
 
-        $('#UserImageDelete').click(function () {
-            var UserId = $('#UserId').html();
-        }
 
-        $('#BasicInfoNextId').click(function () {
-
-        });
 
     </script>
 @endsection

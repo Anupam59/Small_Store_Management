@@ -39,6 +39,7 @@ class RequisitionController extends Controller
         }
         return $res;
     }
+
     public function RequisitionQuantityIncrement(Request $request){
         $requisition_cart_id= $request->input('requisition_cart_id');
         $user_id= $request->input('user_id');
@@ -52,6 +53,7 @@ class RequisitionController extends Controller
             return 0;
         }
     }
+
     public function RequisitionQuantityDecrement(Request $request){
         $requisition_cart_id= $request->input('requisition_cart_id');
         $user_id= $request->input('user_id');
@@ -66,18 +68,21 @@ class RequisitionController extends Controller
         }
 
     }
+
     public function RequisitionCartDelete(Request $request){
         $requisition_cart_id= $request->input('requisition_cart_id');
         $user_id= $request->input('user_id');
         $res = RequisitionCartModel::where('requisition_cart_id',$requisition_cart_id)->where('user_id',$user_id)->delete();
         return $res;
     }
+
     public function ProductRequisitionCartShow(){
         $userId = Auth::id();
         $CartDara = RequisitionCartModel::where('user_id',$userId)->get();
         return $CartDara;
     }
-    function RequisitionAdd(Request $request){
+
+    public function RequisitionAdd(Request $request){
         $total_quantity = $request->input('total_quantity');
         $department_id = $request->input('department_id');
         $note = $request->input('note');
@@ -114,7 +119,6 @@ class RequisitionController extends Controller
                 'created_date'=>$created_date,
             ]);
         }
-
 //        RequisitionCartModel::truncate(); //full table delete
         RequisitionCartModel::where('user_id',$creator)->delete();
         return $RequisitionId;
@@ -135,12 +139,8 @@ class RequisitionController extends Controller
             $query = $query->where('requisition.department_id', '=',$department_id);
         }
         $Requisition = $query->paginate(10);
-
         $Department = DepartmentModel::where('status',1)->get();
-
-
         return view('Admin/Pages/RequisitionPages/RequisitionListPage',compact('Requisition','Department'));
-
     }
 
     public function RequisitionDetails($requisition_id){
@@ -153,5 +153,119 @@ class RequisitionController extends Controller
             ->select('product.product_name','requisition_log.*')
             ->where('reference',$requisition_id)->get();
         return view('Admin/Pages/RequisitionPages/RequisitionDetailsPage',compact('Requisition','ReqProduct'));
+    }
+
+    public function RequisitionEdit($requisition_id){
+        $Requisition = RequisitionModel::join('users', 'users.id', '=', 'requisition.creator')
+            ->join('department', 'department.department_id', '=', 'requisition.department_id')
+            ->select('users.name','department.department_name','users.email','requisition.*')
+            ->where('requisition_id',$requisition_id)->first();
+        return view('Admin/Pages/RequisitionPages/RequisitionEditPage',compact('Requisition'));
+    }
+
+    public function RequisitionItemShow(Request $request){
+        $requisition_id = $request->input('requisition_id');
+        $CartDara = RequisitionLogModel::join('product', 'product.product_id', '=', 'requisition_log.product_id')
+            ->select('product.product_name','requisition_log.*')
+            ->where('reference',$requisition_id)->get();
+        return $CartDara;
+    }
+
+    public function ReqUpdateQuantityIncrement(Request $request){
+        $requisition_log_id= $request->input('requisition_log_id');
+        $ProductCart = RequisitionLogModel::where('requisition_log_id',$requisition_log_id)->first();
+        $data =  array();
+        if($ProductCart->quantity >= 1){
+            $data['quantity'] = $ProductCart->quantity+1;
+            $res = RequisitionLogModel::where('requisition_log_id',$requisition_log_id)->update($data);
+            return $res;
+        }else{
+            return 0;
+        }
+    }
+
+    public function ReqUpdateQuantityDecrement(Request $request){
+        $requisition_log_id= $request->input('requisition_log_id');
+        $ProductCart = RequisitionLogModel::where('requisition_log_id',$requisition_log_id)->first();
+        $data =  array();
+        if ($ProductCart->quantity > 1){
+            $data['quantity'] = $ProductCart->quantity-1;
+            $res = RequisitionLogModel::where('requisition_log_id',$requisition_log_id)->update($data);
+            return $res;
+        }else{
+            return 0;
+        }
+
+    }
+
+    public function RequisitionTotalQuantityUpdate(Request $request){
+        $requisition_id = $request->input('requisition_id');
+        $total_quantity= $request->input('total_quantity');
+        $result = RequisitionModel::where('requisition_id',$requisition_id)->update([
+            'total_quantity'=>$total_quantity,
+        ]);
+        return $result;
+    }
+
+    public function RequisitionApproved(Request $request){
+        $requisition_id = $request->input('requisition_id');
+        $approved_by= $request->input('approved_by');
+        $result = RequisitionModel::where('requisition_id',$requisition_id)->update([
+            'status'=>2,
+            'approved_by'=>$approved_by,
+            'approved_date'=>date("Y-m-d h:i:s"),
+        ]);
+        return $result;
+    }
+
+    public function RequisitionCanceled(Request $request){
+        $requisition_id = $request->input('requisition_id');
+        $canceled_by= $request->input('user_id');
+        $result = RequisitionModel::where('requisition_id',$requisition_id)->update([
+            'status'=>4,
+            'canceled_by'=>$canceled_by,
+            'canceled_date'=>date("Y-m-d h:i:s"),
+        ]);
+        return $result;
+    }
+
+
+    public function ReqUpdateDelete(Request $request){
+        $requisition_log_id= $request->input('requisition_log_id');
+        $res = RequisitionLogModel::where('requisition_log_id',$requisition_log_id)->delete();
+        return $res;
+    }
+
+    public function RequisitionDelivered(Request $request){
+         $requisition_id= $request->input('requisition_id');
+         $user_id= $request->input('user_id');
+         $RequisitionDara = RequisitionLogModel::where('reference',$requisition_id)->get();
+         foreach ($RequisitionDara as $key => $Requisition) {
+             $product_id = $Requisition['product_id'];
+             $product_mode = 3; //Delivered mode = 3
+             $quantity = $Requisition['quantity'];
+             $reference = 'Delivered';
+             $user_ref = $user_id;
+             $status = 1;
+             $created_date = date("Y-m-d h:i:s");
+             $lastData = ProductLogModel::where('product_id',$product_id)->orderBy('product_log_id','desc')->first();
+             $TotalQuantity = $lastData->total_quantity;
+             $result = ProductLogModel::insert([
+                 'product_id'=>$product_id,
+                 'product_mode'=>$product_mode,
+                 'quantity'=>$quantity,
+                 'total_quantity'=>$TotalQuantity-$quantity,
+                 'reference'=>$reference,
+                 'user_ref'=>$user_ref,
+                 'status'=>$status,
+                 'created_date'=>$created_date,
+                 ]);
+         }
+
+        $result = RequisitionModel::where('requisition_id',$requisition_id)->update([
+            'status'=>3,
+            'delivered_by'=>$user_id,
+            'delivered_date'=>date("Y-m-d h:i:s"),
+        ]);
     }
 }
