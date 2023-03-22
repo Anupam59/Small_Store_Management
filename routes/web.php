@@ -107,6 +107,8 @@ Route::middleware('isLoggedIn')->group(function (){
 
 
     Route::get('product-requisition', [RequisitionController::class, 'ProductRequisitionCreate']);
+    Route::post('requisition-product', [RequisitionController::class, 'RequisitionProduct']);
+
     Route::post('product-requisition-cart', [RequisitionController::class, 'ProductRequisitionCart']);
     Route::get('product-requisition-cart-show', [RequisitionController::class, 'ProductRequisitionCartShow']);
     Route::post('requisition-item-show', [RequisitionController::class, 'RequisitionItemShow']);

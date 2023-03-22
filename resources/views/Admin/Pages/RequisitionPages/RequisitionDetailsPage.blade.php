@@ -135,12 +135,11 @@
                                         </div>
                                         <!--end::Table-->
 
-                                        @if($Requisition->status == 2)
+                                        @if($Requisition->status == 2 && auth()->user()->role == 5)
                                             <div class="col-md-12">
                                                 <a id="DeliveredBtnId" class="btn btn-sm fw-bold btn-primary">Delivered</a>
                                             </div>
                                         @endif
-
 
                                     </div>
                                     <!--end:Order summary-->

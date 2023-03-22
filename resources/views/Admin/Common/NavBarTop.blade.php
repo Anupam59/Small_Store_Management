@@ -218,9 +218,9 @@
                                                 <td>Admin</td>
                                             @elseif(auth()->user()->role == 3)
                                                 <td>Department Admin</td>
-                                            @elseif(auth()->user()->role == 3)
+                                            @elseif(auth()->user()->role == 4)
                                                 <td>Department AO</td>
-                                            @elseif(auth()->user()->role == 3)
+                                            @elseif(auth()->user()->role == 5)
                                                 <td>Store Manager</td>
                                             @else
                                                 <td>😢😢😢</td>

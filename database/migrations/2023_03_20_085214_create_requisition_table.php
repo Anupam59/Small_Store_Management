@@ -21,6 +21,9 @@ return new class extends Migration
             $table->unsignedInteger('department_id');
             $table->foreign('department_id')->references('department_id')->on('department');
 
+            $table->unsignedInteger('store_id');
+            $table->foreign('store_id')->references('store_id')->on('store');
+
             $table->integer('approved_by')->nullable();
             $table->timestamp('approved_date')->nullable();
 

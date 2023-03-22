@@ -54,7 +54,7 @@
 
                         <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true" id="kt_menu_63de6bfc33b19">
                             <div class="px-7 py-5">
-                                <div class="fs-5 text-dark fw-bold">Filter Options</div>
+                                <div class="fs-5 text-dark fw-bold">Filter User</div>
                             </div>
 
                             <div class="separator border-gray-200"></div>
@@ -63,30 +63,21 @@
 
                                 <!--begin::Input group-->
                                 <div class="mb-10">
-                                    <label class="form-label fw-semibold">Email:</label>
+                                    <label class="form-label fw-semibold"> User Role </label>
                                     <div>
                                         <select class="form-select form-select-solid" data-kt-select2="true" data-placeholder="Select option" data-dropdown-parent="#kt_menu_63de6bfc33b19" data-allow-clear="true">
-                                            <option>Select Status</option>
-                                            <option value="1">Active</option>
-                                            <option value="2">Inactive</option>
+                                            <option>Select Role</option>
+                                            @if(auth()->user()->role == 1)
+                                                <option value="1">Super Admin</option>
+                                            @endif
+                                            <option value="2">Admin</option>
+                                            <option value="3">Department Admin</option>
+                                            <option value="4">Department AO</option>
+                                            <option value="5">Store Manager</option>
                                         </select>
                                     </div>
                                 </div>
                                 <!--end::Input group-->
-
-                                <!--begin::Input group-->
-                                <div class="mb-10">
-                                    <label class="form-label fw-semibold">Status:</label>
-                                    <div>
-                                        <select class="form-select form-select-solid" data-kt-select2="true" data-placeholder="Select option" data-dropdown-parent="#kt_menu_63de6bfc33b19" data-allow-clear="true">
-                                            <option>Select Status</option>
-                                            <option value="1">Active</option>
-                                            <option value="2">Inactive</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <!--end::Input group-->
-
 
                                 <!--begin::Actions-->
                                 <div class="d-flex justify-content-end">
@@ -100,8 +91,10 @@
                         </div>
                     </div>
 
+                    @if(auth()->user()->role <= 2 )
+                        <a href="/user-create" class="btn btn-sm fw-bold btn-primary">Create</a>
+                    @endif
 
-                    <a href="/user-create" class="btn btn-sm fw-bold btn-primary">Create</a>
 
                 </div>
                 <!--end::Actions Filter-->

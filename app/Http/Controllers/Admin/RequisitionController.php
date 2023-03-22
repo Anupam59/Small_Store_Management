@@ -9,16 +9,47 @@ use App\Models\ProductModel;
 use App\Models\RequisitionCartModel;
 use App\Models\RequisitionLogModel;
 use App\Models\RequisitionModel;
+use App\Models\StoreModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class RequisitionController extends Controller
 {
+
     public function ProductRequisitionCreate(){
-        $Department = DepartmentModel::where('status',1)->get();
-        $Product = ProductModel::where('status',1)->get();
-        return view('Admin/Pages/RequisitionPages/RequisitionCreatePage',compact('Department','Product'));
+        $user_role = Auth::user()->role;
+        $user_id = Auth::user()->id;
+        RequisitionCartModel::where('user_id',$user_id)->delete();
+        if($user_role == '4'){
+            $user_department = Auth::user()->dept_ao;
+            $DepArray = explode(' ',$user_department);
+            $Department  = DepartmentModel::where('status',1)->whereIn('department_id', $DepArray)->get();
+        }
+        ///$Department = DepartmentModel::where('status',1)->get();
+        $Store = StoreModel::where('status',1)->get();
+
+        if ($user_role == 4){
+            return view('Admin/Pages/RequisitionPages/RequisitionCreatePage',compact('Department','Store'));
+        }else{
+            return redirect('requisition-list');
+        }
     }
+
+
+
+    public function RequisitionProduct(Request $request){
+        $user_id= Auth::user()->id;
+        $store_id= $request->input('store_id');
+        RequisitionCartModel::where('user_id',$user_id)->delete();
+        $Product = ProductModel::where('store_id',$store_id)->where('status',1)->get();
+        $data = array();
+        $data[] = "<option value=' '>Select Product</option>";
+        foreach ($Product as $row){
+            $data[] = "<option value='".$row->product_id."'>".$row->product_name."</option>";
+        }
+        return $data;
+    }
+
 
     public function ProductRequisitionCart(Request $request){
         $product_id= $request->input('product_id');
@@ -85,6 +116,7 @@ class RequisitionController extends Controller
     public function RequisitionAdd(Request $request){
         $total_quantity = $request->input('total_quantity');
         $department_id = $request->input('department_id');
+        $store_id = $request->input('store_id');
         $note = $request->input('note');
         $creator = $request->input('creator');
         $modifier = $request->input('creator');
@@ -94,6 +126,7 @@ class RequisitionController extends Controller
         $RequisitionId = RequisitionModel::insertGetId([
             'total_quantity'=>$total_quantity,
             'department_id'=>$department_id,
+            'store_id'=>$store_id,
             'note'=>$note,
             'creator'=>$creator,
             'modifier'=>$modifier,
@@ -125,6 +158,9 @@ class RequisitionController extends Controller
     }
 
     public function RequisitionList(){
+        $storeS = Auth::user()->store_manager;
+        $StoreArray = explode(' ',$storeS);
+
         $department_id = \request('department_id');
         $start_date = \request('start_date');
         $end_date = \request('end_date');
@@ -137,6 +173,12 @@ class RequisitionController extends Controller
         }
         if ($department_id){
             $query = $query->where('requisition.department_id', '=',$department_id);
+        }
+        if (Auth::user()->role == 4){
+            $query = $query->where('requisition.creator', '=',Auth::user()->id);
+        }
+        if (Auth::user()->role == 5 ){
+            $query = $query->whereIn('requisition.store_id',$StoreArray);
         }
         $Requisition = $query->paginate(10);
         $Department = DepartmentModel::where('status',1)->get();
@@ -160,7 +202,12 @@ class RequisitionController extends Controller
             ->join('department', 'department.department_id', '=', 'requisition.department_id')
             ->select('users.name','department.department_name','users.email','requisition.*')
             ->where('requisition_id',$requisition_id)->first();
-        return view('Admin/Pages/RequisitionPages/RequisitionEditPage',compact('Requisition'));
+        if ($Requisition->status == 2 || $Requisition->status == 4){
+            return redirect('requisition-list');
+        }else{
+            return view('Admin/Pages/RequisitionPages/RequisitionEditPage',compact('Requisition'));
+        }
+
     }
 
     public function RequisitionItemShow(Request $request){

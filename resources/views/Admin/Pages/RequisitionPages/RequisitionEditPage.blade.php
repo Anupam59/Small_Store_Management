@@ -117,12 +117,13 @@
                                         </div>
                                     </div>
                                     <!--end:Order summary-->
+                                    @if(auth()->user()->role == 3)
+                                        <div class="col-md-12">
+                                            <a id="ApprovedBtnId" class="btn btn-sm fw-bold btn-primary">Approved</a>
+                                            <a id="CanceledBtnId" class="btn btn-sm fw-bold btn-primary">Canceled</a>
+                                        </div>
+                                    @endif
 
-
-                                    <div class="col-md-12">
-                                        <a id="ApprovedBtnId" class="btn btn-sm fw-bold btn-primary">Approved</a>
-                                        <a id="CanceledBtnId" class="btn btn-sm fw-bold btn-primary">Canceled</a>
-                                    </div>
 
                                 </div>
                                 <!--end::Wrapper-->

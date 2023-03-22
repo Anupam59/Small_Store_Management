@@ -180,11 +180,15 @@
                                                     <a href="/requisition-details/{{ $RequisitionI->requisition_id }}" class="menu-link px-3">Details</a>
                                                 </div>
                                                 <!--end::Menu item-->
+
                                                 <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                    <a href="/requisition-edit/{{ $RequisitionI->requisition_id }}" class="menu-link px-3" data-kt-users-table-filter="delete_row">Edit</a>
-                                                </div>
+                                                @if($RequisitionI->status == 1 && auth()->user()->role == 3)
+                                                    <div class="menu-item px-3">
+                                                        <a href="/requisition-edit/{{ $RequisitionI->requisition_id }}" class="menu-link px-3" data-kt-users-table-filter="delete_row">Edit</a>
+                                                    </div>
+                                                @endif
                                                 <!--end::Menu item-->
+
                                             </div>
                                         </td>
 
