@@ -7,13 +7,25 @@ use App\Models\DepartmentModel;
 use App\Models\StoreModel;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 use Intervention\Image\Facades\Image;
 use function PHPUnit\Framework\isEmpty;
 use function Ramsey\Uuid\Generator\timestamp;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->role > 2 && $request->segment(1) != 'user-profile') {
+                return redirect('dashboard');
+            }
+            return $next($request);
+        });
+    }
+
     public function UserProfile(){
         return view('Admin/Pages/UserPages/UserProfilePage');
     }
@@ -21,7 +33,12 @@ class UserController extends Controller
     public function UserIndex(){
         $role = auth()->user()->role;
         $Users = User::where('role','>=', $role)->orderBy('role','asc')->paginate(10);
-        return view('Admin/Pages/UserPages/UserListPage',compact('Users'));
+        if ($role <= 2){
+            return view('Admin/Pages/UserPages/UserListPage',compact('Users'));
+        }else{
+            return redirect('/dashboard');
+        }
+
     }
 
     public function UserCreate(){

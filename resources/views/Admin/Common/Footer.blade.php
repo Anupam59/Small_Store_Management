@@ -11,13 +11,13 @@
         <!--begin::Menu-->
         <ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
             <li class="menu-item">
-                <a href="#" target="_blank" class="menu-link px-2">About</a>
+                <a href="#" target="_blank" class="menu-link px-2">Link 1</a>
             </li>
             <li class="menu-item">
-                <a href="#" target="_blank" class="menu-link px-2">Product</a>
+                <a href="#" target="_blank" class="menu-link px-2">Link 2</a>
             </li>
             <li class="menu-item">
-                <a href="#" target="_blank" class="menu-link px-2">Profile</a>
+                <a href="#" target="_blank" class="menu-link px-2">Link 3</a>
             </li>
         </ul>
         <!--end::Menu-->
