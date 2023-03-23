@@ -14,29 +14,43 @@ use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
+//    public function ProductIndex(){
+//        $Product  =  ProductModel::select( 'product.*',DB::raw('(select total_quantity from product_log where product_log.product_id  =   product.product_id order by product_log_id DESC limit 1) as total_quantity'))
+//            ->orderBy('product.product_id','desc')
+//            ->paginate(10);
+//        return view('Admin/Pages/ProductPages/ProductListPage',compact('Product'));
+//    }
+
     public function ProductIndex(){
-        $Product  =  ProductModel::select( 'product.*',DB::raw('(select total_quantity from product_log where product_log.product_id  =   product.product_id order by product_log_id DESC limit 1) as total_quantity'))
+        $Product = ProductModel::join('users', 'users.id', '=', 'product.modifier')
+            ->leftJoin('view_total_quantity', 'view_total_quantity.product_id', '=', 'product.product_id')
+            ->select('users.name','view_total_quantity.total_quantity','product.*')
             ->orderBy('product.product_id','desc')
             ->paginate(10);
         return view('Admin/Pages/ProductPages/ProductListPage',compact('Product'));
     }
 
-//    public function ProductIndex(){
-//        $Product = ProductModel::join('users', 'users.id', '=', 'product.modifier')
-//            ->leftJoin('product_log', 'product_log.product_id', '=', 'product.product_id')
-//            ->select('users.name','product_log.total_quantity','product.*')
-//            ->orderBy('product.product_id','desc')
-//            ->orderBy('product_log.product_log_id','desc')
-//            ->paginate(10);
-//        return view('Admin/Pages/ProductPages/ProductListPage',compact('Product'));
-//    }
-
     public function ProductCreate(){
+        $user_id = Auth::user()->role;
+        $store_manager = Auth::user()->store_manager;
+        $store = explode(' ',$store_manager);
+
         $Category = CategoryModel::where('status',1)->get();
-        $Store = StoreModel::where('status',1)->get();
+
+        $query = StoreModel::where('status',1);
+        if ($store_manager){
+            $query = $query->whereIn('store_id',$store);
+        }
+        $Store = $query->get();
+
         $Unite = UniteModel::where('status',1)->get();
-        return view('Admin/Pages/ProductPages/ProductCreatePage',compact('Category','Store','Unite'));
+        if ($user_id <= 2 || $user_id == 5){
+            return view('Admin/Pages/ProductPages/ProductCreatePage',compact('Category','Store','Unite'));
+        }else{
+            return redirect('product-list');
+        }
     }
+
     public function ProductEntry(Request $request){
         $validation = $request->validate([
             'product_name' => 'required|unique:product',
@@ -80,10 +94,21 @@ class ProductController extends Controller
             }
         }
     }
+
     public function ProductEdit($id){
+
+        $store_manager = Auth::user()->store_manager;
+        $store = explode(' ',$store_manager);
+
         $Product = ProductModel::where('product_id',$id)->first();
         $Category = CategoryModel::where('status',1)->get();
-        $Store = StoreModel::where('status',1)->get();
+
+        $query = StoreModel::where('status',1);
+        if ($store_manager){
+            $query = $query->whereIn('store_id',$store);
+        }
+        $Store = $query->get();
+
         $Unite = UniteModel::where('status',1)->get();
         return view('Admin/Pages/ProductPages/ProductUpdatePage',compact('Category','Store','Unite','Product'));
     }

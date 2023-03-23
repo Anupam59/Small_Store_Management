@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ConsumerTypeController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\FeaturesController;
 use App\Http\Controllers\Admin\ProductController;
@@ -53,11 +54,13 @@ Route::middleware('isLoggedIn')->group(function (){
 
     // Route::get('/', function () {return view('welcome');});
     Route::get('/', [CustomAuthController::class, 'dashboard']);
-    Route::get('dashboard', [CustomAuthController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'DashboardIndex']);
+//    Route::get('dashboard', [CustomAuthController::class, 'dashboard'])->name('dashboard');
     Route::get('home', function (){
         return view('Admin/Pages/HomePage');
     });
 
+    Route::get('user-profile', [UserController::class, 'UserProfile'])->name('user.profile');
     Route::get('user-list', [UserController::class, 'UserIndex'])->name('user.list');
     Route::get('user-create', [UserController::class, 'UserCreate'])->name('user.create');
     Route::post('user-entry', [UserController::class, 'UserEntry'])->name('user.entry');

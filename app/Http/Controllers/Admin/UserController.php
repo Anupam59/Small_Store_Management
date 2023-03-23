@@ -14,6 +14,10 @@ use function Ramsey\Uuid\Generator\timestamp;
 
 class UserController extends Controller
 {
+    public function UserProfile(){
+        return view('Admin/Pages/UserPages/UserProfilePage');
+    }
+
     public function UserIndex(){
         $role = auth()->user()->role;
         $Users = User::where('role','>=', $role)->orderBy('role','asc')->paginate(10);

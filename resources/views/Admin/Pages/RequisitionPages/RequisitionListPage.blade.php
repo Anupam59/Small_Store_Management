@@ -136,6 +136,7 @@
                                     <th class="min-w-125px">Date</th>
                                     <th class="min-w-125px">Quantity</th>
                                     <th class="min-w-125px">Department</th>
+                                    <th class="min-w-125px">Store</th>
                                     <th class="min-w-125px">User</th>
                                     <th class="min-w-125px">Status</th>
                                     <th class="text-end min-w-100px">Action</th>
@@ -154,6 +155,7 @@
 
                                         <td>{{ $RequisitionI->total_quantity }}</td>
                                         <td>{{ $RequisitionI->department_name }}</td>
+                                        <td>{{ $RequisitionI->store_name }}</td>
                                         <td>{{ $RequisitionI->name }}</td>
 
                                         @if($RequisitionI->status == 1)

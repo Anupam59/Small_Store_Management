@@ -41,7 +41,12 @@ class RequisitionController extends Controller
         $user_id= Auth::user()->id;
         $store_id= $request->input('store_id');
         RequisitionCartModel::where('user_id',$user_id)->delete();
-        $Product = ProductModel::where('store_id',$store_id)->where('status',1)->get();
+        $Product = ProductModel::join('view_total_quantity', 'view_total_quantity.product_id', '=', 'product.product_id')
+            ->select('view_total_quantity.total_quantity','product.*')
+            ->where('total_quantity','>',0)
+            ->where('store_id',$store_id)
+            ->where('status',1)
+            ->get();
         $data = array();
         $data[] = "<option value=' '>Select Product</option>";
         foreach ($Product as $row){
@@ -54,26 +59,41 @@ class RequisitionController extends Controller
     public function ProductRequisitionCart(Request $request){
         $product_id= $request->input('product_id');
         $user_id= $request->input('user_id');
-        $Product = ProductModel::where('product_id',$product_id)->first();
+        $Product = ProductModel::join('view_total_quantity', 'view_total_quantity.product_id', '=', 'product.product_id')
+            ->select('view_total_quantity.total_quantity','product.*')
+            ->where('product.product_id',$product_id)->first();
         $ProductName = $Product->product_name;
+        $TotalQuantity = $Product->total_quantity;
         $data =  array();
         $ProductCart = RequisitionCartModel::where('product_id',$product_id)->where('user_id',$user_id)->first();
-        if ($ProductCart){
+        if($TotalQuantity <= 0){
+            return 3;
+        }
+        elseif($ProductCart){
             $data['quantity'] = $ProductCart->quantity+1;
             $res = RequisitionCartModel::where('product_id',$product_id)->where('user_id',$user_id)->update($data);
+            return $res;
         }else{
             $data['product_id'] = $product_id;
             $data['product_name'] = $ProductName;
             $data['user_id'] = $user_id;
             $data['created_date'] = date("Y-m-d h:i:s");
             $res = RequisitionCartModel::insert($data);
+            return $res;
         }
-        return $res;
+
     }
 
     public function RequisitionQuantityIncrement(Request $request){
         $requisition_cart_id= $request->input('requisition_cart_id');
         $user_id= $request->input('user_id');
+
+//        $ProductCart = RequisitionCartModel::join('view_total_quantity', 'view_total_quantity.product_id', '=', 'requisition_cart.product_id')
+//            ->select('view_total_quantity.total_quantity','requisition_cart.*')
+//            ->where('requisition_cart_id',$requisition_cart_id)
+//            ->where('user_id',$user_id)
+//            ->first();
+
         $ProductCart = RequisitionCartModel::where('requisition_cart_id',$requisition_cart_id)->where('user_id',$user_id)->first();
         $data =  array();
         if($ProductCart->quantity >= 1){
@@ -109,7 +129,9 @@ class RequisitionController extends Controller
 
     public function ProductRequisitionCartShow(){
         $userId = Auth::id();
-        $CartDara = RequisitionCartModel::where('user_id',$userId)->get();
+        $CartDara = RequisitionCartModel::join('view_total_quantity', 'view_total_quantity.product_id', '=', 'requisition_cart.product_id')
+            ->select('view_total_quantity.total_quantity','requisition_cart.*')
+            ->where('user_id',$userId)->get();
         return $CartDara;
     }
 
@@ -161,12 +183,16 @@ class RequisitionController extends Controller
         $storeS = Auth::user()->store_manager;
         $StoreArray = explode(' ',$storeS);
 
+        $dept_adminS = Auth::user()->dept_admin;
+        $Dept_AdminArray = explode(' ',$dept_adminS);
+
         $department_id = \request('department_id');
         $start_date = \request('start_date');
         $end_date = \request('end_date');
         $query = RequisitionModel::leftJoin('users', 'users.id', '=', 'requisition.creator')
             ->leftJoin('department', 'department.department_id', '=', 'requisition.department_id')
-            ->select('users.name','department.department_name','requisition.*')
+            ->leftJoin('store', 'store.store_id', '=', 'requisition.store_id')
+            ->select('users.name','store.store_name','department.department_name','requisition.*')
             ->orderBy('requisition_id','desc');
         if($start_date && $end_date){
             $query = $query->whereBetween('requisition.created_date', [$start_date, $end_date]);
@@ -177,11 +203,21 @@ class RequisitionController extends Controller
         if (Auth::user()->role == 4){
             $query = $query->where('requisition.creator', '=',Auth::user()->id);
         }
+        if (Auth::user()->role == 3){
+            $query = $query->where('requisition.department_id',$Dept_AdminArray);
+        }
         if (Auth::user()->role == 5 ){
             $query = $query->whereIn('requisition.store_id',$StoreArray);
         }
         $Requisition = $query->paginate(10);
-        $Department = DepartmentModel::where('status',1)->get();
+
+        $Dept = DepartmentModel::where('status',1);
+        $dept_aoS = Auth::user()->dept_ao;
+        $Dept_AoArray = explode(' ',$dept_aoS);
+        if (Auth::user()->role == 4){
+            $Dept = $Dept->whereIn('department_id',$Dept_AoArray);
+        }
+        $Department = $Dept->get();
         return view('Admin/Pages/RequisitionPages/RequisitionListPage',compact('Requisition','Department'));
     }
 

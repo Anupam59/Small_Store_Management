@@ -16,7 +16,12 @@ class PurchaseController extends Controller
 
     public function ProductPurchaseCreate(){
         $Product = ProductModel::where('status',1)->get();
-        return view('Admin/Pages/PurchasePages/PurchaseCreatePage',compact('Product'));
+        if(Auth::user()->role <= 2){
+            return view('Admin/Pages/PurchasePages/PurchaseCreatePage',compact('Product'));
+        }else{
+            return redirect('/');
+        }
+
     }
     public function ProductPurchaseCart(Request $request){
         $product_id= $request->input('product_id');
@@ -142,7 +147,14 @@ class PurchaseController extends Controller
             $query = $query->where('memo_number', 'like', '%' . $memo_no . '%');
         }
         $Purchase = $query->paginate(10);
-        return view('Admin/Pages/PurchasePages/PurchaseListPage',compact('Purchase'));
+
+        if(Auth::user()->role <= 2){
+            return view('Admin/Pages/PurchasePages/PurchaseListPage',compact('Purchase'));
+        }else{
+            return redirect('/');
+        }
+
+
 
     }
 }

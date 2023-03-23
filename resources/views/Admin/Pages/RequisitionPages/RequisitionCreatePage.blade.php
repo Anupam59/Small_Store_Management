@@ -145,19 +145,16 @@
 
                                 <div class="col-md-12">
                                     <div class="fv-row mb-5 fv-plugins-icon-container">
-                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                            <span class="required">Product Name</span>
-                                        </label>
-
                                         <div class="table-responsive mb-8">
                                             <!--begin::Table-->
                                             <table class="table align-middle gs-0 gy-4 my-0">
                                                 <!--begin::Table head-->
                                                 <thead>
-                                                <tr>
-                                                    <th class="min-w-175px"></th>
-                                                    <th class="w-125px"></th>
-                                                    <th class="w-60px"></th>
+                                                <tr class="fw-semibold fs-5">
+                                                    <th>Product Name</th>
+                                                    <th>Total Quantity</th>
+                                                    <th>Quantity</th>
+                                                    <th class="text-end">Action</th>
                                                 </tr>
                                                 </thead>
                                                 <!--end::Table head-->
@@ -168,9 +165,10 @@
                                                 <!--end::Table body-->
                                                 <tfoot>
                                                 <tr>
-                                                    <td class="pe-0"><div class="d-flex align-items-center"><span class="fw-bold text-gray-800 text-primary fs-6 me-1">Total Quantity</span></div></td>
+                                                    <td><div class="d-flex align-items-center"><span class="fw-bold text-gray-800 text-primary fs-6 me-1">Total Quantity</span></div></td>
+                                                    <th></th>
                                                     <th id="TotalQuantity" class="w-125px text-center totalQuantity"></th>
-                                                    <th class="w-60px"></th>
+                                                    <th></th>
                                                 </tr>
                                                 </tfoot>
 
@@ -224,11 +222,12 @@
                         PurItem = PurItem + 1;
                         $('<tr data-kt-pos-element="item" data-kt-pos-item-price="33">').html(
                             '<td class="pe-0"><div class="d-flex align-items-center"><span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-6 me-1">'+JsonData[i].product_name+'</span></div></td>'+
+                            '<td class="pe-0"><div class="d-flex align-items-center"><span class="fw-bold text-gray-800 text-hover-primary fs-6 me-1">'+JsonData[i].total_quantity+'</span></div></td>'+
                             '<td class="pe-0">'+
                             '<div class="position-relative d-flex align-items-center" data-kt-dialer="true" data-kt-dialer-min="1" data-kt-dialer-max="10" data-kt-dialer-step="1" data-kt-dialer-decimals="0">'+
-                            '<a type="button" data-id="'+JsonData[i].requisition_cart_id+'" class="btn btn-icon btn-sm btn-light btn-icon-gray-400 ProductDBtn"><span class="svg-icon svg-icon-3x"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="11" width="12" height="2" rx="1" fill="currentColor"></rect></svg></span></a>'+
+                            '<a type="button"  data-total="'+JsonData[i].total_quantity+'"  data-id="'+JsonData[i].requisition_cart_id+'" class="btn btn-icon btn-sm btn-light btn-icon-gray-400 ProductDBtn"><span class="svg-icon svg-icon-3x"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="11" width="12" height="2" rx="1" fill="currentColor"></rect></svg></span></a>'+
                             '<input id="ProductQ" type="text" class="form-control border-0 text-center px-0 fs-3 fw-bold text-gray-800 w-30px" data-kt-dialer-control="input" placeholder="Amount" name="manageBudget" readonly="readonly" value="'+JsonData[i].quantity+'">'+
-                            '<a type="button" data-id="'+JsonData[i].requisition_cart_id+'" class="btn btn-icon btn-sm btn-light btn-icon-gray-400 ProductIBtn"><span class="svg-icon svg-icon-3x"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect opacity="0.5" x="11" y="18" width="12" height="2" rx="1" transform="rotate(-90 11 18)" fill="currentColor"></rect><rect x="6" y="11" width="12" height="2" rx="1" fill="currentColor"></rect></svg></span></a>'+
+                            '<a type="button" data-quantity="'+JsonData[i].quantity+'"  data-total="'+JsonData[i].total_quantity+'"  data-id="'+JsonData[i].requisition_cart_id+'" class="btn btn-icon btn-sm btn-light btn-icon-gray-400 ProductIBtn"><span class="svg-icon svg-icon-3x"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect opacity="0.5" x="11" y="18" width="12" height="2" rx="1" transform="rotate(-90 11 18)" fill="currentColor"></rect><rect x="6" y="11" width="12" height="2" rx="1" fill="currentColor"></rect></svg></span></a>'+
                             '</div>'+
                             '</td>'+
                             '<td class="text-end"><a type="button" data-id="'+JsonData[i].requisition_cart_id+'" class="btn btn-sm btn-icon btn-active-color-primary ProductDeleteBtn"><span class="svg-icon svg-icon-3"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor"></path><path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor"></path><path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor"></path></svg></span></a></td>'
@@ -241,12 +240,19 @@
 
                     $('.ProductDBtn').click(function () {
                         let requisition_cart_id = $(this).data('id');
+                        let total_quantity = $(this).data('total');
                         ProductQuantityDecrement(requisition_cart_id);
                     });
 
                     $('.ProductIBtn').click(function () {
                         let requisition_cart_id = $(this).data('id');
-                        ProductQuantityIncrement(requisition_cart_id);
+                        let total_quantity = $(this).data('total');
+                        let quantity = $(this).data('quantity');
+                        if (total_quantity > quantity){
+                            ProductQuantityIncrement(requisition_cart_id);
+                        }else{
+                            toastr.warning("Product Quantity Over!");
+                        }
                     });
 
                     //Areas Table Edit Icon Click
@@ -271,7 +277,12 @@
                 product_id:product_id,
                 user_id:user_id,
             }).then(function (response) {
-                ProductCartShow();
+                if (response.data == 3){
+                    toastr.warning("Product Quantity Empty!");
+                }else {
+                    ProductCartShow();
+                }
+
             }).catch(function (error) {
 
             });
