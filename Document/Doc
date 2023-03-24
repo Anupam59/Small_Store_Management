@@ -2,8 +2,8 @@
 CREATE VIEW view_total_quantity AS
 SELECT `product_id`,
 sum(case when `product_mode` in (1,2) then `quantity` else 0 end)-
-sum(case when `product_mode` in (3) then `quantity` else 0 end)
-as `sum`
+sum(case when `product_mode` = (3) then `quantity` else 0 end)
+as `total_quantity`
 from `product_log` group by `product_id`
 
 
