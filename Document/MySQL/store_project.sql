@@ -462,27 +462,10 @@ INSERT INTO `users` (`id`, `name`, `designation`, `email`, `number`, `username`,
 
 -- --------------------------------------------------------
 
---
--- Stand-in structure for view `view_total_quantity`
--- (See below for the actual view)
---
-CREATE TABLE `view_total_quantity` (
-`product_id` int(10) unsigned
-,`total_quantity` decimal(33,0)
-);
+
 
 -- --------------------------------------------------------
 
---
--- Structure for view `view_total_quantity`
---
-DROP TABLE IF EXISTS `view_total_quantity`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_total_quantity`  AS SELECT `product_log`.`product_id` AS `product_id`, sum(case when `product_log`.`product_mode` in (1,2) then `product_log`.`quantity` else 0 end) - sum(case when `product_log`.`product_mode` = 3 then `product_log`.`quantity` else 0 end) AS `total_quantity` FROM `product_log` GROUP BY `product_log`.`product_id``product_id`  ;
-
---
--- Indexes for dumped tables
---
 
 --
 -- Indexes for table `category`
