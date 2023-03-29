@@ -11,7 +11,7 @@ class CategoryController extends Controller
     public function CategoryIndex(){
         $Category = CategoryModel::join('users', 'users.id', '=', 'category.modifier')
             ->select('users.name','category.*')
-            ->orderBy('category_id','asc')->paginate(2);
+            ->orderBy('category_id','asc')->paginate(15);
         return view('Admin/Pages/CategoryPages/CategoryListPage',compact('Category'));
     }
 

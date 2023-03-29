@@ -11,7 +11,7 @@ class UniteController extends Controller
     public function UniteIndex(){
         $Unite = UniteModel::join('users', 'users.id', '=', 'unite.modifier')
             ->select('users.name','unite.*')
-            ->orderBy('unite_id','asc')->paginate(2);
+            ->orderBy('unite_id','asc')->paginate(15);
         return view('Admin/Pages/UnitePages/UniteListPage',compact('Unite'));
     }
 

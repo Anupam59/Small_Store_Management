@@ -11,7 +11,7 @@ class DepartmentController extends Controller
     public function DepartmentIndex(){
         $Department = DepartmentModel::join('users', 'users.id', '=', 'department.modifier')
             ->select('users.name','department.*')
-            ->orderBy('department_id','asc')->paginate(10);
+            ->orderBy('department_id','asc')->paginate(15);
         return view('Admin/Pages/DepartmentPages/DepartmentListPage',compact('Department'));
     }
 

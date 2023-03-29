@@ -13,7 +13,7 @@ class StoreController extends Controller
     public function StoreIndex(){
         $Store = StoreModel::join('users', 'users.id', '=', 'store.modifier')
             ->select('users.name','store.*')
-            ->orderBy('store_id','asc')->paginate(2);
+            ->orderBy('store_id','asc')->paginate(15);
         return view('Admin/Pages/StorePages/StoreListPage',compact('Store'));
     }
 

@@ -32,7 +32,7 @@ class UserController extends Controller
 
     public function UserIndex(){
         $role = auth()->user()->role;
-        $Users = User::where('role','>=', $role)->orderBy('role','asc')->paginate(10);
+        $Users = User::where('role','>=', $role)->orderBy('role','asc')->paginate(15);
         if ($role <= 2){
             return view('Admin/Pages/UserPages/UserListPage',compact('Users'));
         }else{
