@@ -5,9 +5,22 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\DepartmentModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DepartmentController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->role > 2) {
+                return redirect('dashboard');
+            }
+            return $next($request);
+        });
+    }
+
+
     public function DepartmentIndex(){
         $Department = DepartmentModel::join('users', 'users.id', '=', 'department.modifier')
             ->select('users.name','department.*')

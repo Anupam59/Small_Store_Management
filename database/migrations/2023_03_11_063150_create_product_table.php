@@ -27,7 +27,7 @@ return new class extends Migration
             $table->unsignedInteger('unite_id');
             $table->foreign('unite_id')->references('unite_id')->on('unite');
 
-            $table->string('barcode')->unique();
+            $table->string('barcode')->nullable(); // unique
 
             $table->tinyInteger('status')->default(1);
             $table->integer('creator');

@@ -6,9 +6,21 @@ use App\Http\Controllers\Controller;
 use App\Models\DepartmentModel;
 use App\Models\StoreModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StoreController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->role > 2) {
+                return redirect('dashboard');
+            }
+            return $next($request);
+        });
+    }
+
 
     public function StoreIndex(){
         $Store = StoreModel::join('users', 'users.id', '=', 'store.modifier')

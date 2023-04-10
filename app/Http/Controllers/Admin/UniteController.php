@@ -5,9 +5,22 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\UniteModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UniteController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->role > 2) {
+                return redirect('dashboard');
+            }
+            return $next($request);
+        });
+    }
+
+
     public function UniteIndex(){
         $Unite = UniteModel::join('users', 'users.id', '=', 'unite.modifier')
             ->select('users.name','unite.*')

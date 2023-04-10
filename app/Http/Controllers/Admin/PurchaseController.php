@@ -145,7 +145,7 @@ class PurchaseController extends Controller
         }
         $Purchase = $query->paginate(10);
 
-        if(Auth::user()->role == 5 || Auth::user()->role == 6){
+        if(Auth::user()->role <= 2 || Auth::user()->role == 5 || Auth::user()->role == 6){
             return view('Admin/Pages/PurchasePages/PurchaseListPage',compact('Purchase'));
         }else{
             return redirect('/');

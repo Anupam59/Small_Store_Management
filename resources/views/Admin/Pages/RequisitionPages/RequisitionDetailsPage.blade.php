@@ -143,13 +143,14 @@
 
                                         @if($Requisition->status == 1 && auth()->user()->role == 3)
                                             <div class="col-md-12">
-                                                <a id="ApprovedBtnId" class="btn btn-sm fw-bold btn-primary">Approved</a>
+                                                <a id="ApprovedBtnId" class="btn btn-sm fw-bold btn-success">Approved</a>
                                                 <a id="CanceledBtnId" class="btn btn-sm fw-bold btn-danger">Canceled</a>
                                             </div>
                                         @elseif($Requisition->status == 2 && auth()->user()->role == 6)
                                             <div class="col-md-12">
-                                                <a id="ApprovedConfirmBtnId" class="btn btn-sm fw-bold btn-primary">Approved Confirm</a>
+                                                <a id="ApprovedConfirmBtnId" class="btn btn-sm fw-bold btn-success">Approved Confirm</a>
                                                 <a id="CanceledBtnId" class="btn btn-sm fw-bold btn-danger">Canceled</a>
+                                                <a id="EditBtnId" class="btn btn-sm fw-bold btn-primary">Edit</a>
                                             </div>
                                         @elseif($Requisition->status == 5 && auth()->user()->role == 5)
                                             <div class="col-md-12">
@@ -227,6 +228,14 @@
                 toastr.error("Something went to wrong ! try again");
             });
         });
+
+
+        $('#EditBtnId').click(function () {
+            var RequisitionId = $('#RequisitionId').html();
+            window.location.replace("/requisition-edit/"+RequisitionId);
+        });
+
+
 
         $('#ApprovedConfirmBtnId').click(function () {
             var RequisitionId = $('#RequisitionId').html();

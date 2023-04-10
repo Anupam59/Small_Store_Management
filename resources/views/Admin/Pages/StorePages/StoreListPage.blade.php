@@ -11,7 +11,7 @@
                 <!--begin::Page title-->
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
-                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Consumer Type List</h1>
+                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Store List</h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -26,7 +26,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Store</li>
+                        <li class="breadcrumb-item text-muted">Store List</li>
                         <!--end::Item-->
 
                     </ul>
@@ -111,9 +111,9 @@
                                                 </div>
                                                 <!--end::Menu item-->
                                                 <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">Delete</a>
-                                                </div>
+{{--                                                <div class="menu-item px-3">--}}
+{{--                                                    <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">Delete</a>--}}
+{{--                                                </div>--}}
                                                 <!--end::Menu item-->
                                             </div>
                                         </td>

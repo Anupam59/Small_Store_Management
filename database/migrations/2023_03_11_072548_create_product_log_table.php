@@ -22,7 +22,7 @@ return new class extends Migration
 
             $table->tinyInteger('product_mode');
             $table->integer('quantity');
-            $table->integer('total_quantity')->nullable();
+
             $table->string('reference',200)->nullable();
             $table->integer('user_ref');
 

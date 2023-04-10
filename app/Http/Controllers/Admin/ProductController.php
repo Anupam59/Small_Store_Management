@@ -73,7 +73,6 @@ class ProductController extends Controller
             $dataLog['product_id'] = $ProductId;
             $dataLog['product_mode'] = 1;
             $dataLog['quantity'] = $request->quantity;
-            $dataLog['total_quantity'] = $request->quantity;
             $dataLog['reference'] = $request->reference;
             $dataLog['user_ref'] = $request->creator;
             $dataLog['status'] = 1;
@@ -176,7 +175,14 @@ class ProductController extends Controller
         $Category = CategoryModel::where('status',1)->get();
         $Store = StoreModel::where('status',1)->get();
 
-        return view('Admin/Pages/ProductPages/ProductLogPage',compact('ProductLog','Category','Store'));
+
+
+        if (Auth::user()->role <= 2){
+            return view('Admin/Pages/ProductPages/ProductLogPage',compact('ProductLog','Category','Store'));
+        }else{
+            return redirect('product-list');
+        }
+
     }
 
     public function ProductStock(Request $request){

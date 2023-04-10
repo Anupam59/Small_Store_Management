@@ -5,9 +5,22 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\CategoryModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->role > 2) {
+                return redirect('dashboard');
+            }
+            return $next($request);
+        });
+    }
+
+
     public function CategoryIndex(){
         $Category = CategoryModel::join('users', 'users.id', '=', 'category.modifier')
             ->select('users.name','category.*')

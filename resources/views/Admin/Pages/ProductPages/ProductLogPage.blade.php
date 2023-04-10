@@ -39,9 +39,9 @@
 
                 <!--begin::Actions  Filter-->
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
-                    <a href="/product-create" class="btn btn-sm fw-bold btn-primary">Product Create</a>
-                    <a href="/product-purchase" class="btn btn-sm fw-bold btn-primary">Purchase</a>
-                    <a href="/product-distribute" class="btn btn-sm fw-bold btn-primary">Distribute</a>
+{{--                    <a href="/product-create" class="btn btn-sm fw-bold btn-primary">Product Create</a>--}}
+{{--                    <a href="/product-purchase" class="btn btn-sm fw-bold btn-primary">Purchase</a>--}}
+{{--                    <a href="/product-distribute" class="btn btn-sm fw-bold btn-primary">Distribute</a>--}}
 
                     <div class="m-0">
                         <a href="#" class="btn btn-sm btn-flex bg-body btn-color-gray-700 btn-active-color-primary fw-bold" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">

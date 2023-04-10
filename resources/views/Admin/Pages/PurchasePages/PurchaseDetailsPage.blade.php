@@ -101,10 +101,11 @@
                                                     <tr class="border-bottom fs-6 fw-bold text-muted">
                                                         <th class="min-w-20px pb-2">SL</th>
                                                         <th class="min-w-175px pb-2">Products</th>
-                                                        @if($Purchase->status == 5 && auth()->user()->role == 5)
-                                                            <th class="min-w-80px text-center pb-2">Available Quantity</th>
+                                                        @if( auth()->user()->role == 5)
+                                                            <th class="text-center pb-2">Available Quantity</th>
                                                         @endif
-                                                        <th class="min-w-80px text-center pb-2">Purchase Quantity</th>
+                                                        <th class="text-center pb-2">Purchase Quantity</th>
+{{--                                                        <th class="text-center pb-2">Action</th>--}}
                                                     </tr>
                                                     </thead>
                                                     <tbody class="fw-semibold text-gray-600">
@@ -119,7 +120,7 @@
                                                                     </div>
                                                                 </div>
                                                             </td>
-                                                            @if($Purchase->status == 5 && auth()->user()->role == 5)
+                                                            @if( auth()->user()->role == 5)
                                                                 <td class="text-center">{{ $Product->total_quantity }}</td>
                                                             @endif
                                                             <td class="text-center">{{ $Product->quantity }}</td>

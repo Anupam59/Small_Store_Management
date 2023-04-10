@@ -27,7 +27,7 @@ return new class extends Migration
 
             $table->string('dept_admin',500)->nullable();
             $table->string('dept_ao',500)->nullable();
-            $table->string('store_manager',500)->nullable();
+            $table->string('store_admin',500)->nullable();
             $table->string('store_manager',500)->nullable();
 
             $table->tinyInteger('role')->default(1);
