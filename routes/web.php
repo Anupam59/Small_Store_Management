@@ -107,6 +107,7 @@ Route::middleware('isLoggedIn')->group(function (){
     Route::post('product-cart-delete', [PurchaseController::class, 'ProductCartDelete']);
     Route::post('product-purchase-add', [PurchaseController::class, 'PurchaseAdd']);
     Route::get('purchase-list', [PurchaseController::class, 'PurchaseList']);
+    Route::get('purchase-details/{id}', [PurchaseController::class, 'PurchaseDetails']);
 
 
     Route::get('product-requisition', [RequisitionController::class, 'ProductRequisitionCreate']);
@@ -128,8 +129,15 @@ Route::middleware('isLoggedIn')->group(function (){
     Route::post('req-update-delete', [RequisitionController::class, 'ReqUpdateDelete']);
 
     Route::post('req-total-quantity-update', [RequisitionController::class, 'RequisitionTotalQuantityUpdate']);
-    Route::post('requisition-approved', [RequisitionController::class, 'RequisitionApproved']);
-    Route::post('requisition-canceled', [RequisitionController::class, 'RequisitionCanceled']);
 
+    Route::post('requisition-approved', [RequisitionController::class, 'RequisitionApproved']);
+    Route::post('requisition-approved-conf', [RequisitionController::class, 'RequisitionApprovedConfirm']);
+    Route::post('requisition-canceled', [RequisitionController::class, 'RequisitionCanceled']);
+    Route::post('requisition-delivered-check', [RequisitionController::class, 'RequisitionDeliveredCheck']);
     Route::post('requisition-delivered', [RequisitionController::class, 'RequisitionDelivered']);
+
+
+    Route::post('add-product-requisition', [RequisitionController::class, 'AddProductRequisition']);
+
+
 });

@@ -37,7 +37,6 @@
                 <!--end::Page title-->
 
 
-
                 <!--begin::Actions  Filter-->
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
                     <a href="/requisition-list" class="btn btn-sm fw-bold btn-primary">Requisition List</a>
@@ -112,7 +111,17 @@
 
                             </div>
                             <div class="row">
-                                <div class="col-md-9">
+
+                                <div class="col-md-2">
+                                    <div class="fv-row mb-5 fv-plugins-icon-container">
+                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                            <span class="invisible">Add</span>
+                                        </label>
+                                        <a id="NewProductAddId" class="btn btn-sm fw-bold btn-primary">Add New Product</a>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-8">
                                     <div class="fv-row mb-5 fv-plugins-icon-container">
                                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                             <span class="required">Product Name</span>
@@ -124,7 +133,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="fv-row mb-5 fv-plugins-icon-container">
                                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                             <span class="invisible">Add</span>
@@ -136,8 +145,6 @@
                         </div>
                         <!--end::Card body-->
                     </div>
-
-
 
                     <div class="card mb-5 mb-xl-8">
                         <div class="card-body">
@@ -152,7 +159,8 @@
                                                 <thead>
                                                 <tr class="fw-semibold fs-5">
                                                     <th>Product Name</th>
-                                                    <th>Total Quantity</th>
+{{--                                                    <th>Total Quantity</th>--}}
+                                                    <th></th>
                                                     <th>Quantity</th>
                                                     <th class="text-end">Action</th>
                                                 </tr>
@@ -203,6 +211,130 @@
     </div>
     <!--end::Content wrapper-->
 
+
+
+
+    <!--begin::Modal - Create Api Key-->
+    <div class="modal fade" id="ProductAddModal">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-650px">
+            <!--begin::Modal content-->
+            <div class="modal-content">
+                <!--begin::Modal header-->
+                <div class="modal-header" id="kt_modal_create_api_key_header">
+                    <!--begin::Modal title-->
+                    <h2>Create API Key</h2>
+                    <!--end::Modal title-->
+                    <!--begin::Close-->
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span class="svg-icon svg-icon-1">
+								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+									<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+								</svg>
+							</span>
+                        <!--end::Svg Icon-->
+                    </div>
+                    <!--end::Close-->
+                </div>
+                <!--end::Modal header-->
+
+                    <!--begin::Modal body-->
+                    <div class="modal-body py-10 px-lg-17">
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="fv-row mb-5 fv-plugins-icon-container">
+                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                        <span class="required">Product Name</span>
+                                    </label>
+                                    <input type="text" class="form-control form-control-lg form-control-solid" id="AddProductId" placeholder="" value="" required="">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="fv-row mb-5 fv-plugins-icon-container">
+                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                        <span class="required">Category</span>
+                                    </label>
+
+                                    <select id="AddCategoryId" aria-label="Select a Timezone" data-control="select2" data-placeholder="Select Store" class="form-control form-control-lg form-control-solid">
+                                        <option value=" " selected>Select Store</option>
+                                        @if(!$Category->isEmpty())
+                                            @foreach($Category as $CategoryItem)
+                                                <option value="{{ $CategoryItem->category_id }}"> {{ $CategoryItem->category_name }}</option>
+                                            @endforeach
+                                        @else
+
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="fv-row mb-5 fv-plugins-icon-container">
+                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                        <span class="required">Store</span>
+                                    </label>
+
+                                    <select id="AddStoreId" aria-label="Select a Timezone" data-control="select2" data-placeholder="Select Store" class="form-control form-control-lg form-control-solid">
+                                        <option value=" " selected>Select Store</option>
+                                        @if(!$Store->isEmpty())
+                                            @foreach($Store as $StoreItem)
+                                                <option value="{{ $StoreItem->store_id }}"> {{ $StoreItem->store_name }}</option>
+                                            @endforeach
+                                        @else
+
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="fv-row mb-5 fv-plugins-icon-container">
+
+                                    <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                        <span class="required">Unit</span>
+                                    </label>
+
+                                    <select id="AddUnitId" aria-label="Select a Timezone" data-control="select2" data-placeholder="Select Store" class="form-control form-control-lg form-control-solid">
+                                        <option value=" " selected>Select Store</option>
+                                        @if(!$Unit->isEmpty())
+                                            @foreach($Unit as $UnitItem)
+                                                <option value="{{ $UnitItem->unite_id }}"> {{ $UnitItem->unite_name }}</option>
+                                            @endforeach
+                                        @else
+
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Modal body-->
+
+                    <!--begin::Modal footer-->
+                    <div class="modal-footer flex-center">
+                        <!--begin::Button-->
+                        <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">Cancel</button>
+                        <!--end::Button-->
+                        <!--begin::Button-->
+                        <button id="ProductAddBtnId" class="btn btn-primary">
+                            <span class="indicator-label">Add</span>
+                        </button>
+                        <!--end::Button-->
+                    </div>
+                    <!--end::Modal footer-->
+
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - Create Api Key-->
+
+
 @endsection
 
 
@@ -222,7 +354,8 @@
                         PurItem = PurItem + 1;
                         $('<tr data-kt-pos-element="item" data-kt-pos-item-price="33">').html(
                             '<td class="pe-0"><div class="d-flex align-items-center"><span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-6 me-1">'+JsonData[i].product_name+'</span></div></td>'+
-                            '<td class="pe-0"><div class="d-flex align-items-center"><span class="fw-bold text-gray-800 text-hover-primary fs-6 me-1">'+JsonData[i].total_quantity+'</span></div></td>'+
+                            // '<td class="pe-0"><div class="d-flex align-items-center"><span class="fw-bold text-gray-800 text-hover-primary fs-6 me-1">'+JsonData[i].total_quantity+'</span></div></td>'+
+                            '<td class="pe-0"><div class="d-flex align-items-center"><span class="fw-bold text-gray-800 text-hover-primary fs-6 me-1"></span></div></td>'+
                             '<td class="pe-0">'+
                             '<div class="position-relative d-flex align-items-center" data-kt-dialer="true" data-kt-dialer-min="1" data-kt-dialer-max="10" data-kt-dialer-step="1" data-kt-dialer-decimals="0">'+
                             '<a type="button"  data-total="'+JsonData[i].total_quantity+'"  data-id="'+JsonData[i].requisition_cart_id+'" class="btn btn-icon btn-sm btn-light btn-icon-gray-400 ProductDBtn"><span class="svg-icon svg-icon-3x"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="11" width="12" height="2" rx="1" fill="currentColor"></rect></svg></span></a>'+
@@ -248,11 +381,14 @@
                         let requisition_cart_id = $(this).data('id');
                         let total_quantity = $(this).data('total');
                         let quantity = $(this).data('quantity');
-                        if (total_quantity > quantity){
-                            ProductQuantityIncrement(requisition_cart_id);
-                        }else{
-                            toastr.warning("Product Quantity Over!");
-                        }
+                        ProductQuantityIncrement(requisition_cart_id);
+
+                        // if (total_quantity > quantity){
+                        //     ProductQuantityIncrement(requisition_cart_id);
+                        // }else{
+                        //     toastr.warning("Product Quantity Over!");
+                        // }
+
                     });
 
                     //Areas Table Edit Icon Click
@@ -306,9 +442,13 @@
                 requisition_cart_id:Id,
                 user_id:user_id,
             }).then(function (response) {
-                ProductCartShow();
+                if(response.data == 0){
+                    toastr.warning("Product Quantity Minimum One!");
+                }else{
+                    ProductCartShow();
+                }
             }).catch(function (error) {
-
+                toastr.warning("Something went to wrong!");
             });
         }
 
@@ -323,8 +463,6 @@
 
             });
         }
-
-
 
         $('#RequisitionBtnId').click(function () {
             let total_quantity = $('#TotalQuantity').html();
@@ -359,15 +497,12 @@
             }
         });
 
-
         function RequisitionFileEmpty() {
             $('#DepartmentId').val(' ');
             $('#StoreId').val(' ');
             $('#ProductId').val('');
             $('#RequisitionNote').val('');
         }
-
-
 
         $('#StoreId').change(function(){
             let store_id = $('#StoreId').val();
@@ -384,6 +519,69 @@
         });
 
 
+        $('#NewProductAddId').click(function () {
+            modelEmpty();
+            $('#ProductAddModal').modal("show");
+        });
+
+        $('#ProductAddBtnId').click(function () {
+            let product_name = $('#AddProductId').val();
+            let category_id = $('#AddCategoryId').val();
+            let store_id = $('#AddStoreId').val();
+            let unite_id = $('#AddUnitId').val();
+            AddProduct(product_name,category_id,store_id,unite_id);
+        });
+
+        function AddProduct(product_name,category_id,store_id,unite_id) {
+           if (product_name.length <=2 ){
+               toastr.warning("Product Is Empty !");
+           }
+           else if(category_id == " "){
+               toastr.warning("Category Is Empty !");
+           }
+           else if(store_id == " "){
+               toastr.warning("Store Is Empty !");
+           }
+           else if(unite_id == " "){
+               toastr.warning("Unit Is Empty !");
+           }else{
+               axios.post('/add-product-requisition',{
+                   product_name:product_name,
+                   store_id:store_id,
+                   category_id:category_id,
+                   unite_id:unite_id,
+               }).then(function (response) {
+                  if (response.status == 200){
+                      toastr.success("Product add Successfully !");
+                      $('#ProductAddModal').modal("hide");
+                      modelEmpty();
+                  }
+               }).catch(function (error) {
+                   if (error.response.data.errors){
+                       if (error.response.data.errors.product_name) {
+                           toastr.error("Already Available This Product");
+                       }else{
+                           toastr.error("Something went to wrong");
+                           $('#ProductAddModal').modal("hide");
+                           modelEmpty();
+                       }
+                   }else {
+                       toastr.error("Something went to wrong");
+                       $('#ProductAddModal').modal("hide");
+                       modelEmpty();
+                   }
+
+               });
+           }
+
+        }
+
+        function modelEmpty(){
+            $('#AddProductId').val('');
+            $('#AddCategoryId').val(" ").trigger('change');
+            $('#AddStoreId').val(" ").trigger('change');
+            $('#AddUnitId').val(" ").trigger('change');
+        }
 
     </script>
 @endsection

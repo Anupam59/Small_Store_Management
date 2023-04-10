@@ -73,6 +73,7 @@
                                             <option value="2">Admin</option>
                                             <option value="3">Department Admin</option>
                                             <option value="4">Department AO</option>
+                                            <option value="6">Store Admin</option>
                                             <option value="5">Store Manager</option>
                                         </select>
                                     </div>
@@ -166,6 +167,7 @@
                                                 @elseif($User->role == 2) Admin
                                                 @elseif($User->role == 3) Department Admin
                                                 @elseif($User->role == 4) Department AO
+                                                @elseif($User->role == 6) Store Admin
                                                 @elseif($User->role == 5) Store Manager
                                                 @else 😢😢😢
                                                 @endif

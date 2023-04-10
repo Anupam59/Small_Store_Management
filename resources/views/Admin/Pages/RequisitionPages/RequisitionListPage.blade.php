@@ -164,6 +164,8 @@
                                             <td><div class="badge badge-light-success fw-bold">Approved</div></td>
                                         @elseif($RequisitionI->status == 3)
                                             <td><div class="badge badge-light-primary fw-bold">Delivered</div></td>
+                                        @elseif($RequisitionI->status == 5)
+                                            <td><div class="badge badge-light-danger fw-bold">Approved Confirm</div></td>
                                         @elseif($RequisitionI->status == 4)
                                             <td><div class="badge badge-light-danger fw-bold">Canceled</div></td>
                                         @endif
@@ -184,7 +186,7 @@
                                                 <!--end::Menu item-->
 
                                                 <!--begin::Menu item-->
-                                                @if($RequisitionI->status == 1 && auth()->user()->role == 3)
+                                                @if($RequisitionI->status == 2 && auth()->user()->role == 6)
                                                     <div class="menu-item px-3">
                                                         <a href="/requisition-edit/{{ $RequisitionI->requisition_id }}" class="menu-link px-3" data-kt-users-table-filter="delete_row">Edit</a>
                                                     </div>

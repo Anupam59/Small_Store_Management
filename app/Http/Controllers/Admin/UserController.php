@@ -72,24 +72,34 @@ class UserController extends Controller
 
         $dept_admin = $request->input('dept_admin');
         $dept_ao = $request->input('dept_ao');
+        $store_admin = $request->input('store_admin');
         $store_manager = $request->input('store_manager');
         $role = $request->input('role');
         if ($role == 3){
             $data['dept_admin'] = implode(" ",$dept_admin);
             $data['dept_ao'] = null;
             $data['store_manager'] = null;
+            $data['store_admin'] = null;
         }if ($role == 4){
             $data['dept_admin'] = null;
             $data['dept_ao'] = implode(" ",$dept_ao);
             $data['store_manager'] = null;
+            $data['store_admin'] = null;
         }if ($role == 5){
             $data['dept_admin'] = null;
             $data['dept_ao'] = null;
             $data['store_manager'] = implode(" ",$store_manager);
+            $data['store_admin'] = null;
+        }if ($role == 6){
+            $data['dept_admin'] = null;
+            $data['dept_ao'] = null;
+            $data['store_manager'] = null;
+            $data['store_admin'] = implode(" ",$store_admin);
         }if ($role == 1 || $role == 2){
             $data['dept_admin'] = null;
             $data['dept_ao'] = null;
             $data['store_manager'] = null;
+            $data['store_admin'] = null;
         }
 
         $image = $request->file('user_image');
@@ -164,6 +174,7 @@ class UserController extends Controller
 
         $dept_admin = $request->input('dept_admin');
         $dept_ao = $request->input('dept_ao');
+        $store_admin = $request->input('store_admin');
         $store_manager = $request->input('store_manager');
 
         $role = $request->input('role');
@@ -171,18 +182,27 @@ class UserController extends Controller
             $data['dept_admin'] = implode(" ",$dept_admin);
             $data['dept_ao'] = null;
             $data['store_manager'] = null;
+            $data['store_admin'] = null;
         }if ($role == 4){
             $data['dept_admin'] = null;
             $data['dept_ao'] = implode(" ",$dept_ao);
             $data['store_manager'] = null;
+            $data['store_admin'] = null;
         }if ($role == 5){
             $data['dept_admin'] = null;
             $data['dept_ao'] = null;
             $data['store_manager'] = implode(" ",$store_manager);
+            $data['store_admin'] = null;
+        }if ($role == 6){
+            $data['dept_admin'] = null;
+            $data['dept_ao'] = null;
+            $data['store_manager'] = null;
+            $data['store_admin'] = implode(" ",$store_admin);
         }if ($role == 1 || $role == 2){
             $data['dept_admin'] = null;
             $data['dept_ao'] = null;
             $data['store_manager'] = null;
+            $data['store_admin'] = null;
         }
 
 

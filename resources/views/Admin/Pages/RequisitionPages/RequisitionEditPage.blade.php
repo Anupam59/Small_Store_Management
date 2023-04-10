@@ -94,9 +94,10 @@
                                                 <!--begin::Table head-->
                                                 <thead>
                                                 <tr>
-                                                    <th class="min-w-175px">Product</th>
-                                                    <th class="w-125px"></th>
-                                                    <th class="w-60px"></th>
+                                                    <th>Product</th>
+                                                    <th>Available Quantity</th>
+                                                    <th></th>
+                                                    <th></th>
                                                 </tr>
                                                 </thead>
                                                 <!--end::Table head-->
@@ -107,9 +108,10 @@
                                                 <!--end::Table body-->
                                                 <tfoot>
                                                 <tr>
-                                                    <td class="pe-0"><div class="d-flex align-items-center"><span class="fw-bold text-gray-800 text-primary fs-6 me-1">Total Quantity</span></div></td>
-                                                    <th id="TotalQuantity" class="w-125px text-center totalQuantity"></th>
-                                                    <th class="w-60px"></th>
+                                                    <th>Total Quantity - </th>
+                                                    <td><div class="d-flex align-items-center"><span class="fw-bold text-gray-800 text-primary fs-6 me-1"></span></div></td>
+                                                    <th id="TotalQuantity" class="totalQuantity"></th>
+                                                    <th></th>
                                                 </tr>
                                                 </tfoot>
                                             </table>
@@ -117,12 +119,12 @@
                                         </div>
                                     </div>
                                     <!--end:Order summary-->
-                                    @if(auth()->user()->role == 3)
-                                        <div class="col-md-12">
-                                            <a id="ApprovedBtnId" class="btn btn-sm fw-bold btn-primary">Approved</a>
-                                            <a id="CanceledBtnId" class="btn btn-sm fw-bold btn-primary">Canceled</a>
-                                        </div>
-                                    @endif
+
+
+                                    <div class="col-md-12">
+                                        <a href="/requisition-details/{{ $Requisition->requisition_id }}" class="btn btn-sm fw-bold btn-primary">Details</a>
+                                    </div>
+
 
 
                                 </div>
@@ -179,11 +181,12 @@
                     var TotalQuantity = 0;
                     $('#Req_Table').empty();
                     $.each(JsonData, function (i, item) {
-
                         TotalQuantity = TotalQuantity + JsonData[i].quantity;
                         PurItem = PurItem + 1;
+
                         $('<tr data-kt-pos-element="item" data-kt-pos-item-price="33">').html(
                             '<td class="pe-0"><div class="d-flex align-items-center"><span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-6 me-1">'+JsonData[i].product_name+'</span></div></td>'+
+                            '<td class="pe-0"><div class="d-flex align-items-center"><span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-6 me-1">'+JsonData[i].total_quantity+'</span></div></td>'+
                             '<td class="pe-0">'+
                             '<div class="position-relative d-flex align-items-center" data-kt-dialer="true" data-kt-dialer-min="1" data-kt-dialer-max="10" data-kt-dialer-step="1" data-kt-dialer-decimals="0">'+
                             '<a type="button" data-id="'+JsonData[i].requisition_log_id+'" class="btn btn-icon btn-sm btn-light btn-icon-gray-400 ProductDBtn"><span class="svg-icon svg-icon-3x"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="11" width="12" height="2" rx="1" fill="currentColor"></rect></svg></span></a>'+
@@ -193,6 +196,7 @@
                             '</td>'+
                             '<td class="text-end"><a type="button" data-id="'+JsonData[i].requisition_log_id+'" class="btn btn-sm btn-icon btn-active-color-primary ProductDeleteBtn"><span class="svg-icon svg-icon-3"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor"></path><path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor"></path><path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor"></path></svg></span></a></td>'
                         ).appendTo('#Req_Table');
+
                     });
 
                     $('#TotalQuantity').html(TotalQuantity);
@@ -319,33 +323,6 @@
         }
 
 
-        $('#ApprovedBtnId').click(function () {
-            var RequisitionId = $('#RequisitionId').html();
-            var UserId = $('#UserId').html();
-            axios.post('/requisition-approved',{
-                requisition_id:RequisitionId,
-                approved_by:UserId,
-            }).then(function (response) {
-                toastr.success("Requisition Approved Successfully Done");
-                window.location.replace("/requisition-list");
-            }).catch(function (error) {
-                toastr.error("Something went to wrong ! try again");
-            });
-        });
-
-        $('#CanceledBtnId').click(function () {
-            var RequisitionId = $('#RequisitionId').html();
-            var UserId = $('#UserId').html();
-            axios.post('/requisition-canceled',{
-                requisition_id:RequisitionId,
-                user_id:UserId,
-            }).then(function (response) {
-                toastr.success("Requisition Canceled Successfully Done");
-                window.location.replace("/requisition-list");
-            }).catch(function (error) {
-                toastr.error("Something went to wrong ! try again");
-            });
-        });
 
 
 

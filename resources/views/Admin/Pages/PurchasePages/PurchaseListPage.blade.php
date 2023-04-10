@@ -2,6 +2,11 @@
 
 @section('content')
 
+    <?php
+    $user_role = auth()->user()->role;
+    ?>
+
+
     <!--begin::Content wrapper-->
     <div class="d-flex flex-column flex-column-fluid">
         <!--begin::Toolbar-->
@@ -103,7 +108,9 @@
 
                         </div>
                     </div>
+                    @if($user_role == 5 )
                     <a href="/product-purchase" class="btn btn-sm fw-bold btn-primary">Purchase Create</a>
+                    @endif
                 </div>
                 <!--end::Actions Filter-->
 
@@ -174,13 +181,13 @@
                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
                                                 <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
-                                                    <a href="/category-edit/{{ $PurchaseI->category_id }}" class="menu-link px-3">Edit</a>
+                                                    <a href="/purchase-details/{{ $PurchaseI->purchase_id }}" class="menu-link px-3">Edit</a>
                                                 </div>
                                                 <!--end::Menu item-->
                                                 <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">Delete</a>
-                                                </div>
+{{--                                                <div class="menu-item px-3">--}}
+{{--                                                    <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">Delete</a>--}}
+{{--                                                </div>--}}
                                                 <!--end::Menu item-->
                                             </div>
                                         </td>

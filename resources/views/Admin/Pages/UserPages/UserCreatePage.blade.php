@@ -241,6 +241,7 @@
                                                 <option value="2">Admin</option>
                                                 <option value="3">Department Admin</option>
                                                 <option value="4">Department AO</option>
+                                                <option value="6">Store Admin</option>
                                                 <option value="5">Store Manager</option>
                                             </select>
                                         </div>
@@ -303,6 +304,38 @@
                                             </div>
                                         </div>
                                     </div>
+
+
+
+                                    <div id="StoreAdmin" class="col-md-12 d-none">
+                                        <div class="fv-row mb-5 fv-plugins-icon-container">
+                                            <label class="d-flex align-items-center fs-5 fw-semibold mb-3">
+                                                <span class="">Store Admin</span>
+                                            </label>
+                                            <div class="row">
+
+                                                @if(!$Store->isEmpty())
+                                                    @foreach($Store as $StoreItem)
+                                                        <div class="col-lg-3 col-md-4 col-sm-6 mb-2">
+                                                            <label class="form-check form-check-sm form-check-custom form-check-solid me-5">
+                                                                <input class="form-check-input" type="checkbox" name="store_admin[]" value="{{ $StoreItem->store_id }}">
+                                                                <span class="form-check-label">{{ $StoreItem->store_name }}</span>
+                                                            </label>
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div class="col-12">
+                                                        <label class="form-check form-check-sm form-check-custom form-check-solid me-5">
+                                                            <span class="form-check-label">Data Not Found !</span>
+                                                        </label>
+                                                    </div>
+                                                @endif
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
 
 
                                     <div id="StoreManager" class="col-md-12 d-none">
@@ -395,18 +428,27 @@
                 $('#DepartmentAdmin').removeClass('d-none');
                 $('#DepartmentAO').addClass('d-none');
                 $('#StoreManager').addClass('d-none');
+                $('#StoreAdmin').addClass('d-none');
             }else if(roleId == 4){
                 $('#DepartmentAdmin').addClass('d-none');
                 $('#DepartmentAO').removeClass('d-none');
                 $('#StoreManager').addClass('d-none');
+                $('#StoreAdmin').addClass('d-none');
             }else if(roleId == 5){
                 $('#DepartmentAdmin').addClass('d-none');
                 $('#DepartmentAO').addClass('d-none');
                 $('#StoreManager').removeClass('d-none');
+                $('#StoreAdmin').addClass('d-none');
+            }else if(roleId == 6){
+                $('#DepartmentAdmin').addClass('d-none');
+                $('#DepartmentAO').addClass('d-none');
+                $('#StoreManager').addClass('d-none');
+                $('#StoreAdmin').removeClass('d-none');
             }else{
                 $('#DepartmentAdmin').addClass('d-none');
                 $('#DepartmentAO').addClass('d-none');
                 $('#StoreManager').addClass('d-none');
+                $('#StoreAdmin').addClass('d-none');
             }
         }
 

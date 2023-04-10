@@ -5,7 +5,7 @@
     <!--begin::Content wrapper-->
     <div class="d-flex flex-column flex-column-fluid">
 
-        <p id="RequisitionId" class="d-none">{{ request()->route('id') }}</p>
+        <p id="PurchaseId" class="d-none">{{ request()->route('id') }}</p>
         <p id="UserId" class="d-none">{{ Auth::user()->id }}</p>
 
         <!--begin::Toolbar-->
@@ -15,7 +15,7 @@
                 <!--begin::Page title-->
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
-                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Requisition Details</h1>
+                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Purchase Details</h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -39,7 +39,7 @@
                 <!--begin::Actions-->
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
                     <!--begin::Primary button-->
-                    <a href="/requisition-list" class="btn btn-sm fw-bold btn-primary">Requisition List</a>
+                    <a href="/purchase-list" class="btn btn-sm fw-bold btn-primary">Purchase List</a>
                     <!--end::Primary button-->
                 </div>
                 <!--end::Actions-->
@@ -63,10 +63,10 @@
                                 <!--begin::Wrapper-->
                                 <div class="d-flex flex-column gap-7 gap-md-10">
                                     <!--begin::Message-->
-                                    <div class="fw-bold fs-2">{{ $Requisition->name }}
-                                        <span class="fs-6">({{ $Requisition->email }})</span>,
+                                    <div class="fw-bold fs-2">{{ $Purchase->name }}
+                                        <span class="fs-6">({{ $Purchase->email }})</span>,
                                         <br />
-                                        <span class="text-muted fs-5">{{ $Requisition->note }}</span></div>
+                                        <span class="text-muted fs-5">{{ $Purchase->note }}</span></div>
                                     <!--begin::Message-->
                                     <!--begin::Separator-->
                                     <div class="separator"></div>
@@ -74,17 +74,17 @@
                                     <!--begin::Order details-->
                                     <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
                                         <div class="flex-root d-flex flex-column">
-                                            <span class="text-muted">Requisition Id</span>
-                                            <span class="fs-5">{{ $Requisition->requisition_id }}</span>
+                                            <span class="text-muted">Purchase Id</span>
+                                            <span class="fs-5">{{ $Purchase->purchase_id }}</span>
                                         </div>
                                         <div class="flex-root d-flex flex-column">
                                             <span class="text-muted">Date</span>
-                                            <span class="fs-5">{{ date('d M, Y',strtotime($Requisition->created_date))}}</span>
+                                            <span class="fs-5">{{ date('d M, Y',strtotime($Purchase->created_date))}}</span>
                                         </div>
-                                        <div class="flex-root d-flex flex-column">
-                                            <span class="text-muted">Department</span>
-                                            <span class="fs-5">{{ $Requisition->department_name }}</span>
-                                        </div>
+{{--                                        <div class="flex-root d-flex flex-column">--}}
+{{--                                            <span class="text-muted">Department</span>--}}
+{{--                                            <span class="fs-5">{{ $Purchase->department_name }}</span>--}}
+{{--                                        </div>--}}
                                     </div>
                                     <!--end::Order details-->
 
@@ -95,21 +95,21 @@
                                         <!--begin::Table -->
                                         <div class="table-responsive border-bottom mb-9">
 
-                                            @if(!$ReqProduct->isEmpty())
+                                            @if(!$PurProduct->isEmpty())
                                                 <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0">
                                                     <thead>
                                                     <tr class="border-bottom fs-6 fw-bold text-muted">
                                                         <th class="min-w-20px pb-2">SL</th>
                                                         <th class="min-w-175px pb-2">Products</th>
-                                                        @if($Requisition->status == 5 && auth()->user()->role == 5)
+                                                        @if($Purchase->status == 5 && auth()->user()->role == 5)
                                                             <th class="min-w-80px text-center pb-2">Available Quantity</th>
                                                         @endif
-                                                        <th class="min-w-80px text-center pb-2">Requisition Quantity</th>
+                                                        <th class="min-w-80px text-center pb-2">Purchase Quantity</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody class="fw-semibold text-gray-600">
 
-                                                    @foreach($ReqProduct as $key => $Product)
+                                                    @foreach($PurProduct as $key => $Product)
                                                         <tr>
                                                             <td class="text-start">{{ $key+1 }}</td>
                                                             <td>
@@ -119,8 +119,8 @@
                                                                     </div>
                                                                 </div>
                                                             </td>
-                                                            @if($Requisition->status == 5 && auth()->user()->role == 5)
-                                                            <td class="text-center">{{ $Product->total_quantity }}</td>
+                                                            @if($Purchase->status == 5 && auth()->user()->role == 5)
+                                                                <td class="text-center">{{ $Product->total_quantity }}</td>
                                                             @endif
                                                             <td class="text-center">{{ $Product->quantity }}</td>
                                                         </tr>
@@ -140,22 +140,6 @@
 
                                         </div>
                                         <!--end::Table-->
-
-                                        @if($Requisition->status == 1 && auth()->user()->role == 3)
-                                            <div class="col-md-12">
-                                                <a id="ApprovedBtnId" class="btn btn-sm fw-bold btn-primary">Approved</a>
-                                                <a id="CanceledBtnId" class="btn btn-sm fw-bold btn-danger">Canceled</a>
-                                            </div>
-                                        @elseif($Requisition->status == 2 && auth()->user()->role == 6)
-                                            <div class="col-md-12">
-                                                <a id="ApprovedConfirmBtnId" class="btn btn-sm fw-bold btn-primary">Approved Confirm</a>
-                                                <a id="CanceledBtnId" class="btn btn-sm fw-bold btn-danger">Canceled</a>
-                                            </div>
-                                        @elseif($Requisition->status == 5 && auth()->user()->role == 5)
-                                            <div class="col-md-12">
-                                                <a id="DeliveredBtnId" class="btn btn-sm fw-bold btn-primary">Delivered</a>
-                                            </div>
-                                        @endif
 
                                     </div>
                                     <!--end:Order summary-->
@@ -198,81 +182,6 @@
 
 
 @section('script')
-    <script>
-
-        $('#ApprovedBtnId').click(function () {
-            var RequisitionId = $('#RequisitionId').html();
-            var UserId = $('#UserId').html();
-            axios.post('/requisition-approved',{
-                requisition_id:RequisitionId,
-                approved_by:UserId,
-            }).then(function (response) {
-                toastr.success("Requisition Approved Successfully Done");
-                window.location.replace("/requisition-list");
-            }).catch(function (error) {
-                toastr.error("Something went to wrong ! try again");
-            });
-        });
-
-        $('#CanceledBtnId').click(function () {
-            var RequisitionId = $('#RequisitionId').html();
-            var UserId = $('#UserId').html();
-            axios.post('/requisition-canceled',{
-                requisition_id:RequisitionId,
-                canceled_by:UserId,
-            }).then(function (response) {
-                toastr.success("Requisition Canceled Successfully Done");
-                window.location.replace("/requisition-list");
-            }).catch(function (error) {
-                toastr.error("Something went to wrong ! try again");
-            });
-        });
-
-        $('#ApprovedConfirmBtnId').click(function () {
-            var RequisitionId = $('#RequisitionId').html();
-            var UserId = $('#UserId').html();
-            axios.post('/requisition-approved-conf',{
-                requisition_id:RequisitionId,
-                approved_conf_by:UserId,
-            }).then(function (response) {
-                toastr.success("Requisition Approved Successfully Done");
-                window.location.replace("/requisition-list");
-            }).catch(function (error) {
-                toastr.error("Something went to wrong ! try again");
-            });
-        });
-
-        $('#DeliveredBtnId').click(function(){
-            let RequisitionId = $('#RequisitionId').html();
-            let UserId = $('#UserId').html();
-            axios.post('/requisition-delivered',{
-                requisition_id:RequisitionId,
-                user_id:UserId,
-            }).then(function (response) {
-                if (response.data == 0){
-                    toastr.success("Product Not available, Please Purchase!");
-                }else{
-                    toastr.success("Requisition Delivered Successfully Done");
-                    window.location.replace("/requisition-list");
-                }
-            }).catch(function (error) {
-                toastr.success("Something went to wrong!");
-            });
-        });
 
 
-        // $('#DeliveredBtnId').click(function(){
-        //     let RequisitionId = $('#RequisitionId').html();
-        //     let UserId = $('#UserId').html();
-        //     axios.post('/requisition-delivered-check',{
-        //         requisition_id:RequisitionId,
-        //         user_id:UserId,
-        //     }).then(function (response) {
-        //         toastr.success("Requisition Delivered Successfully Done");
-        //     }).catch(function (error) {
-        //
-        //     });
-        // });
-
-    </script>
 @endsection

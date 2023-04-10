@@ -16,7 +16,7 @@ class PurchaseController extends Controller
 
     public function ProductPurchaseCreate(){
         $Product = ProductModel::where('status',1)->get();
-        if(Auth::user()->role <= 2){
+        if(Auth::user()->role == 5){
             return view('Admin/Pages/PurchasePages/PurchaseCreatePage',compact('Product'));
         }else{
             return redirect('/');
@@ -109,13 +109,10 @@ class PurchaseController extends Controller
             $user_ref = $creator;
             $status = 1;
             $created_date = date("Y-m-d h:i:s");
-            $lastData = ProductLogModel::where('product_id',$product_id)->orderBy('product_log_id','desc')->first();
-            $TotalQuantity = $lastData->total_quantity;
             $result = ProductLogModel::insert([
                 'product_id'=>$product_id,
                 'product_mode'=>$product_mode,
                 'quantity'=>$quantity,
-                'total_quantity'=>$TotalQuantity+$quantity,
                 'reference'=>$reference,
                 'user_ref'=>$user_ref,
                 'status'=>$status,
@@ -148,13 +145,24 @@ class PurchaseController extends Controller
         }
         $Purchase = $query->paginate(10);
 
-        if(Auth::user()->role <= 2){
+        if(Auth::user()->role == 5 || Auth::user()->role == 6){
             return view('Admin/Pages/PurchasePages/PurchaseListPage',compact('Purchase'));
         }else{
             return redirect('/');
         }
+    }
 
 
+    public function PurchaseDetails($purchase_id){
+        $Purchase = PurchaseModel::join('users', 'users.id', '=', 'purchase.creator')
+            ->select('users.name','users.email','purchase.*')
+            ->where('purchase_id',$purchase_id)->first();
+
+        $PurProduct = ProductLogModel::join('product', 'product.product_id', '=', 'product_log.product_id')
+            ->join('view_total_quantity', 'view_total_quantity.product_id', '=', 'product_log.product_id')
+            ->select('view_total_quantity.total_quantity','product.product_name','product_log.*')
+            ->where('reference',$purchase_id)->get();
+        return view('Admin/Pages/PurchasePages/PurchaseDetailsPage',compact('Purchase','PurProduct'));
 
     }
 }

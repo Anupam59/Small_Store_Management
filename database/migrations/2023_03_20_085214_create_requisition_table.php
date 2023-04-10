@@ -27,6 +27,9 @@ return new class extends Migration
             $table->integer('approved_by')->nullable();
             $table->timestamp('approved_date')->nullable();
 
+            $table->integer('approved_conf_by')->nullable();
+            $table->timestamp('approved_conf_date')->nullable();
+
             $table->integer('delivered_by')->nullable();
             $table->timestamp('delivered_date')->nullable();
 
