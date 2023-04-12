@@ -13,4 +13,8 @@ class RequisitionModel extends Model
     public $incrementing=true;
     public $keyType='int';
     public $timestamps=false;
+
+    public function req_log(){
+        return $this->hasMany('App\Models\RequisitionLogModel','reference','requisition_id');
+    }
 }

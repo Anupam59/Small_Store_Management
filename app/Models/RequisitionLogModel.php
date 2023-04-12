@@ -13,4 +13,8 @@ class RequisitionLogModel extends Model
     public $incrementing=true;
     public $keyType='int';
     public $timestamps=false;
+
+    public function product(){
+        return $this->hasOne('App\Models\ProductModel','product_id','product_id');
+    }
 }

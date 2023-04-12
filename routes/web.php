@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\FeaturesController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\PropertyTypeController;
 use App\Http\Controllers\Admin\PurchaseController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\RequisitionController;
 use App\Http\Controllers\Admin\StoreController;
 use App\Http\Controllers\Admin\UniteController;
@@ -139,5 +140,13 @@ Route::middleware('isLoggedIn')->group(function (){
 
     Route::post('add-product-requisition', [RequisitionController::class, 'AddProductRequisition']);
 
+
+
+    Route::get('requisition-report', [ReportController::class, 'RequisitionReportList']);
+    Route::get('requisition-report-details/{id}', [ReportController::class, 'RequisitionReportDetails']);
+
+
+    Route::get('purchase-report', [ReportController::class, 'PurchaseReportList']);
+    Route::get('purchase-report-details/{id}', [ReportController::class, 'PurchaseReportDetails']);
 
 });

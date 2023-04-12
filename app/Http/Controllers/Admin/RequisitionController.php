@@ -7,6 +7,7 @@ use App\Models\CategoryModel;
 use App\Models\DepartmentModel;
 use App\Models\ProductLogModel;
 use App\Models\ProductModel;
+use App\Models\PurchaseModel;
 use App\Models\RequisitionCartModel;
 use App\Models\RequisitionLogModel;
 use App\Models\RequisitionModel;
@@ -39,12 +40,25 @@ class RequisitionController extends Controller
         $data['created_date'] = date("Y-m-d h:i:s");
         $data['modified_date'] = date("Y-m-d h:i:s");
         $ProductId = ProductModel::insertGetId($data);
+
+        $PurchaseId = PurchaseModel::insertGetId([
+            'total_quantity'=>0,
+            'supplier'=>"Initial Supplier",
+            'memo_number'=>"Initial",
+            'note'=>"This is Initial Note",
+            'creator'=>$userId,
+            'modifier'=>$userId,
+            'created_date'=>date("Y-m-d h:i:s"),
+            'modified_date'=>date("Y-m-d h:i:s"),
+        ]);
+
+
         if ($ProductId){
             $dataLog =  array();
             $dataLog['product_id'] = $ProductId;
             $dataLog['product_mode'] = 1;
             $dataLog['quantity'] = 0;
-            $dataLog['reference'] = 'Request';
+            $dataLog['reference'] = $PurchaseId;
             $dataLog['user_ref'] = $userId;
             $dataLog['status'] = 1;
             $dataLog['created_date'] = date("Y-m-d h:i:s");

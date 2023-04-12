@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CategoryModel;
 use App\Models\ProductLogModel;
 use App\Models\ProductModel;
+use App\Models\PurchaseModel;
 use App\Models\StoreModel;
 use App\Models\UniteModel;
 use Illuminate\Http\Request;
@@ -68,17 +69,31 @@ class ProductController extends Controller
         $data['created_date'] = date("Y-m-d h:i:s");
         $data['modified_date'] = date("Y-m-d h:i:s");
         $ProductId = ProductModel::insertGetId($data);
+
+        $PurchaseId = PurchaseModel::insertGetId([
+            'total_quantity'=>$request->quantity,
+            'supplier'=>"Initial Supplier",
+            'memo_number'=>$request->reference,
+            'note'=>"This is Initial Note",
+            'creator'=>$request->creator,
+            'modifier'=>$request->creator,
+            'created_date'=>date("Y-m-d h:i:s"),
+            'modified_date'=>date("Y-m-d h:i:s"),
+        ]);
+
+
         if ($ProductId){
             $dataLog =  array();
             $dataLog['product_id'] = $ProductId;
             $dataLog['product_mode'] = 1;
             $dataLog['quantity'] = $request->quantity;
-            $dataLog['reference'] = $request->reference;
+            $dataLog['reference'] = $PurchaseId;
             $dataLog['user_ref'] = $request->creator;
             $dataLog['status'] = 1;
             $dataLog['created_date'] = date("Y-m-d h:i:s");
 
             $res = ProductLogModel::insert($dataLog);
+
 
             if ($res){
                 $success_notification = array(
