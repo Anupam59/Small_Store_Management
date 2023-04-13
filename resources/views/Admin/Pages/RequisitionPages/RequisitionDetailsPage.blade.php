@@ -140,6 +140,11 @@
 
                                         </div>
                                         <!--end::Table-->
+                                        @if($Requisition->file)
+                                        <div class="col-md-12">
+                                            <a href="/File/ReqFile/{{ $Requisition->file }}" download class="btn btn-sm fw-bold btn-success">Download File</a>
+                                        </div>
+                                        @endif
 
                                         @if($Requisition->status == 1 && auth()->user()->role == 3)
                                             <div class="col-md-12">

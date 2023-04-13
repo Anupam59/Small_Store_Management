@@ -3,22 +3,32 @@
 @section('content')
 
     <style>
+
+        .imageIconD{
+            margin-top: -15px;
+            width: 250px;
+        }
+
         @media print {
-            /*.notPrint{*/
-            /*    display: none !important;*/
-            /*}*/
-            /*.flexPrint{*/
-            /*    display: block !important;*/
-            /*}*/
+
+            .imageIconD{
+                margin-top: -10px;
+                width: 200px;
+            }
+            .notPrint{
+                display: none !important;
+            }
             .rowBlock{
-                display: block !important;
-                width: 1000px !important;
-                background: red;
+                background-color: red !important;
             }
             .colBlock{
+                width: 200px !important;
+            }
+            .colImage{
                 width: 300px !important;
-                background: #1634ff;
-                display: block !important;
+            }
+            .colTitle{
+                width: 300px !important;
             }
 
         }
@@ -32,7 +42,7 @@
         <p id="UserId" class="d-none">{{ Auth::user()->id }}</p>
 
         <!--begin::Toolbar-->
-        <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
+        <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6 notPrint">
             <!--begin::Toolbar container-->
             <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
                 <!--begin::Page title-->
@@ -70,6 +80,8 @@
             <!--end::Toolbar container-->
         </div>
         <!--end::Toolbar-->
+
+
         <!--begin::Content-->
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <!--begin::Content container-->
@@ -78,6 +90,7 @@
                 <div class="card">
                     <!-- begin::Body-->
                     <div class="card-body py-20">
+
                         <!-- begin::Wrapper-->
                         <div class="mw-lg-950px mx-auto w-100">
 
@@ -85,8 +98,32 @@
                             <div class="pb-12">
                                 <!--begin::Wrapper-->
                                 <div class="d-flex flex-column gap-7 gap-md-10">
+
+
+                                    <div class="row rowBlock">
+
+                                        <div class="col-md-6 colTitle">
+                                            <h4 class="fw-bolder text-gray-800 fs-2qx">Requisition Details</h4>
+                                        </div>
+
+                                        <div class="col-md-6 colImage text-end">
+                                            <div class="d-inline">
+                                                <img class="imageIconD" src="{{ asset('Images/sr-logo.png') }}">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+
+                                    <!--begin::Separator-->
+                                    <div class="separator"></div>
+                                    <!--begin::Separator-->
+
+
+
                                     <!--begin::Message-->
-                                    <div class="fw-bold fs-2">{{ $Requisition->name }}
+                                    <div class="fw-bold fs-2">{{ $Requisition->creator }}
                                         <span class="fs-6">({{ $Requisition->email }})</span>,
                                         <br />
                                         <span class="text-muted fs-5">{{ $Requisition->note }}</span></div>
@@ -96,6 +133,8 @@
                                     <!--begin::Separator-->
                                     <div class="separator"></div>
                                     <!--begin::Separator-->
+
+
 
                                     <div class="row fw-bold rowBlock">
 
@@ -128,8 +167,53 @@
                                             </div>
                                         </div>
 
-                                    </div>
+                                        <div class="col-md-4 mt-3 colBlock">
+                                            <div class="flex-root d-flex flex-column flexPrint">
+                                                <span class="text-muted">Approved By</span>
+                                                <span class="fs-5">{{ $Requisition->department_name }}</span>
+                                                <span class="fs-5">{{ date('d M, Y',strtotime($Requisition->created_date))}}</span>
+                                            </div>
+                                        </div>
 
+                                        <div class="col-md-4 mt-3 colBlock">
+                                            <div class="flex-root d-flex flex-column flexPrint">
+                                                <span class="text-muted">Approved Confirm By</span>
+                                                <span class="fs-5">{{ $Requisition->department_name }}</span>
+                                                <span class="fs-5">{{ date('d M, Y',strtotime($Requisition->created_date))}}</span>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-4 mt-3 colBlock">
+                                            <div class="flex-root d-flex flex-column flexPrint">
+                                                <span class="text-muted">Delivered By</span>
+                                                <span class="fs-5">{{ $Requisition->department_name }}</span>
+                                                <span class="fs-5">{{ date('d M, Y',strtotime($Requisition->created_date))}}</span>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="col-md-4 mt-3 colBlock">
+                                            <div class="flex-root d-flex flex-column flexPrint">
+                                                <span class="text-muted">Status</span>
+                                                <span class="fs-5">
+                                                    @if($Requisition->status == 1)
+                                                        Pending
+                                                    @elseif($Requisition->status == 2)
+                                                        Approved
+                                                    @elseif($Requisition->status == 3)
+                                                        Delivered
+                                                    @elseif($Requisition->status == 5)
+                                                        Approved Confirm
+                                                    @elseif($Requisition->status == 4)
+                                                        Canceled
+                                                    @endif
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                    </div>
 
 
                                     <!--begin:Order summary-->
@@ -184,6 +268,7 @@
 
                                     </div>
                                     <!--end:Order summary-->
+
                                 </div>
                                 <!--end::Wrapper-->
                             </div>

@@ -196,8 +196,27 @@
                                         </label>
                                         <textarea id="RequisitionNote" class="form-control form-control form-control-solid" placeholder="Requisition Note..." data-kt-autosize="true"></textarea>
                                     </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="fv-row mb-5 fv-plugins-icon-container">
+                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                            <span>Requisition File</span>
+                                        </label>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <input class="form-control" type="text" id="RequisitionFileNameId" placeholder="File Name --"/>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input class="form-control" type="file" id="RequisitionFileId" accept="application/pdf, application/vnd.ms-excel"/>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
                                     <a id="RequisitionBtnId" class="btn btn-sm fw-bold btn-primary">Requisition</a>
                                 </div>
+
 
                             </div>
                         </div>
@@ -469,6 +488,8 @@
             let department_id = $('#DepartmentId').val();
             let store_id = $('#StoreId').val();
             let note = $('#RequisitionNote').val();
+            let file_name = $('#RequisitionFileNameId').val();
+            let file = $('#RequisitionFileId').prop('files')[0];
             let creator = $('#UserId').val();
             let purItem = $('#PurItem').html();
 
@@ -481,13 +502,24 @@
             else if(purItem == 0){
                 toastr.warning("Please Some Product Add Now !");
             }else{
-                axios.post('/product-requisition-add',{
-                    total_quantity:total_quantity,
-                    department_id:department_id,
-                    store_id:store_id,
-                    note:note,
-                    creator:creator,
-                }).then(function (response) {
+
+
+                let formData=new FormData();
+                formData.append('total_quantity',total_quantity);
+                formData.append('department_id',department_id);
+                formData.append('store_id',store_id);
+                formData.append('note',note);
+                formData.append('file_name',file_name);
+                formData.append('file',file);
+                formData.append('creator',creator);
+
+                let config = {
+                    headers: {
+                        "Content-Type": "multipart/form-data"
+                    }
+                };
+
+                axios.post('/product-requisition-add',formData,config).then(function (response) {
                     toastr.success("Requisition Successfully Done");
                     ProductCartShow();
                     RequisitionFileEmpty();

@@ -2,6 +2,39 @@
 
 @section('content')
 
+
+    <style>
+
+        .imageIconD{
+            margin-top: -15px;
+            width: 250px;
+        }
+
+        @media print {
+            .imageIconD{
+                margin-top: -10px;
+                width: 200px;
+            }
+            .notPrint{
+                display: none !important;
+            }
+            .rowBlock{
+                background-color: red !important;
+            }
+            .colBlock{
+                width: 200px !important;
+            }
+            .colImage{
+                width: 300px !important;
+            }
+            .colTitle{
+                width: 300px !important;
+            }
+        }
+    </style>
+
+
+
     <!--begin::Content wrapper-->
     <div class="d-flex flex-column flex-column-fluid">
 
@@ -9,7 +42,7 @@
         <p id="UserId" class="d-none">{{ Auth::user()->id }}</p>
 
         <!--begin::Toolbar-->
-        <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
+        <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6 notPrint">
             <!--begin::Toolbar container-->
             <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
                 <!--begin::Page title-->
@@ -62,39 +95,71 @@
                             <div class="pb-12">
                                 <!--begin::Wrapper-->
                                 <div class="d-flex flex-column gap-7 gap-md-10">
+
+
+
+                                    <div class="row rowBlock">
+                                        <div class="col-md-6 colTitle">
+                                            <h4 class="fw-bolder text-gray-800 fs-2qx">Purchase Details</h4>
+                                        </div>
+                                        <div class="col-md-6 colImage text-end">
+                                            <div class="d-inline">
+                                                <img class="imageIconD" src="{{ asset('Images/sr-logo.png') }}">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--begin::Separator-->
+                                    <div class="separator"></div>
+                                    <!--begin::Separator-->
+
+
+
+
+
                                     <!--begin::Message-->
                                     <div class="fw-bold fs-2">{{ $Purchase->name }}
                                         <span class="fs-6">({{ $Purchase->email }})</span>,
                                         <br />
                                         <span class="text-muted fs-5">{{ $Purchase->note }}</span></div>
                                     <!--begin::Message-->
+
                                     <!--begin::Separator-->
                                     <div class="separator"></div>
                                     <!--begin::Separator-->
-                                    <!--begin::Order details-->
-                                    <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
-                                        <div class="flex-root d-flex flex-column">
-                                            <span class="text-muted">Purchase Id</span>
-                                            <span class="fs-5">{{ $Purchase->purchase_id }}</span>
+
+
+                                    <div class="row fw-bold rowBlock">
+
+                                        <div class="col-md-4 mt-3 colBlock">
+                                            <div class="flex-root d-flex flex-column flexPrint">
+                                                <span class="text-muted">Purchase Id</span>
+                                                <span class="fs-5">{{ $Purchase->purchase_id }}</span>
+                                            </div>
                                         </div>
-                                        <div class="flex-root d-flex flex-column">
-                                            <span class="text-muted">Date</span>
-                                            <span class="fs-5">{{ date('d M, Y',strtotime($Purchase->created_date))}}</span>
+
+                                        <div class="col-md-4 mt-3 colBlock">
+                                            <div class="flex-root d-flex flex-column flexPrint">
+                                                <span class="text-muted">Date</span>
+                                                <span class="fs-5">{{ date('d M, Y',strtotime($Purchase->created_date))}}</span>
+                                            </div>
                                         </div>
-                                        {{--                                        <div class="flex-root d-flex flex-column">--}}
-                                        {{--                                            <span class="text-muted">Department</span>--}}
-                                        {{--                                            <span class="fs-5">{{ $Purchase->department_name }}</span>--}}
-                                        {{--                                        </div>--}}
+
+                                        <div class="col-md-4 mt-3 colBlock">
+                                            <div class="flex-root d-flex flex-column flexPrint">
+                                                <span class="text-muted">Memo/Reference</span>
+                                                <span class="fs-5">{{ $Purchase->memo_number }}</span>
+                                            </div>
+                                        </div>
+
                                     </div>
-                                    <!--end::Order details-->
+
 
 
                                     <!--begin:Order summary-->
                                     <div class="d-flex justify-content-between flex-column">
-
                                         <!--begin::Table -->
                                         <div class="table-responsive border-bottom mb-9">
-
                                             @if(!$PurProduct->isEmpty())
                                                 <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0">
                                                     <thead>
@@ -150,20 +215,14 @@
                             <!--end::Body-->
 
                             <!-- begin::Footer-->
-                            <div class="d-flex flex-stack flex-wrap mt-lg-20 pt-13 d-none">
+                            <div class="d-flex flex-stack flex-wrap mt-lg-20 pt-13 notPrint">
                                 <!-- begin::Actions-->
                                 <div class="my-1 me-5">
                                     <!-- begin::Pint-->
-                                    <button type="button" class="btn btn-success my-1 me-12" onclick="window.print();">Print Invoice</button>
+                                    <button type="button" class="btn btn-success my-1 me-12" onclick="window.print();">Print</button>
                                     <!-- end::Pint-->
-                                    <!-- begin::Download-->
-                                    <button type="button" class="btn btn-light-success my-1">Download</button>
-                                    <!-- end::Download-->
                                 </div>
                                 <!-- end::Actions-->
-                                <!-- begin::Action-->
-                                <a href="#" class="btn btn-primary my-1">Create Invoice</a>
-                                <!-- end::Action-->
                             </div>
                             <!-- end::Footer-->
                         </div>

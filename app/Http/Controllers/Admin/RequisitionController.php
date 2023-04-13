@@ -201,21 +201,39 @@ class RequisitionController extends Controller
         $department_id = $request->input('department_id');
         $store_id = $request->input('store_id');
         $note = $request->input('note');
+        $file_name = $request->input('file_name');
         $creator = $request->input('creator');
         $modifier = $request->input('creator');
         $created_date = date("Y-m-d h:i:s");
         $modified_date = date("Y-m-d h:i:s");
 
-        $RequisitionId = RequisitionModel::insertGetId([
-            'total_quantity'=>$total_quantity,
-            'department_id'=>$department_id,
-            'store_id'=>$store_id,
-            'note'=>$note,
-            'creator'=>$creator,
-            'modifier'=>$modifier,
-            'created_date'=>$created_date,
-            'modified_date'=>$modified_date,
-        ]);
+
+        $data =  array();
+        $data['total_quantity'] = $total_quantity;
+        $data['department_id'] = $department_id;
+        $data['store_id'] = $store_id;
+        $data['note'] = $note;
+        $data['creator'] = $creator;
+        $data['modifier'] = $modifier;
+        $data['created_date'] = $created_date;
+        $data['modified_date'] = $modified_date;
+
+
+        $file = $request->file('file');
+        if ($file) {
+            $file_name = $file_name.time();
+            $ext = strtolower($file->getClientOriginalExtension());
+            $file_full_name = $file_name . '.' . $ext;
+            $upload_path = 'File/ReqFile/';
+            $file->move($upload_path, $file_full_name);
+            $data['file'] = $file_full_name;
+            $RequisitionId = RequisitionModel::insertGetId($data);
+        }
+        if ($file == null){
+            $RequisitionId = RequisitionModel::insertGetId($data);
+        }
+
+
         $requisitions = RequisitionCartModel::where('user_id',$creator)->get();
         foreach ($requisitions as $key => $requisition) {
             $product_id = $requisition['product_id'];

@@ -37,6 +37,7 @@ return new class extends Migration
             $table->timestamp('canceled_date')->nullable();
 
             $table->text('note')->nullable();
+            $table->string('file',100)->nullable();
 
             $table->tinyInteger('status')->default(1);
             $table->integer('creator');

@@ -37,7 +37,7 @@ class ReportController extends Controller
 
         $userA = Auth::user();
 
-        $requisition = RequisitionLogModel::where('product_id',2)->get();
+        $requisition = RequisitionLogModel::where('product_id',$product_id)->get();
         $requisition_ids = array();
         foreach ($requisition as $row){
             $requisition_ids[] = $row->reference;
@@ -64,6 +64,7 @@ class ReportController extends Controller
         if ($status){
             $query = $query->where('requisition.status', '=',$status);
         }
+
         if ($userA->role == 4){
             $query = $query->where('requisition.creator', '=',$userA->id);
         }
@@ -72,9 +73,9 @@ class ReportController extends Controller
             $query = $query->whereIn('requisition.department_id',$dept_admin_Array);
         }
 
-        if ( $userA->role == 4){
-            $query = $query->whereIn('requisition.department_id',$dept_ao_Array);
-        }
+//        if ( $userA->role == 4){
+//            $query = $query->whereIn('requisition.department_id',$dept_ao_Array);
+//        }
 
         if ($userA->role == 5){
             $query = $query->whereIn('requisition.store_id',$store_manager_Array);
@@ -126,12 +127,25 @@ class ReportController extends Controller
         return view('Admin/Pages/ReportPages/RequisitionReport',compact('Requisition','Department','Store','Product'));
     }
 
+
     public function RequisitionReportDetails($requisition_id){
-        $Requisition = RequisitionModel::join('users', 'users.id', '=', 'requisition.creator')
-            ->join('department', 'department.department_id', '=', 'requisition.department_id')
-            ->join('store', 'store.store_id', '=', 'requisition.store_id')
-            ->select('users.name','store.store_name','department.department_name','users.email','requisition.*')
+        $Requisition = RequisitionModel::leftJoin('users as creator', 'creator.id', '=', 'requisition.creator')
+            ->leftJoin('users as approved_by', 'approved_by.id', '=', 'requisition.approved_by')
+            ->leftJoin('users as approved_conf_by', 'approved_conf_by.id', '=', 'requisition.approved_conf_by')
+            ->leftJoin('users as delivered_by', 'delivered_by.id', '=', 'requisition.delivered_by')
+
+            ->leftJoin('department', 'department.department_id', '=', 'requisition.department_id')
+            ->leftJoin('store', 'store.store_id', '=', 'requisition.store_id')
+            ->select(
+                'creator.name as creator_by',
+                'creator.email as email',
+                'approved_by.name as approved_by',
+                'approved_conf_by.name as approved_conf_by',
+                'delivered_by.name as delivered_by',
+                'store.store_name','department.department_name','requisition.*')
             ->where('requisition_id',$requisition_id)->first();
+
+//        dd($Requisition);
 
         $ReqProduct = RequisitionLogModel::join('product', 'product.product_id', '=', 'requisition_log.product_id')
             ->join('view_total_quantity', 'view_total_quantity.product_id', '=', 'requisition_log.product_id')
