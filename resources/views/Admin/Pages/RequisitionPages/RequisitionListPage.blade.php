@@ -39,7 +39,6 @@
 
                 <!--begin::Actions  Filter-->
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
-
                     <div class="m-0">
                         <a href="#" class="btn btn-sm btn-flex bg-body btn-color-gray-700 btn-active-color-primary fw-bold" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
                             <span class="svg-icon svg-icon-6 svg-icon-muted me-1">
@@ -106,7 +105,6 @@
                         </div>
                     </div>
 
-
                 </div>
                 <!--end::Actions Filter-->
 
@@ -151,7 +149,7 @@
                                     <tr>
                                         <td>{{ $key+1 }}</td>
 
-                                        <td>{{ date("d-m-Y", strtotime($RequisitionI->created_date)) }}</td>
+                                        <td>{{ date("d-m-Y", strtotime($RequisitionI->requisition_date)) }}</td>
 
                                         <td>{{ $RequisitionI->total_quantity }}</td>
                                         <td>{{ $RequisitionI->department_name }}</td>

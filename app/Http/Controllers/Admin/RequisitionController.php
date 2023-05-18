@@ -20,7 +20,6 @@ class RequisitionController extends Controller
 {
 
 
-
     public function AddProductRequisition(Request $request){
         $validation = $request->validate([
             'product_name' => 'required|unique:product',
@@ -200,6 +199,7 @@ class RequisitionController extends Controller
         $total_quantity = $request->input('total_quantity');
         $department_id = $request->input('department_id');
         $store_id = $request->input('store_id');
+        $requisition_date = $request->input('requisition_date');
         $note = $request->input('note');
         $file_name = $request->input('file_name');
         $creator = $request->input('creator');
@@ -212,6 +212,7 @@ class RequisitionController extends Controller
         $data['total_quantity'] = $total_quantity;
         $data['department_id'] = $department_id;
         $data['store_id'] = $store_id;
+        $data['requisition_date'] = $requisition_date;
         $data['note'] = $note;
         $data['creator'] = $creator;
         $data['modifier'] = $modifier;
@@ -250,6 +251,7 @@ class RequisitionController extends Controller
                 'reference'=>$reference,
                 'user_ref'=>$user_ref,
                 'status'=>$status,
+                'requisition_date'=>$requisition_date,
                 'created_date'=>$created_date,
             ]);
         }
@@ -268,6 +270,7 @@ class RequisitionController extends Controller
         $department_id = \request('department_id');
         $start_date = \request('start_date');
         $end_date = \request('end_date');
+
         $query = RequisitionModel::leftJoin('users', 'users.id', '=', 'requisition.creator')
             ->leftJoin('department', 'department.department_id', '=', 'requisition.department_id')
             ->leftJoin('store', 'store.store_id', '=', 'requisition.store_id')
@@ -301,10 +304,25 @@ class RequisitionController extends Controller
     }
 
     public function RequisitionDetails($requisition_id){
-        $Requisition = RequisitionModel::join('users', 'users.id', '=', 'requisition.creator')
-            ->join('department', 'department.department_id', '=', 'requisition.department_id')
-            ->select('users.name','department.department_name','users.email','requisition.*')
+        $Requisition = RequisitionModel::join('users as creator_by', 'creator_by.id', '=', 'requisition.creator')
+            ->leftJoin('users as approved_by', 'approved_by.id', '=', 'requisition.approved_by')
+            ->leftJoin('users as approved_conf_by', 'approved_conf_by.id', '=', 'requisition.approved_conf_by')
+            ->leftJoin('users as canceled_by', 'canceled_by.id', '=', 'requisition.canceled_by')
+            ->leftJoin('users as delivered_by', 'delivered_by.id', '=', 'requisition.delivered_by')
+
+            ->leftJoin('department', 'department.department_id', '=', 'requisition.department_id')
+            ->leftJoin('store', 'store.store_id', '=', 'requisition.store_id')
+            ->select('department.department_name','store.store_name','requisition.*',
+                'creator_by.name as creator_by',
+                'creator_by.email as creator_email',
+                'approved_by.name as approved_by',
+                'approved_conf_by.name as approved_conf_by',
+                'canceled_by.name as canceled_by',
+                'delivered_by.name as delivered_by',
+            )
             ->where('requisition_id',$requisition_id)->first();
+
+
 
         $ReqProduct = RequisitionLogModel::join('product', 'product.product_id', '=', 'requisition_log.product_id')
             ->join('view_total_quantity', 'view_total_quantity.product_id', '=', 'requisition_log.product_id')
@@ -376,37 +394,82 @@ class RequisitionController extends Controller
 
     public function RequisitionApproved(Request $request){
         $requisition_id = $request->input('requisition_id');
+        $approved_date= $request->input('approved_date');
         $approved_by= $request->input('approved_by');
-        $result = RequisitionModel::where('requisition_id',$requisition_id)->update([
-            'status'=>2,
-            'approved_by'=>$approved_by,
-            'approved_date'=>date("Y-m-d h:i:s"),
-        ]);
-        return $result;
+
+        $present_date = date("Y-m-d");
+        $Requisition = RequisitionModel::where('requisition_id',$requisition_id)->first();
+        $reqdate = date("Y-m-d", strtotime($Requisition->requisition_date));
+
+        if ($reqdate <= $approved_date && $present_date >= $approved_date){
+
+            $result = RequisitionModel::where('requisition_id',$requisition_id)->update([
+                'status'=>2,
+                'approved_by'=>$approved_by,
+                'approved_date'=>$approved_date,
+            ]);
+           if ($result){
+               return 1;
+           }
+        }else{
+            return 0;
+        }
+
     }
 
     public function RequisitionCanceled(Request $request){
         $requisition_id = $request->input('requisition_id');
+        $canceled_date= $request->input('canceled_date');
         $canceled_by= $request->input('canceled_by');
-        $result = RequisitionModel::where('requisition_id',$requisition_id)->update([
-            'status'=>4,
-            'canceled_by'=>$canceled_by,
-            'canceled_date'=>date("Y-m-d h:i:s"),
-        ]);
-        return $result;
+
+        $present_date = date("Y-m-d");
+        $Requisition = RequisitionModel::where('requisition_id',$requisition_id)->first();
+        $reqdate = date("Y-m-d", strtotime($Requisition->approved_date));
+
+
+
+        if ($reqdate <= $canceled_date && $present_date >= $canceled_date){
+
+            $result = RequisitionModel::where('requisition_id',$requisition_id)->update([
+                'status'=>4,
+                'canceled_by'=>$canceled_by,
+                'canceled_date'=>$canceled_date,
+            ]);
+            if ($result){
+                return 1;
+            }
+        }else{
+            return 0;
+        }
+
     }
 
 
 
     public function RequisitionApprovedConfirm(Request $request){
         $requisition_id = $request->input('requisition_id');
+        $approved_conf_date= $request->input('approved_conf_date');
         $approved_conf_by= $request->input('approved_conf_by');
-        $result = RequisitionModel::where('requisition_id',$requisition_id)->update([
-            'status'=>5,
-            'approved_conf_by'=>$approved_conf_by,
-            'approved_conf_date'=>date("Y-m-d h:i:s"),
-        ]);
-        return $result;
+
+        $present_date = date("Y-m-d");
+        $Requisition = RequisitionModel::where('requisition_id',$requisition_id)->first();
+        $reqdate = date("Y-m-d", strtotime($Requisition->approved_date));
+
+
+        if ($reqdate <= $approved_conf_date && $present_date >= $approved_conf_date){
+            $result = RequisitionModel::where('requisition_id',$requisition_id)->update([
+                'status'=>5,
+                'approved_conf_by'=>$approved_conf_by,
+                'approved_conf_date'=>$approved_conf_date,
+            ]);
+
+            if ($result){
+                return 1;
+            }
+        }else{
+            return 0;
+        }
+
     }
 
 
@@ -441,10 +504,20 @@ class RequisitionController extends Controller
     public function RequisitionDelivered(Request $request){
 
          $requisition_id= $request->input('requisition_id');
-         $user_id= $request->input('user_id');
+         $delivered_date= $request->input('delivered_date');
+         $user_id= $request->input('delivered_by');
+
+        $present_date = date("Y-m-d");
+        $Requisition = RequisitionModel::where('requisition_id',$requisition_id)->first();
+        $reqdate = date("Y-m-d", strtotime($Requisition->requisition_date));
+
+
          $RequisitionDara = RequisitionLogModel::join('view_total_quantity', 'view_total_quantity.product_id', '=', 'requisition_log.product_id')
              ->select('view_total_quantity.total_quantity','requisition_log.*')
              ->where('reference',$requisition_id)->get();
+
+
+        if($reqdate <= $delivered_date && $present_date >= $delivered_date){}else{return 2;}
 
         foreach ($RequisitionDara as $key => $Requisition) {
             $quantity = $Requisition['quantity'];
@@ -473,13 +546,14 @@ class RequisitionController extends Controller
                  'reference'=>$reference,
                  'user_ref'=>$user_ref,
                  'status'=>$status,
+                 'product_created_date'=>$delivered_date,
                  'created_date'=>$created_date,
                  ]);
          }
         $result = RequisitionModel::where('requisition_id',$requisition_id)->update([
             'status'=>3,
             'delivered_by'=>$user_id,
-            'delivered_date'=>date("Y-m-d h:i:s"),
+            'delivered_date'=>$delivered_date,
         ]);
         if ($result){
             return 1;

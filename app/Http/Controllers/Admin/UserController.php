@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Intervention\Image\Facades\Image;
 use function PHPUnit\Framework\isEmpty;
 use function Ramsey\Uuid\Generator\timestamp;
@@ -114,30 +115,18 @@ class UserController extends Controller
             $data['user_image'] = $image_full_name;
             $res = User::insert($data);
             if ($res){
-                $success_notification = array(
-                    'success_message' => 'User Add Successfully',
-                );
-                return redirect('/user-list')->with($success_notification);
+                return back()->with('success_message','User Add Successfully!');
             }else{
-                $error_notification = array(
-                    'error_message' => 'User Add Fail',
-                );
-                return back()->with($error_notification);
+                return back()->with('error_message','User Add Fail!');
             }
 
         }else{
             $data['user_image'] = null;
             $res = User::insert($data);
             if ($res){
-                $success_notification = array(
-                    'success_message' => 'User Add Successfully!',
-                );
-                return redirect('/user-create')->with($success_notification);
+                return back()->with('success_message','User Add Successfully!');
             }else{
-                $error_notification = array(
-                    'error_message' => 'User Add Fail!',
-                );
-                return back()->with($error_notification);
+                return back()->with('error_message','User Add Fail!');
             }
         }
 
@@ -225,32 +214,95 @@ class UserController extends Controller
             $data['user_image'] = $image_full_name;
             $res = User::where('id','=',$id)->update($data);
             if ($res){
-                $success_notification = array(
-                    'success_message' => 'User Update Successfully',
-                );
-                return redirect('/user-list')->with($success_notification);
+                return back()->with('success_message','User Update Successfully!');
             }else{
-                $error_notification = array(
-                    'error_message' => 'User Update Fail',
-                );
-                return back()->with($error_notification);
+                return back()->with('error_message','User Update Fail!');
             }
 
         }
         else{
             $res = User::where('id','=',$id)->update($data);
             if ($res){
-                $success_notification = array(
-                    'success_message' => 'User Update Successfully!',
-                );
-                return redirect('/user-list')->with($success_notification);
+                return back()->with('success_message','User Update Successfully!');
             }else{
-                $error_notification = array(
-                    'error_message' => 'User Update Fail!',
-                );
-                return back()->with($error_notification);
+                return back()->with('error_message','User Update Fail!');
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
+    public function UserPasswordUpdatePage($id){
+        $user = User::where('id','=',$id)->first();
+        if (Auth::user()->role <=2){
+            return view('Admin/Pages/UserPages/UpdatePassword',compact('user'));
+        }
+        return back();
+    }
+
+    public function UserPasswordUpdate(Request $request, $id){
+        $validation = $request->validate([
+            'password' => 'required|min:5|max:12',
+            'confiem_password' => 'required|same:password',
+        ]);
+
+        $data =  array();
+        $data['password'] = Hash::make($request->password);
+        $data['modifier'] = $request->creator;
+        $data['modified_date'] = date("Y-m-d h:i:s");
+
+        $userS = User::where('id','=',$id)->first();
+        $userole = $userS->role;
+
+        if (Auth::user()->role ==1){
+            $res = User::where('id','=',$id)->update($data);
+            return back()->with('success_message','Password Update Successfully!');
+        }
+        if (Auth::user()->role ==2){
+            if ($userole == 1){
+                return back();
+            }else{
+                $res = User::where('id','=',$id)->update($data);
+                return back()->with('success_message','Password Update Successfully!');
+            }
+        }
+        return back()->with('error_message','Password Update Fail!');
+    }
+
+
+    public function UserPasswordResetPage(){
+        return view('Admin/Pages/UserPages/ChangePassword');
+    }
+
+
+    public function UserPasswordReset(Request $request){
+        $validation = $request->validate([
+            'old_password' => 'required|min:5|max:12',
+            'password' => 'required|min:5|max:12',
+            'confiem_password' => 'required|same:password',
+        ]);
+
+        $data =  array();
+        $data['password'] = Hash::make($request->password);
+
+        $userS = User::where('id','=',Auth::user()->id)->first();
+        if ($userS){
+            if (Hash::check($request->old_password,$userS->password)){
+                $res = User::where('id','=',Auth::user()->id)->update($data);
+                return redirect('/user-pass-reset')->with('success_message','Password Reset Successfully!.');
+            }else{
+                return redirect('/user-pass-reset')->with('error_message','Password not matches !.');
+            }
+        }
+    }
+
+
 
 }

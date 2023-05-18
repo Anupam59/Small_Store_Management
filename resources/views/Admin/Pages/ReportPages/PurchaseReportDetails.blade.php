@@ -141,7 +141,7 @@
                                         <div class="col-md-4 mt-3 colBlock">
                                             <div class="flex-root d-flex flex-column flexPrint">
                                                 <span class="text-muted">Date</span>
-                                                <span class="fs-5">{{ date('d M, Y',strtotime($Purchase->created_date))}}</span>
+                                                <span class="fs-5">{{ date('d M, Y',strtotime($Purchase->purchase_date))}}</span>
                                             </div>
                                         </div>
 

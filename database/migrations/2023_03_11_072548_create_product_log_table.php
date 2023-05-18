@@ -27,6 +27,7 @@ return new class extends Migration
             $table->integer('user_ref');
 
             $table->tinyInteger('status')->default(1);
+            $table->timestamp('product_created_date')->nullable();
             $table->timestamp('created_date')->default(DB::raw('CURRENT_TIMESTAMP'));
         });
     }

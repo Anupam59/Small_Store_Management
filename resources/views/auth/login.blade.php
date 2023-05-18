@@ -23,7 +23,7 @@
                         <form class="form w-100" novalidate="novalidate" action="{{ route('sample.validate_login') }}" method="post">
                             @csrf
                             <div class="text-center mb-11">
-                                <h1 class="text-dark fw-bolder mb-3" style="font-variant: small-caps; font-size: 30px;">Stock Register</h1>
+                                <h1 class="text-dark fw-bolder mb-3" style="font-variant: small-caps; font-size: 30px;">Stock Register of Divisional Commissioner's Office, Sylhet</h1>
                                 <div class="text-gray-500 fw-semibold fs-6">Sign in to continue. </div>
                             </div>
 
@@ -68,12 +68,12 @@
 
 
             <!--begin::Aside-->
-            <div class="d-flex flex-lg-row-fluid w-lg-50 bgi-size-cover bgi-position-center order-1 order-lg-2" style="background-image: url({{ asset('Admin/assets/media/misc/auth-bg.png') }})">
+            <div class="d-flex flex-lg-row-fluid w-lg-50 bgi-size-cover bgi-position-center order-1 order-lg-2" style="background-color: #fff2f5">
                 <!--begin::Content-->
                 <div class="d-flex flex-column flex-center py-7 py-lg-15 px-5 px-md-15 w-100">
                     <!--begin::Logo-->
                     <a href="#" class="mb-0 mb-lg-12">
-                        <img alt="Logo" src="{{ asset('Images/stockicon.png') }}" class="h-60px h-lg-75px" />
+                        <img alt="Logo" src="{{ asset('images/sr-logo.png') }}" class="h-60px h-lg-75px" />
                     </a>
                     <!--end::Logo-->
 

@@ -40,53 +40,6 @@
 
                 <!--begin::Actions  Filter-->
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
-                    <div class="m-0">
-                        <a href="#" class="btn btn-sm btn-flex bg-body btn-color-gray-700 btn-active-color-primary fw-bold" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                        <span class="svg-icon svg-icon-6 svg-icon-muted me-1">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z" fill="currentColor" />
-                            </svg>
-                        </span>Filter</a>
-                        <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true" id="kt_menu_63de6bfc33b19">
-                            <div class="px-7 py-5">
-                                <div class="fs-5 text-dark fw-bold">Filter Options</div>
-                            </div>
-                            <div class="separator border-gray-200"></div>
-                            <div class="px-7 py-5">
-                                <!--begin::Input group-->
-                                <div class="mb-10">
-                                    <label class="form-label fw-semibold">Email:</label>
-                                    <div>
-                                        <select class="form-select form-select-solid" data-kt-select2="true" data-placeholder="Select option" data-dropdown-parent="#kt_menu_63de6bfc33b19" data-allow-clear="true">
-                                            <option>Select Status</option>
-                                            <option value="1">Active</option>
-                                            <option value="2">Inactive</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <!--end::Input group-->
-
-                                <!--begin::Input group-->
-                                <div class="mb-10">
-                                    <label class="form-label fw-semibold">Status:</label>
-                                    <div>
-                                        <select class="form-select form-select-solid" data-kt-select2="true" data-placeholder="Select option" data-dropdown-parent="#kt_menu_63de6bfc33b19" data-allow-clear="true">
-                                            <option>Select Status</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <!--end::Input group-->
-
-
-                                <!--begin::Actions-->
-                                <div class="d-flex justify-content-end">
-                                    <button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true">Reset</button>
-                                    <button type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Apply</button>
-                                </div>
-                                <!--end::Actions-->
-                            </div>
-                        </div>
-                    </div>
                     <a href="/purchase-list" class="btn btn-sm fw-bold btn-primary">Purchase List</a>
                 </div>
                 <!--end::Actions Filter-->
@@ -114,8 +67,10 @@
                             @endif
                             {{--                            <div class="mb-3">{!! DNS2D::getBarcodeHTML('Anupam Talukdar', 'QRCODE') !!}</div>--}}
                             <div class="separator"></div>
+
                             <div class="row">
-                                <div class="col-md-6">
+
+                                <div class="col-md-4">
                                     <div class="fv-row mb-5 fv-plugins-icon-container">
                                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                             <span class="required">Supplier Name</span>
@@ -124,7 +79,8 @@
 
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+
+                                <div class="col-md-4">
                                     <div class="fv-row mb-5 fv-plugins-icon-container">
                                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                             <span>Memo Number</span>
@@ -132,6 +88,16 @@
                                         <input id="MemoNumber" type="text" class="form-control form-control-lg form-control-solid" name="purchase_name" placeholder="Memo Number" value="">
                                     </div>
                                 </div>
+
+                                <div class="col-md-4">
+                                    <div class="fv-row mb-5 fv-plugins-icon-container">
+                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                            <span class="required">Date</span>
+                                        </label>
+                                        <input id="PurchaseDate" type="date" class="form-control form-control-lg form-control-solid" name="purchase_date" value="{{date("Y-m-d")}}" placeholder="Date Set" value="">
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="row">
                                 <div class="col-md-9">
@@ -350,12 +316,15 @@
             let total_quantity = $('#TotalQuantity').html();
             let supplier = $('#SupplierName').val();
             let memo_number = $('#MemoNumber').val();
+            let purchase_date = $('#PurchaseDate').val();
             let note = $('#PurchaseNote').val();
             let creator = $('#UserId').val();
             let purItem = $('#PurItem').html();
 
             if (supplier.length == 0){
                 toastr.warning("Supplier Name NoT Empty!");
+            }else if (purchase_date.length == 0){
+                toastr.warning("Purchase Date NoT Empty!");
             }else if(purItem == 0){
                 toastr.warning("Please Some Product Add Now !");
             }else{
@@ -363,6 +332,7 @@
                     total_quantity:total_quantity,
                     supplier:supplier,
                     memo_number:memo_number,
+                    purchase_date:purchase_date,
                     note:note,
                     creator:creator,
                 }).then(function (response) {

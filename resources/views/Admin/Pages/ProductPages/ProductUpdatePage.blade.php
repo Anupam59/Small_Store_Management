@@ -140,10 +140,10 @@
                                     <div class="col-md-4">
                                         <div class="fv-row mb-5 fv-plugins-icon-container">
                                             <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                                <span class="required">Unite</span>
+                                                <span class="required">Unit</span>
                                             </label>
                                             <select name="unite_id" aria-label="Select a Timezone" data-control="select2" data-placeholder="Select Unite" class="form-control form-control-lg form-control-solid" required>
-                                                <option value="">Select Unite</option>
+                                                <option value="">Select Unit</option>
                                                 @if(!$Unite->isEmpty())
                                                     @foreach($Unite as $UniteItem)
                                                         <option value="{{ $UniteItem->unite_id }}" @if($UniteItem->unite_id == $Product->unite_id) {{ 'selected' }} @endif>{{ $UniteItem->unite_name }}</option>

@@ -22,3 +22,51 @@
 .TotalSize{
     margin-left: 10px;
 }
+.actionModal{
+    width: 154px !important;
+}
+
+
+ .imageIconD{
+     margin-top: -15px;
+     width: 250px;
+ }
+
+
+.header, .header-space,
+.footer ,.footer-space {
+    height: 100px;
+}
+.header {
+    position: fixed;
+    top: 0;
+}
+.footer {
+    position: fixed;
+    bottom: 0;
+}
+
+@media print {
+
+    .imageIconD{
+        margin-top: -10px;
+        width: 200px;
+    }
+    .notPrint{
+        display: none !important;
+    }
+    .rowBlock{
+        background-color: red !important;
+    }
+    .colBlock{
+        width: 200px !important;
+    }
+    .colImage{
+        width: 300px !important;
+    }
+    .colTitle{
+        width: 300px !important;
+    }
+
+}
+

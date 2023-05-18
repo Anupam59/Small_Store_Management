@@ -15,7 +15,11 @@ class PurchaseController extends Controller
 
 
     public function ProductPurchaseCreate(){
-        $Product = ProductModel::where('status',1)->get();
+
+        $storeS = Auth::user()->store_manager;
+        $StoreArray = explode(' ',$storeS);
+
+        $Product = ProductModel::where('status',1)->whereIn('store_id',$StoreArray)->get();
         if(Auth::user()->role == 5){
             return view('Admin/Pages/PurchasePages/PurchaseCreatePage',compact('Product'));
         }else{
@@ -85,6 +89,7 @@ class PurchaseController extends Controller
         $supplier = $request->input('supplier');
         $memo_number = $request->input('memo_number');
         $note = $request->input('note');
+        $purchase_date = $request->input('purchase_date');
         $creator = $request->input('creator');
         $modifier = $request->input('creator');
         $created_date = date("Y-m-d h:i:s");
@@ -95,6 +100,7 @@ class PurchaseController extends Controller
             'supplier'=>$supplier,
             'memo_number'=>$memo_number,
             'note'=>$note,
+            'purchase_date'=>$purchase_date,
             'creator'=>$creator,
             'modifier'=>$modifier,
             'created_date'=>$created_date,
@@ -116,6 +122,7 @@ class PurchaseController extends Controller
                 'reference'=>$reference,
                 'user_ref'=>$user_ref,
                 'status'=>$status,
+                'product_created_date'=>$purchase_date,
                 'created_date'=>$created_date,
             ]);
         }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\FeaturesController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProductSummaryController;
 use App\Http\Controllers\Admin\PropertyTypeController;
 use App\Http\Controllers\Admin\PurchaseController;
 use App\Http\Controllers\Admin\ReportController;
@@ -68,6 +69,13 @@ Route::middleware('isLoggedIn')->group(function (){
     Route::get('user-edit/{id}', [UserController::class, 'UserEdit']);
     Route::post('user-update/{id}', [UserController::class, 'UserUpdate']);
 
+    Route::get('user-pass-update/{id}', [UserController::class, 'UserPasswordUpdatePage']);
+    Route::post('user-passupdate/{id}', [UserController::class, 'UserPasswordUpdate']);
+    Route::get('user-pass-reset', [UserController::class, 'UserPasswordResetPage']);
+    Route::post('user-passreset', [UserController::class, 'UserPasswordReset']);
+
+
+
     Route::get('store-list', [StoreController::class, 'StoreIndex'])->name('store.list');
     Route::get('store-create', [StoreController::class, 'StoreCreate'])->name('store.create');
     Route::post('store-entry', [StoreController::class, 'StoreEntry'])->name('store.entry');
@@ -99,6 +107,12 @@ Route::middleware('isLoggedIn')->group(function (){
     Route::post('product-update/{id}', [ProductController::class, 'ProductUpdate']);
     Route::get('product-log-list', [ProductController::class, 'ProductLogIndex'])->name('product.log.list');
     Route::post('product-stock', [ProductController::class, 'ProductStock']);
+
+
+
+    Route::get('product-summary-report', [ProductSummaryController::class, 'ProductSummaryIndex']);
+
+
 
     Route::get('product-purchase', [PurchaseController::class, 'ProductPurchaseCreate']);
     Route::post('product-purchase-cart', [PurchaseController::class, 'ProductPurchaseCart']);

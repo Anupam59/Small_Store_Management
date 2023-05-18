@@ -47,6 +47,7 @@
             <!--end::Toolbar container-->
         </div>
         <!--end::Toolbar-->
+
         <!--begin::Content-->
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <!--begin::Content container-->
@@ -63,30 +64,102 @@
                                 <!--begin::Wrapper-->
                                 <div class="d-flex flex-column gap-7 gap-md-10">
                                     <!--begin::Message-->
-                                    <div class="fw-bold fs-2">{{ $Requisition->name }}
-                                        <span class="fs-6">({{ $Requisition->email }})</span>,
+                                    <div class="fw-bold fs-2">{{ $Requisition->creator_by }}
+                                        <span class="fs-6">({{ $Requisition->creator_email }})</span>,
                                         <br />
                                         <span class="text-muted fs-5">{{ $Requisition->note }}</span></div>
                                     <!--begin::Message-->
+
                                     <!--begin::Separator-->
                                     <div class="separator"></div>
                                     <!--begin::Separator-->
+
                                     <!--begin::Order details-->
                                     <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
+
                                         <div class="flex-root d-flex flex-column">
                                             <span class="text-muted">Requisition Id</span>
                                             <span class="fs-5">{{ $Requisition->requisition_id }}</span>
                                         </div>
                                         <div class="flex-root d-flex flex-column">
                                             <span class="text-muted">Date</span>
-                                            <span class="fs-5">{{ date('d M, Y',strtotime($Requisition->created_date))}}</span>
+                                            <span class="fs-5">{{ date('d M, Y',strtotime($Requisition->requisition_date))}}</span>
                                         </div>
                                         <div class="flex-root d-flex flex-column">
                                             <span class="text-muted">Department</span>
                                             <span class="fs-5">{{ $Requisition->department_name }}</span>
                                         </div>
+
+                                        <div class="flex-root d-flex flex-column">
+                                            <span class="text-muted">Store</span>
+                                            <span class="fs-5">{{ $Requisition->store_name }}</span>
+                                        </div>
+
+
                                     </div>
                                     <!--end::Order details-->
+
+
+                                    <!--begin::Order details-->
+                                    <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
+
+
+                                        <div class="flex-root d-flex flex-column">
+                                            <span class="text-muted">Approved By:</span>
+                                            @if($Requisition->approved_by != null)
+                                            <span class="fs-5">{{ $Requisition->approved_by }}</span>
+                                            <span class="fs-5">{{ date('d M, Y',strtotime($Requisition->approved_date))}}</span>
+                                            @else
+                                                <span class="fs-5">-------</span>
+                                            @endif
+                                        </div>
+
+
+
+
+                                        <div class="flex-root d-flex flex-column">
+                                            <span class="text-muted">Approved Confirm: </span>
+                                            @if($Requisition->approved_conf_by != null)
+                                            <span class="fs-5">{{ $Requisition->approved_conf_by }}</span>
+                                            <span class="fs-5">{{ date('d M, Y',strtotime($Requisition->approved_conf_date))}}</span>
+                                            @else
+                                                <span class="fs-5">-------</span>
+                                            @endif
+                                        </div>
+
+
+
+
+                                        <div class="flex-root d-flex flex-column">
+                                            <span class="text-muted">Canceled By:</span>
+                                            @if($Requisition->canceled_by != null)
+                                            <span class="fs-5">{{ $Requisition->canceled_by }}</span>
+                                            <span class="fs-5">{{ date('d M, Y',strtotime($Requisition->canceled_date))}}</span>
+                                            @else
+                                                <span class="fs-5">-------</span>
+                                            @endif
+                                        </div>
+
+
+
+
+                                        <div class="flex-root d-flex flex-column">
+                                            <span class="text-muted">Delivered By:</span>
+                                            @if($Requisition->delivered_by != null)
+                                            <span class="fs-5">{{ $Requisition->delivered_by }}</span>
+                                            <span class="fs-5">{{ date('d M, Y',strtotime($Requisition->delivered_date))}}</span>
+                                            @else
+                                                <span class="fs-5">-------</span>
+                                            @endif
+                                        </div>
+
+
+
+                                    </div>
+                                    <!--end::Order details-->
+
+                                    <hr>
+
 
 
                                     <!--begin:Order summary-->
@@ -139,6 +212,42 @@
                                             @endif
 
                                         </div>
+
+
+
+                                        @if($Requisition->status == 1 && auth()->user()->role == 3)
+                                            <div class="col-md-4">
+                                                <div class="row mb-3">
+                                                    <label class="col-sm-2 col-form-label">Date:</label>
+                                                    <div class="col-sm-10">
+                                                        <input id="RequisitionDate" type="date" class="form-control form-control-lg form-control-solid" name="requisition_date" value="{{date("Y-m-d")}}" placeholder="Date Set" value="" >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @elseif($Requisition->status == 2 && auth()->user()->role == 6)
+                                            <div class="col-md-4">
+                                                <div class="row mb-3">
+                                                    <label class="col-sm-2 col-form-label">Date:</label>
+                                                    <div class="col-sm-10">
+                                                        <input id="RequisitionDate" type="date" class="form-control form-control-lg form-control-solid" name="requisition_date" value="{{date("Y-m-d")}}" placeholder="Date Set" value="" >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @elseif($Requisition->status == 5 && auth()->user()->role == 5)
+                                            <div class="col-md-4">
+                                                <div class="row mb-3">
+                                                    <label class="col-sm-2 col-form-label">Date:</label>
+                                                    <div class="col-sm-10">
+                                                        <input id="RequisitionDate" type="date" class="form-control form-control-lg form-control-solid" name="requisition_date" value="{{date("Y-m-d")}}" placeholder="Date Set" value="" >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+
+
+
+
+
                                         <!--end::Table-->
                                         @if($Requisition->file)
                                         <div class="col-md-12">
@@ -169,6 +278,7 @@
                                 <!--end::Wrapper-->
                             </div>
                             <!--end::Body-->
+
 
                             <!-- begin::Footer-->
                             <div class="d-flex flex-stack flex-wrap mt-lg-20 pt-13 d-none">
@@ -208,13 +318,19 @@
 
         $('#ApprovedBtnId').click(function () {
             var RequisitionId = $('#RequisitionId').html();
+            var RequisitionDate = $('#RequisitionDate').val();
             var UserId = $('#UserId').html();
             axios.post('/requisition-approved',{
                 requisition_id:RequisitionId,
+                approved_date:RequisitionDate,
                 approved_by:UserId,
             }).then(function (response) {
-                toastr.success("Requisition Approved Successfully Done");
-                window.location.replace("/requisition-list");
+                if (response.data == 1){
+                    toastr.success("Requisition Approved Successfully Done !");
+                    window.location.replace("/requisition-list");
+                }else {
+                    toastr.error("Please Check Your Approved Date !");
+                }
             }).catch(function (error) {
                 toastr.error("Something went to wrong ! try again");
             });
@@ -222,13 +338,20 @@
 
         $('#CanceledBtnId').click(function () {
             var RequisitionId = $('#RequisitionId').html();
+            var RequisitionDate = $('#RequisitionDate').val();
             var UserId = $('#UserId').html();
             axios.post('/requisition-canceled',{
                 requisition_id:RequisitionId,
+                canceled_date:RequisitionDate,
                 canceled_by:UserId,
             }).then(function (response) {
-                toastr.success("Requisition Canceled Successfully Done");
-                window.location.replace("/requisition-list");
+                if (response.data == 1){
+                    toastr.success("Requisition Canceled Successfully Done");
+                    window.location.replace("/requisition-list");
+                }else {
+                    toastr.error("Please Check Your Canceled Date !");
+                }
+
             }).catch(function (error) {
                 toastr.error("Something went to wrong ! try again");
             });
@@ -244,13 +367,19 @@
 
         $('#ApprovedConfirmBtnId').click(function () {
             var RequisitionId = $('#RequisitionId').html();
+            var RequisitionDate = $('#RequisitionDate').val();
             var UserId = $('#UserId').html();
             axios.post('/requisition-approved-conf',{
                 requisition_id:RequisitionId,
+                approved_conf_date:RequisitionDate,
                 approved_conf_by:UserId,
             }).then(function (response) {
-                toastr.success("Requisition Approved Successfully Done");
-                window.location.replace("/requisition-list");
+                if (response.data == 1){
+                    toastr.success("Approved Confirm Successfully Done");
+                    window.location.replace("/requisition-list");
+                }else {
+                    toastr.error("Please Check Your Confirm Date !");
+                }
             }).catch(function (error) {
                 toastr.error("Something went to wrong ! try again");
             });
@@ -258,13 +387,17 @@
 
         $('#DeliveredBtnId').click(function(){
             let RequisitionId = $('#RequisitionId').html();
+            var RequisitionDate = $('#RequisitionDate').val();
             let UserId = $('#UserId').html();
             axios.post('/requisition-delivered',{
                 requisition_id:RequisitionId,
-                user_id:UserId,
+                delivered_date:RequisitionDate,
+                delivered_by:UserId,
             }).then(function (response) {
                 if (response.data == 0){
-                    toastr.success("Product Not available, Please Purchase!");
+                    toastr.warning("Product Not available, Please Purchase!");
+                }else if (response.data == 2){
+                    toastr.error("Please Check Your Delivered Date !");
                 }else{
                     toastr.success("Requisition Delivered Successfully Done");
                     window.location.replace("/requisition-list");

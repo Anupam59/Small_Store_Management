@@ -2,38 +2,6 @@
 
 @section('content')
 
-    <style>
-
-        .imageIconD{
-            margin-top: -15px;
-            width: 250px;
-        }
-
-        @media print {
-
-            .imageIconD{
-                margin-top: -10px;
-                width: 200px;
-            }
-            .notPrint{
-                display: none !important;
-            }
-            .rowBlock{
-                background-color: red !important;
-            }
-            .colBlock{
-                width: 200px !important;
-            }
-            .colImage{
-                width: 300px !important;
-            }
-            .colTitle{
-                width: 300px !important;
-            }
-
-        }
-
-    </style>
 
     <!--begin::Content wrapper-->
     <div class="d-flex flex-column flex-column-fluid">
@@ -123,7 +91,7 @@
 
 
                                     <!--begin::Message-->
-                                    <div class="fw-bold fs-2">{{ $Requisition->creator }}
+                                    <div class="fw-bold fs-2">{{ $Requisition->creator_by }}
                                         <span class="fs-6">({{ $Requisition->email }})</span>,
                                         <br />
                                         <span class="text-muted fs-5">{{ $Requisition->note }}</span></div>

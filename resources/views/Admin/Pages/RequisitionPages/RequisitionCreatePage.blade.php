@@ -68,7 +68,7 @@
                             <div class="separator"></div>
                             <div class="row">
 
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="fv-row mb-5 fv-plugins-icon-container">
                                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                             <span class="required">Department</span>
@@ -88,7 +88,7 @@
                                 </div>
 
 
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="fv-row mb-5 fv-plugins-icon-container">
                                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                             <span class="required">Store</span>
@@ -104,6 +104,20 @@
 
                                             @endif
                                         </select>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="col-md-4">
+                                    <div class="fv-row mb-5 fv-plugins-icon-container">
+                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
+                                            <span class="required">Date</span>
+                                        </label>
+
+                                        <input id="RequisitionDate" type="date" class="form-control form-control-lg form-control-solid" name="requisition_date" value="{{date("Y-m-d")}}" placeholder="Date Set" value="">
+
                                     </div>
                                 </div>
 
@@ -487,6 +501,7 @@
             let total_quantity = $('#TotalQuantity').html();
             let department_id = $('#DepartmentId').val();
             let store_id = $('#StoreId').val();
+            let requisition_date = $('#RequisitionDate').val();
             let note = $('#RequisitionNote').val();
             let file_name = $('#RequisitionFileNameId').val();
             let file = $('#RequisitionFileId').prop('files')[0];
@@ -508,6 +523,7 @@
                 formData.append('total_quantity',total_quantity);
                 formData.append('department_id',department_id);
                 formData.append('store_id',store_id);
+                formData.append('requisition_date',requisition_date);
                 formData.append('note',note);
                 formData.append('file_name',file_name);
                 formData.append('file',file);

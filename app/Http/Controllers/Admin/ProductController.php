@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\CategoryModel;
+use App\Models\DepartmentModel;
 use App\Models\ProductLogModel;
 use App\Models\ProductModel;
 use App\Models\PurchaseModel;
@@ -23,13 +24,32 @@ class ProductController extends Controller
 //    }
 
     public function ProductIndex(){
-        $Product = ProductModel::join('users', 'users.id', '=', 'product.modifier')
+
+        $category_id = \request('category_id');
+        $store_id = \request('store_id');
+
+        $query = ProductModel::join('users', 'users.id', '=', 'product.modifier')
             ->leftJoin('view_total_quantity', 'view_total_quantity.product_id', '=', 'product.product_id')
-            ->select('users.name','view_total_quantity.total_quantity','product.*')
-            ->orderBy('product.product_id','desc')
-            ->paginate(10);
-        return view('Admin/Pages/ProductPages/ProductListPage',compact('Product'));
+            ->leftJoin('category', 'category.category_id', '=', 'product.category_id')
+            ->leftJoin('store', 'store.store_id', '=', 'product.store_id')
+            ->select('users.name','view_total_quantity.total_quantity','category.category_name','store.store_name','product.*')
+            ->orderBy('product.product_id','desc');
+
+         if ($category_id){
+             $query = $query->where('category.category_id', '=',$category_id);
+         }
+         if ($store_id){
+             $query = $query->where('store.store_id', '=',$store_id);
+         }
+
+         $Product = $query->paginate(20);
+
+        $Category = CategoryModel::where('status',1)->get();
+        $Store = StoreModel::where('status',1)->get();
+
+        return view('Admin/Pages/ProductPages/ProductListPage',compact('Product','Category','Store'));
     }
+
 
     public function ProductCreate(){
         $user_id = Auth::user()->role;
@@ -63,11 +83,16 @@ class ProductController extends Controller
         $data['unite_id'] = $request->unite_id;
 
         $data['barcode'] = $request->barcode;
+//        $data['purchase_date'] = $request->purchase_date;
         $data['status'] = 1;
         $data['creator'] = $request->creator;
         $data['modifier'] = $request->creator;
         $data['created_date'] = date("Y-m-d h:i:s");
         $data['modified_date'] = date("Y-m-d h:i:s");
+
+        $purchase_date = $request->input('purchase_date');
+
+
         $ProductId = ProductModel::insertGetId($data);
 
         $PurchaseId = PurchaseModel::insertGetId([
@@ -75,6 +100,7 @@ class ProductController extends Controller
             'supplier'=>"Initial Supplier",
             'memo_number'=>$request->reference,
             'note'=>"This is Initial Note",
+            'purchase_date'=>$purchase_date,
             'creator'=>$request->creator,
             'modifier'=>$request->creator,
             'created_date'=>date("Y-m-d h:i:s"),
@@ -90,7 +116,7 @@ class ProductController extends Controller
             $dataLog['reference'] = $PurchaseId;
             $dataLog['user_ref'] = $request->creator;
             $dataLog['status'] = 1;
-            $dataLog['created_date'] = date("Y-m-d h:i:s");
+            $dataLog['created_date'] = $purchase_date;
 
             $res = ProductLogModel::insert($dataLog);
 

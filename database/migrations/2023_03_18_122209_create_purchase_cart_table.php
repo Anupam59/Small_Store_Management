@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('product_name',100);
             $table->integer('quantity')->default(1);
             $table->integer('user_id');
+            $table->date('purchase_date')->nullable();
             $table->date('created_date');
         });
     }

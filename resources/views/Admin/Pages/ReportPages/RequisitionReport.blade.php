@@ -5,7 +5,7 @@
     <!--begin::Content wrapper-->
     <div class="d-flex flex-column flex-column-fluid">
         <!--begin::Toolbar-->
-        <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
+        <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6 notPrint">
             <!--begin::Toolbar container-->
             <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
                 <!--begin::Page title-->
@@ -164,6 +164,11 @@
                             </div>
 
                         </div>
+
+
+                        <a href="#" class="btn btn-sm btn-primary fw-bold" onclick="window.print();">
+                            Print
+                        </a>
                     </div>
 
 
@@ -189,7 +194,7 @@
                             <!--begin::Table-->
                             <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
                                 <!--begin::Table head-->
-                                <thead class="text-start">
+                                <thead class="text-start header-space">
                                 <!--begin::Table row-->
                                 <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                                     <th class="w-10px pe-2">SL.</th>
@@ -247,10 +252,9 @@
 {{--                                                @endforeach--}}
 {{--                                            </div>--}}
 {{--                                        </table>--}}
+
                                     </tr>
-
                                 @endforeach
-
                                 </tbody>
                             </table>
 
@@ -277,7 +281,6 @@
             <!--end::Content container-->
         </div>
         <!--end::Content table -->
-
     </div>
     <!--end::Content wrapper-->
 

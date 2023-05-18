@@ -10,7 +10,7 @@
     <!--begin::Content wrapper-->
     <div class="d-flex flex-column flex-column-fluid">
         <!--begin::Toolbar-->
-        <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
+        <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6 notPrint">
             <!--begin::Toolbar container-->
             <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
                 <!--begin::Page title-->
@@ -39,7 +39,6 @@
 
                 </div>
                 <!--end::Page title-->
-
 
 
                 <!--begin::Actions  Filter-->
@@ -107,6 +106,11 @@
                             </div>
 
                         </div>
+
+                        <a href="#" class="btn btn-sm btn-primary fw-bold" onclick="window.print();">
+                            Print
+                        </a>
+
                     </div>
                     @if($user_role == 5 )
                         <a href="/product-purchase" class="btn btn-sm fw-bold btn-primary">Purchase Create</a>
@@ -155,7 +159,7 @@
                                     <tr>
                                         <td>{{ $key+1 }}</td>
 
-                                        <td>{{ date("d-m-Y", strtotime($PurchaseI->created_date)) }}</td>
+                                        <td>{{ date("d-m-Y", strtotime($PurchaseI->purchase_date)) }}</td>
 
                                         <td>{{ $PurchaseI->total_quantity }}</td>
                                         <td>{{ $PurchaseI->supplier }}</td>
@@ -171,7 +175,7 @@
 
 
                                         <td class="text-end">
-                                            <a href="/purchase-report-details/{{ $PurchaseI->purchase_id }}" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions</a>
+                                            <a href="/purchase-report-details/{{ $PurchaseI->purchase_id }}" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Details</a>
                                         </td>
 
                                     </tr>

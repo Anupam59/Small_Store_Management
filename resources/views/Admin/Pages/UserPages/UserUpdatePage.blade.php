@@ -63,6 +63,23 @@
                                 </div>
                             @endif
 
+
+
+                                @if (session('success_message'))
+                                    <div class="alert alert-success">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> {{ session('success_message') }}
+                                    </div>
+                                @elseif (session('error_message'))
+                                    <div class="alert alert-danger">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> {{ session('error_message') }}
+                                    </div>
+                                @else
+
+                                @endif
+
+
+
+
                             <form action="{{url('/user-update/'.$Users->id)}}" method="post" class="form" enctype="multipart/form-data">
                                 @csrf
                                 <div class="d-flex flex-center flex-column py-5">

@@ -104,6 +104,31 @@
     var avatar3 = new KTImageInput('kt_image_3');
 </script>
 
+<script>
+    goodMessage();
+    errorMessage();
+
+    function errorMessage() {
+        let e = $('#MessageE').val();
+        if (e!=null){
+            toastr.error(e);
+        }else{
+            console.log("good");
+        }
+    }
+
+    function goodMessage() {
+        let g = $('#MessageS').val();
+        if (g!=null){
+            toastr.error(g);
+        }else{
+            console.log("good");
+        }
+    }
+
+</script>
+
+
 @yield('script')
 <!--end::Javascript-->
 </body>

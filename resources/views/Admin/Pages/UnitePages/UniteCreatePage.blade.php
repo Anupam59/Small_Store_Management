@@ -39,8 +39,7 @@
 
                 <!--begin::Actions  Filter-->
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
-
-                    <a href="/unite-list" class="btn btn-sm fw-bold btn-primary">Unite List</a>
+                    <a href="/unite-list" class="btn btn-sm fw-bold btn-primary">Unit List</a>
                 </div>
                 <!--end::Actions Filter-->
             </div>

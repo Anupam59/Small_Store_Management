@@ -166,7 +166,7 @@ class ReportController extends Controller
             ->select('users.name','purchase.*')
             ->orderBy('purchase_id','desc');
         if($start_date && $end_date){
-            $query = $query->whereBetween('purchase.created_date', [$start_date, $end_date]);
+            $query = $query->whereBetween('purchase.purchase_date', [$start_date, $end_date]);
         }
         if ($supplier){
             $query = $query->where('supplier', 'like', '%' . $supplier . '%');

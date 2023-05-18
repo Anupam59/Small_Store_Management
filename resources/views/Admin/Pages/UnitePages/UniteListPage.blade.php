@@ -39,9 +39,7 @@
 
                 <!--begin::Actions  Filter-->
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
-
                     <a href="/unite-create" class="btn btn-sm fw-bold btn-primary">Create</a>
-
                 </div>
                 <!--end::Actions Filter-->
 
@@ -68,7 +66,7 @@
                                 <!--begin::Table row-->
                                 <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                                     <th class="w-10px pe-2">Id</th>
-                                    <th class="min-w-125px">Unite</th>
+                                    <th class="min-w-125px">Unit</th>
                                     <th class="min-w-125px">Modifier</th>
                                     <th class="min-w-125px">Status</th>
                                     <th class="min-w-125px">Created Date</th>

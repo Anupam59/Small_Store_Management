@@ -51,7 +51,9 @@
 
     <div id="kt_app_content" class="app-content flex-column-fluid">
         <div id="kt_app_content_container" class="app-container container-xxl">
-            <div class="card mb-5 mb-xxl-8">
+            <div class="card mb-5 mb-xxl-8 pb-5">
+
+
                 <div class="card-body pt-9 pb-0">
                 <!--begin::Details-->
                 <div class="d-flex flex-wrap flex-sm-nowrap">
@@ -133,7 +135,10 @@
                     <!--end::Info-->
                 </div>
                 <!--end::Details-->
+                    <a href="/user-pass-reset" class="btn btn-sm fw-bold btn-primary">Reset Password</a>
+
             </div>
+
             </div>
 
             <div class="row g-6 g-xl-9 d-none">
