@@ -157,12 +157,36 @@
                                 <!--begin::Table body-->
                                 <tbody class="text-gray-600 fw-semibold text-start">
 
+                                <?php
+                                    if($TodayTotal){
+                                        $Total = $TodayTotal->opening_stock;
+                                    }else{
+                                        $Total = 0;
+                                    }
+                                ?>
+                                {{ $Total }}
+
                                 @foreach($ProductSummary as $key => $ProductLogI)
+
+                                    <?php
+                                        $PreviousStock = $Total;
+                                        $TotalQuantity = $PreviousStock + $ProductLogI->purchase;
+                                        $RemainingBalance = $TotalQuantity - $ProductLogI->delivered;
+                                    ?>
                                     <tr>
                                         <td>{{ $key+1 }}</td>
-                                        <td>{{ date("d-m-Y", strtotime($ProductLogI->created_date)) }}</td>
-                                        <td><div class="badge badge-light fw-bold">{{ $ProductLogI->quantity }}</div></td>
+                                        <td>{{ date("d-m-Y", strtotime($ProductLogI->product_created_date)) }}</td>
+                                        <td>{{ $PreviousStock }}</td>
+                                        <td>{{ $ProductLogI->purchase }}</td>
+                                        <td>Memo{{ $key+1 }}</td>
+                                        <td>{{ $TotalQuantity }}</td>
+                                        <td>{{ $ProductLogI->delivered }}</td>
+                                        <td>{{ $RemainingBalance }}</td>
+                                        <td>-------</td>
                                     </tr>
+                                    <?php
+                                        $Total = $RemainingBalance;
+                                    ?>
                                 @endforeach
 
                                 </tbody>

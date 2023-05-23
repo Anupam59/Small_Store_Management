@@ -6,7 +6,7 @@
 <!--begin::Head-->
 <head><base href=""/>
     <title> Stock Register - A New Experience </title>
-    <link rel="icon" type="image/x-icon" href="{{ asset('images/stockicon.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('Images/stockicon.png') }}">
     <meta charset="utf-8" />
     <meta name="description" content="Product Quantity Stock Management Software" />
     <meta name="keywords" content="Stock, Software, Stock management, ITLab " />

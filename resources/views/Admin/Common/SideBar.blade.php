@@ -9,8 +9,8 @@
     <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo" style="background: #fff2f5;">
         <!--begin::Logo image-->
         <a href="/dashboard">
-            <img alt="Logo" src="{{asset('images/sr-logo.png')}}" class="h-50px app-sidebar-logo-default" />
-            <img alt="Logo" src="{{asset('images/logo-sm.png')}}" class="h-30px app-sidebar-logo-minimize" />
+            <img alt="Logo" src="{{asset('Images/sr-logo.png')}}" class="h-50px app-sidebar-logo-default" />
+            <img alt="Logo" src="{{asset('Images/logo-sm.png')}}" class="h-30px app-sidebar-logo-minimize" />
         </a>
         <!--end::Logo image-->
 

@@ -187,7 +187,7 @@
                                     <tr>
                                         <td>{{ $key+1 }}</td>
 
-                                        <td>{{ date("d-m-Y", strtotime($ProductLogI->created_date)) }}</td>
+                                        <td>{{ date("d-m-Y", strtotime($ProductLogI->product_created_date)) }}</td>
 
                                         <td>{{ $ProductLogI->product_name }}</td>
 
