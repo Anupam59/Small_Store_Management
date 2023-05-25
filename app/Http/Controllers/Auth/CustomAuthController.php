@@ -49,9 +49,21 @@ class CustomAuthController extends Controller
             'password'  =>  'required'
         ]);
         $credentials = $request->only('email', 'password');
+
         if(Auth::attempt($credentials))
         {
-            return redirect('dashboard');
+            $userStatus = Auth::User()->status;
+            if($userStatus=='1') {
+                return redirect('dashboard');
+            }
+            else{
+                
+                Session::flush();
+                Auth::logout();
+                return redirect('login')->with('success', 'You are not Accessible');
+
+            }
+            // return redirect('dashboard');
         }
         return redirect('login')->with('success', 'Login details are not valid');
     }

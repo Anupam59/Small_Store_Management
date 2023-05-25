@@ -107,6 +107,8 @@ class PurchaseController extends Controller
             'modified_date'=>$modified_date,
         ]);
         $purchases = PurchaseCartModel::where('user_id',$creator)->get();
+
+//        dd($purchases);
         foreach ($purchases as $key => $purchase) {
             $product_id = $purchase['product_id'];
             $product_mode = 2; //purchase mode = 2
@@ -120,6 +122,7 @@ class PurchaseController extends Controller
                 'product_mode'=>$product_mode,
                 'quantity'=>$quantity,
                 'reference'=>$reference,
+                'memo_number'=>$memo_number,
                 'user_ref'=>$user_ref,
                 'status'=>$status,
                 'product_created_date'=>$purchase_date,

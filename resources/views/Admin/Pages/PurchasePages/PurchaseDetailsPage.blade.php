@@ -78,8 +78,13 @@
                                             <span class="fs-5">{{ $Purchase->purchase_id }}</span>
                                         </div>
                                         <div class="flex-root d-flex flex-column">
-                                            <span class="text-muted">Date</span>
+                                            <span class="text-muted">Create Date</span>
                                             <span class="fs-5">{{ date('d M, Y',strtotime($Purchase->created_date))}}</span>
+                                        </div>
+
+                                        <div class="flex-root d-flex flex-column">
+                                            <span class="text-muted">Purchase Date</span>
+                                            <span class="fs-5">{{ date('d M, Y',strtotime($Purchase->purchase_date))}}</span>
                                         </div>
 {{--                                        <div class="flex-root d-flex flex-column">--}}
 {{--                                            <span class="text-muted">Department</span>--}}

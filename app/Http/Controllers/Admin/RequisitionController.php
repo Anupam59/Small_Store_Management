@@ -42,9 +42,10 @@ class RequisitionController extends Controller
 
         $PurchaseId = PurchaseModel::insertGetId([
             'total_quantity'=>0,
-            'supplier'=>"Initial Supplier",
-            'memo_number'=>"Initial",
+            'supplier'=>"P-DAO".$userId,
+            'memo_number'=>"P-DAO".$userId,
             'note'=>"This is Initial Note",
+            'purchase_date'=>date("Y-m-d h:i:s"),
             'creator'=>$userId,
             'modifier'=>$userId,
             'created_date'=>date("Y-m-d h:i:s"),
@@ -58,9 +59,12 @@ class RequisitionController extends Controller
             $dataLog['product_mode'] = 1;
             $dataLog['quantity'] = 0;
             $dataLog['reference'] = $PurchaseId;
+            $dataLog['memo_number'] = "P-DAO".$userId;
             $dataLog['user_ref'] = $userId;
             $dataLog['status'] = 1;
+            $dataLog['product_created_date'] = date("Y-m-d h:i:s");
             $dataLog['created_date'] = date("Y-m-d h:i:s");
+
 
             $res = ProductLogModel::insert($dataLog);
             if ($res){
@@ -533,7 +537,7 @@ class RequisitionController extends Controller
              $product_mode = 3; //Delivered mode = 3
              $quantity = $Requisition['quantity'];
              $total_quantity = $Requisition['total_quantity'];
-             $reference = 'Delivered';
+             $reference = 'SM'.$user_id;
              $user_ref = $user_id;
              $status = 1;
              $created_date = date("Y-m-d h:i:s");
@@ -544,6 +548,7 @@ class RequisitionController extends Controller
                  'product_mode'=>$product_mode,
                  'quantity'=>$quantity,
                  'reference'=>$reference,
+                 'memo_number'=>"S-D1",
                  'user_ref'=>$user_ref,
                  'status'=>$status,
                  'product_created_date'=>$delivered_date,

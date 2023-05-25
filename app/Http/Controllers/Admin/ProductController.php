@@ -25,6 +25,7 @@ class ProductController extends Controller
 
     public function ProductIndex(){
 
+        $product_id = \request('product_id');
         $category_id = \request('category_id');
         $store_id = \request('store_id');
 
@@ -38,6 +39,9 @@ class ProductController extends Controller
          if ($category_id){
              $query = $query->where('category.category_id', '=',$category_id);
          }
+        if ($product_id){
+            $query = $query->where('product.product_id', '=',$product_id);
+        }
          if ($store_id){
              $query = $query->where('store.store_id', '=',$store_id);
          }
@@ -114,9 +118,11 @@ class ProductController extends Controller
             $dataLog['product_mode'] = 1;
             $dataLog['quantity'] = $request->quantity;
             $dataLog['reference'] = $PurchaseId;
+            $dataLog['memo_number'] = $request->reference;
             $dataLog['user_ref'] = $request->creator;
             $dataLog['status'] = 1;
-            $dataLog['created_date'] = $purchase_date;
+            $dataLog['product_created_date'] = $purchase_date;
+            $dataLog['created_date'] = date("Y-m-d h:i:s");
 
             $res = ProductLogModel::insert($dataLog);
 

@@ -24,6 +24,7 @@ class ReportController extends Controller
 
         $dept_aoS = Auth::user()->dept_ao;
         $dept_ao_Array = explode(' ',$dept_aoS);
+
         $dept_adminS = Auth::user()->dept_admin;
         $dept_admin_Array = explode(' ',$dept_adminS);
 
@@ -92,6 +93,7 @@ class ReportController extends Controller
 //        dd($Requisition[0]->req_log[0]->product->product_name);
 
         $Dept = DepartmentModel::where('status',1);
+
         $dept_aoS = $userA->dept_ao;
         $dept_ao_Array = explode(' ',$dept_aoS);
 

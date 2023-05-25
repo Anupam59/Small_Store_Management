@@ -117,20 +117,19 @@
 
                                 <div class="col-md-3">
                                     <div class="fv-row mb-5 fv-plugins-icon-container">
+
                                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
                                             <span>Status</span>
                                         </label>
-
-                                        <select id="StatusId" aria-label="Select a Timezone" data-control="select2" data-placeholder="Select Status" class="form-control form-control-lg form-control-solid">
-                                            <option value="">Select Status</option>
-                                            @if(!$Department->isEmpty())
-                                                @foreach($Department as $DepartmentItem)
-                                                    <option value="{{ $DepartmentItem->department_id }}">{{ $DepartmentItem->department_name }}</option>
-                                                @endforeach
-                                            @else
-
-                                            @endif
+                                        <select id="StatusId" aria-label="Select a Timezone" data-control="select2" data-placeholder="Select Status" value="{{ Request::get('status') }}" class="form-control form-control-lg form-control-solid">
+                                            <option value=" " >Select Mode</option>
+                                            <option value="1" @if( Request::get('status') == "1") {{ 'selected' }} @endif>Pending</option>
+                                            <option value="2" @if( Request::get('status') == "2") {{ 'selected' }} @endif>Approved</option>
+                                            <option value="3" @if( Request::get('status') == "3") {{ 'selected' }} @endif>Delivered</option>
+                                            <option value="5" @if( Request::get('status') == "5") {{ 'selected' }} @endif>Approved Confirm</option>
+                                            <option value="4" @if( Request::get('status') == "4") {{ 'selected' }} @endif>Canceled</option>
                                         </select>
+
                                     </div>
                                 </div>
 

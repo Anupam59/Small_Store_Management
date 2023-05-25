@@ -20,7 +20,7 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            if (Auth::user()->role > 2 && $request->segment(1) != 'user-profile') {
+            if (Auth::user()->role > 2 && $request->segment(1) != 'user-profile' && $request->segment(1) != 'user-pass-reset' && $request->segment(1) != 'user-passreset') {
                 return redirect('dashboard');
             }
             return $next($request);

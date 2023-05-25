@@ -24,6 +24,7 @@ return new class extends Migration
             $table->integer('quantity');
 
             $table->string('reference',200)->nullable();
+            $table->string('memo_number',300)->nullable();
             $table->integer('user_ref');
 
             $table->tinyInteger('status')->default(1);

@@ -62,7 +62,7 @@
                                             <span>Category</span>
                                         </label>
                                         <select id="CategoryId" aria-label="Select a Timezone" data-control="select2" data-placeholder="Select Category" class="form-control form-control-lg form-control-solid" required>
-                                            <option value="">Select Category</option>
+                                            <option value=" ">Select Category</option>
                                             @if(!$Category->isEmpty())
                                                 @foreach($Category as $CatItem)
                                                     <option value="{{ $CatItem->category_id }}" @if( Request::get('category') == $CatItem->category_id) {{ 'selected' }} @endif>{{ $CatItem->category_name }}</option>
@@ -76,10 +76,10 @@
                                 <div class="col-md-3">
                                     <div class="fv-row mb-5 fv-plugins-icon-container">
                                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
-                                            <span>Mode</span>
+                                            <span>Store</span>
                                         </label>
                                         <select id="StoreId" aria-label="Select a Timezone" data-control="select2" data-placeholder="Select Store" class="form-control form-control-lg form-control-solid" required>
-                                            <option value="">Select Store</option>
+                                            <option value=" ">Select Store</option>
                                             @if(!$Store->isEmpty())
                                                 @foreach($Store as $StoreItem)
                                                     <option value="{{ $StoreItem->store_id }}" @if( Request::get('store') == $StoreItem->store_id) {{ 'selected' }} @endif>{{ $StoreItem->store_name }}</option>
@@ -107,7 +107,7 @@
                                             <span>Mode</span>
                                         </label>
                                         <select id="ProductMode" aria-label="Select a Timezone" data-control="select2" data-placeholder="Select Mode" value="{{ Request::get('product_mode') }}" class="form-control form-control-lg form-control-solid">
-                                            <option value="" >Select Product</option>
+                                            <option value=" " >Select Mode</option>
                                             <option value="1" @if( Request::get('product_mode') == "1") {{ 'selected' }} @endif>Initial</option>
                                             <option value="2" @if( Request::get('product_mode') == "2") {{ 'selected' }} @endif>Purchase</option>
                                             <option value="3" @if( Request::get('product_mode') == "3") {{ 'selected' }} @endif>Distribute</option>
@@ -204,7 +204,13 @@
 
                                         <td><div class="badge badge-light fw-bold">{{ $ProductLogI->quantity }}</div></td>
 
-                                        <td>{{ $ProductLogI->reference }}</td>
+                                        @if($ProductLogI->product_mode == 1)
+                                            <td>Ini-{{ $ProductLogI->reference }}</td>
+                                        @elseif($ProductLogI->product_mode == 2)
+                                            <td>Pur-{{ $ProductLogI->reference }}</td>
+                                        @else
+                                            <td>Dis-{{ $ProductLogI->reference }}</td>
+                                        @endif
 
                                         <td>{{ $ProductLogI->name }}</td>
 

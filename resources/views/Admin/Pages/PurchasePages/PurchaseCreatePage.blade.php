@@ -110,7 +110,7 @@
                                             <option value="">Select Product</option>
                                             @if(!$Product->isEmpty())
                                                 @foreach($Product as $ProductItem)
-                                                    <option value="{{ $ProductItem->product_id }}">{{ $ProductItem->product_id }}-{{ $ProductItem->product_name }}</option>
+                                                    <option value="{{ $ProductItem->product_id }}">{{ $ProductItem->product_name }}</option>
                                                 @endforeach
                                             @else
 

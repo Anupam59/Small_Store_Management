@@ -155,7 +155,7 @@
                                     <tr>
                                         <td>{{ $key+1 }}</td>
 
-                                        <td>{{ date("d-m-Y", strtotime($PurchaseI->created_date)) }}</td>
+                                        <td>{{ date("d-m-Y", strtotime($PurchaseI->purchase_date)) }}</td>
 
                                         <td>{{ $PurchaseI->total_quantity }}</td>
                                         <td>{{ $PurchaseI->supplier }}</td>
@@ -181,7 +181,7 @@
                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
                                                 <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
-                                                    <a href="/purchase-details/{{ $PurchaseI->purchase_id }}" class="menu-link px-3">Edit</a>
+                                                    <a href="/purchase-details/{{ $PurchaseI->purchase_id }}" class="menu-link px-3">Details</a>
                                                 </div>
                                                 <!--end::Menu item-->
                                                 <!--begin::Menu item-->
