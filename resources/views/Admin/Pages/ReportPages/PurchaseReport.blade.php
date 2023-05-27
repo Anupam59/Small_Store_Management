@@ -7,16 +7,154 @@
     ?>
 
 
+
+    <style>
+
+        .headerGroup:after {
+            content: 'Text';
+            /*background-image: url('Moto-invoice-setup-96-watter-mark.jpg');*/
+        }
+
+
+        /*-----start print layout---*/
+        .header {
+            visibility: hidden;
+            width: 100%;
+            height: 10px;
+            background: #fff;
+            position: fixed;
+            top: 0px;
+            left: 0;
+            z-index: 99999999 !important;
+            text-align: center;
+        }
+
+        .footer {
+            visibility: hidden;
+            width: 100%;
+            height: 10px;
+            position: fixed;
+            bottom: 0px;
+            left: 0;
+            background: #fff;
+            z-index: 99999999 !important;
+            text-align: right;
+        }
+
+        .print-only {
+            display: none !important;
+        }
+
+        .headerGroup {
+            position: relative;
+            background: transparent;
+        }
+
+        .headerGroup:after {
+            font-size: 42px;
+            color: #fff;
+            filter: grayscale(0.5);
+            background-size: cover;
+            opacity: 0;
+            position: absolute;
+            top: 350px;
+            left: 50%;
+            width: 450px;
+            height: 450px;
+            z-index: 1 !important;
+            transform: translate(-50%);
+        }
+
+        /* ============media start========== */
+        @media print {
+
+            .headerGroup:after {
+                opacity: .1;
+            }
+            .content ,.content-wrapper{
+                padding: 0 !important;
+                margin: 0 !important;
+                background-color: #fff;
+            }
+
+            .header, .header-block {
+                height: 100px;
+                background-color: #fff;
+                padding: 0;
+                margin: 0;
+            }
+            .footer, .footer-block {
+                height: 80px;
+                background-color: none;
+            }
+            footer {
+                page-break-after: always;
+                height: 120px !important;
+            }
+            @page {
+                size: A4;
+                -webkit-print-color-adjust: exact;
+                margin: 0 !important;
+                padding:0 !important;
+                width: 100%;
+                height: 100%;
+            }
+            thead {
+                display: table-header-group;
+            }
+            tfoot {
+                display: table-footer-group;
+            }
+            .invoice-print {
+                width: 95%;
+            }
+            .header {
+                visibility: visible;
+            }
+            .footer {
+                visibility: visible;
+            }
+            html, body {
+                border: 1px solid white;
+                height: 99%;
+                page-break-after: avoid;
+                page-break-before: avoid;
+            }
+            /* ----for content management in print layout---- */
+            .no-print {
+                display: none;
+            }
+            .print-only {
+                display: block !important;
+            }
+            /* ----aditional style----- */
+            .page{
+                margin-right:2rem;
+                margin-left: 2rem;
+            }
+
+        }
+        /* ==============end print=========== */
+        /* ================================== */
+
+
+    </style>
+
+
+
+
+
+
     <!--begin::Content wrapper-->
     <div class="d-flex flex-column flex-column-fluid">
         <!--begin::Toolbar-->
-        <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6 notPrint">
+        <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6 no-print">
             <!--begin::Toolbar container-->
             <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
                 <!--begin::Page title-->
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
-                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">purchase List</h1>
+                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Purchase Report</h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -31,7 +169,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Purchase List</li>
+                        <li class="breadcrumb-item text-muted">Purchase Report</li>
                         <!--end::Item-->
 
                     </ul>
@@ -124,92 +262,146 @@
         <!--end::Toolbar-->
 
 
-        <!--begin::Content Table -->
-        <div id="kt_app_content" class="app-content flex-column-fluid">
-            <!--begin::Content container-->
-            <div id="kt_app_content_container" class="app-container container-xxl">
-
-            @if(!$Purchase->isEmpty())
-                <!--begin::Card-->
-                    <div class="card">
-                        <!--begin::Card body-->
-                        <div class="card-body py-4">
-                            <!--begin::Table-->
-                            <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
-                                <!--begin::Table head-->
-                                <thead class="text-start">
-                                <!--begin::Table row-->
-                                <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-                                    <th class="w-10px pe-2">SL.</th>
-                                    <th class="min-w-125px">Date</th>
-                                    <th class="min-w-125px">Quantity</th>
-                                    <th class="min-w-125px">Supplier</th>
-                                    <th class="min-w-125px">Memo No</th>
-                                    <th class="min-w-125px">User</th>
-                                    <th class="min-w-125px">Status</th>
-                                    <th class="text-end min-w-100px">Action</th>
-                                </tr>
-                                <!--end::Table row-->
-                                </thead>
-                                <!--end::Table head-->
-                                <!--begin::Table body-->
-                                <tbody class="text-gray-600 fw-semibold text-start">
-
-                                @foreach($Purchase as $key => $PurchaseI)
-                                    <tr>
-                                        <td>{{ $key+1 }}</td>
-
-                                        <td>{{ date("d-m-Y", strtotime($PurchaseI->purchase_date)) }}</td>
-
-                                        <td>{{ $PurchaseI->total_quantity }}</td>
-                                        <td>{{ $PurchaseI->supplier }}</td>
-                                        <td>{{ $PurchaseI->memo_number }}</td>
-                                        <td>{{ $PurchaseI->name }}</td>
 
 
-                                        @if($PurchaseI->status == 1)
-                                            <td><div class="badge badge-light-success fw-bold">Active</div></td>
-                                        @elseif($PurchaseI->status == 2)
-                                            <td><div class="badge badge-light-danger fw-bold">Inactive</div></td>
-                                        @endif
+        <table width="100%">
+
+            <thead>
+            <tr>
+                <td class="headerGroup">
+                    <div class="header-block"></div>
+                </td>
+            </tr>
+            </thead>
 
 
-                                        <td class="text-end">
-                                            <a href="/purchase-report-details/{{ $PurchaseI->purchase_id }}" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Details</a>
-                                        </td>
+            <tfoot>
+            <tr>
+                <td class="footerGroup">
+                    <div class="footer-block"></div>
+                </td>
+            </tr>
+            </tfoot>
 
-                                    </tr>
-                                @endforeach
 
-                                </tbody>
-                            </table>
 
-{{--                            <div class="row">--}}
-{{--                                <div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div>--}}
-{{--                                <div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">--}}
-{{--                                    <div class="dataTables_paginate paging_simple_numbers" id="kt_table_users_paginate">--}}
+            <tbody>
+            <tr>
+                <td>
 
-{{--                                        {{ $Purchase->onEachSide(3)->links('Admin.Common.Paginate') }}--}}
+                    <!--begin::Content Table -->
+                    <div id="kt_app_content" class="app-content flex-column-fluid">
+                        <!--begin::Content container-->
+                        <div id="kt_app_content_container" class="app-container container-xxl">
 
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
+                        @if(!$Purchase->isEmpty())
+                            <!--begin::Card-->
+                                <div class="card">
+                                    <!--begin::Card body-->
+                                    <div class="card-body py-4">
+                                        <!--begin::Table-->
+                                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
+                                            <!--begin::Table head-->
+                                            <thead class="text-start">
+                                            <!--begin::Table row-->
+                                            <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                                                <th class="w-10px pe-2">SL.</th>
+                                                <th class="min-w-125px">Date</th>
+                                                <th class="min-w-125px">Quantity</th>
+                                                <th class="min-w-125px">Supplier</th>
+                                                <th class="min-w-125px">Memo No</th>
+                                                <th class="min-w-125px">User</th>
+                                                <th class="min-w-125px">Status</th>
+                                                <th class="text-end min-w-100px">Action</th>
+                                            </tr>
+                                            <!--end::Table row-->
+                                            </thead>
+                                            <!--end::Table head-->
+                                            <!--begin::Table body-->
+                                            <tbody class="text-gray-600 fw-semibold text-start">
+
+                                            @foreach($Purchase as $key => $PurchaseI)
+                                                <tr>
+                                                    <td>{{ $key+1 }}</td>
+
+                                                    <td>{{ date("d-m-Y", strtotime($PurchaseI->purchase_date)) }}</td>
+
+                                                    <td>{{ $PurchaseI->total_quantity }}</td>
+                                                    <td>{{ $PurchaseI->supplier }}</td>
+                                                    <td>{{ $PurchaseI->memo_number }}</td>
+                                                    <td>{{ $PurchaseI->name }}</td>
+
+
+                                                    @if($PurchaseI->status == 1)
+                                                        <td><div class="badge badge-light-success fw-bold">Active</div></td>
+                                                    @elseif($PurchaseI->status == 2)
+                                                        <td><div class="badge badge-light-danger fw-bold">Inactive</div></td>
+                                                    @endif
+
+
+                                                    <td class="text-end">
+                                                        <a href="/purchase-report-details/{{ $PurchaseI->purchase_id }}" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Details</a>
+                                                    </td>
+
+                                                </tr>
+                                            @endforeach
+
+                                            </tbody>
+                                        </table>
+
+                                        {{--                            <div class="row">--}}
+                                        {{--                                <div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div>--}}
+                                        {{--                                <div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">--}}
+                                        {{--                                    <div class="dataTables_paginate paging_simple_numbers" id="kt_table_users_paginate">--}}
+
+                                        {{--                                        {{ $Purchase->onEachSide(3)->links('Admin.Common.Paginate') }}--}}
+
+                                        {{--                                    </div>--}}
+                                        {{--                                </div>--}}
+                                        {{--                            </div>--}}
+
+                                    </div>
+                                    <!--end::Card body-->
+                                </div>
+                                <!--end::Card-->
+                            @else
+                                @include('Admin.Common.DataNotFound')
+                            @endif
 
                         </div>
-                        <!--end::Card body-->
+                        <!--end::Content container-->
                     </div>
-                    <!--end::Card-->
-                @else
-                    @include('Admin.Common.DataNotFound')
-                @endif
+                    <!--end::Content table -->
 
-            </div>
-            <!--end::Content container-->
-        </div>
-        <!--end::Content table -->
+                </td>
+            </tr>
+            </tbody>
+
+
+        </table>
+
+
+
 
     </div>
     <!--end::Content wrapper-->
+
+
+
+    <!-- ============ srtart absolute header/footer image========== -->
+    <div class="header">
+        <img src="{{asset('Images/logo-sm.png')}}" alt="Logo image" style="background-size: cover; margin-top: 15px; width: 40px; height:40px;">
+        <h1 style="font-size: 20px;">Stock Register of Divisional Commissioner's Office, Sylhet</h1>
+        <h1 style="font-size: 20px;">Purchase Report</h1>
+        <hr>
+    </div>
+    <div class="footer">
+        <hr>
+        <p style="font-size: 16px; margin-right: 25px;">Date: {{ date("d-M-y h:i a") }}</p>
+    </div>
+    <!-- ============ end absolute header/footer image========== -->
+
+
 
 @endsection
 

@@ -2,10 +2,146 @@
 
 @section('content')
 
+
+
+    <style>
+
+        .headerGroup:after {
+            content: 'Text';
+            /*background-image: url('Moto-invoice-setup-96-watter-mark.jpg');*/
+        }
+
+        /*-----start print layout---*/
+        .header {
+            visibility: hidden;
+            width: 100%;
+            height: 10px;
+            background: #fff;
+            position: fixed;
+            top: 0px;
+            left: 0;
+            z-index: 99999999 !important;
+            text-align: center;
+        }
+
+        .footer {
+            visibility: hidden;
+            width: 100%;
+            height: 10px;
+            position: fixed;
+            bottom: 0px;
+            left: 0;
+            background: #fff;
+            z-index: 99999999 !important;
+            text-align: right;
+        }
+
+        .print-only {
+            display: none !important;
+        }
+
+        .headerGroup {
+            position: relative;
+            background: transparent;
+        }
+
+        .headerGroup:after {
+            font-size: 42px;
+            color: #fff;
+            filter: grayscale(0.5);
+            background-size: cover;
+            opacity: 0;
+            position: absolute;
+            top: 350px;
+            left: 50%;
+            width: 450px;
+            height: 450px;
+            z-index: 1 !important;
+            transform: translate(-50%);
+        }
+
+        /* ============media start========== */
+        @media print {
+
+            .headerGroup:after {
+                opacity: .1;
+            }
+            .content ,.content-wrapper{
+                padding: 0 !important;
+                margin: 0 !important;
+                background-color: #fff;
+            }
+
+            .header, .header-block {
+                height: 100px;
+                background-color: #fff;
+                padding: 0;
+                margin: 0;
+            }
+            .footer, .footer-block {
+                height: 80px;
+                background-color: none;
+            }
+            footer {
+                page-break-after: always;
+                height: 120px !important;
+            }
+            @page {
+                size: A4;
+                -webkit-print-color-adjust: exact;
+                margin: 0 !important;
+                padding:0 !important;
+                width: 100%;
+                height: 100%;
+            }
+            thead {
+                display: table-header-group;
+            }
+            tfoot {
+                display: table-footer-group;
+            }
+            .invoice-print {
+                width: 95%;
+            }
+            .header {
+                visibility: visible;
+            }
+            .footer {
+                visibility: visible;
+            }
+            html, body {
+                border: 1px solid white;
+                height: 99%;
+                page-break-after: avoid;
+                page-break-before: avoid;
+            }
+            /* ----for content management in print layout---- */
+            .no-print {
+                display: none;
+            }
+            .print-only {
+                display: block !important;
+            }
+            /* ----aditional style----- */
+            .page{
+                margin-right:2rem;
+                margin-left: 2rem;
+            }
+
+        }
+        /* ==============end print=========== */
+        /* ================================== */
+
+
+    </style>
+
+
+
+
     <!--begin::Content wrapper-->
     <div class="d-flex flex-column flex-column-fluid">
         <!--begin::Toolbar-->
-        <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6 notPrint">
+        <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6 no-print">
             <!--begin::Toolbar container-->
             <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
                 <!--begin::Page title-->
@@ -134,8 +270,6 @@
                                 </div>
 
 
-
-
                                 <div class="col-md-3">
                                     <div class="fv-row mb-5 fv-plugins-icon-container">
                                         <label class="d-flex align-items-center fs-5 fw-semibold mb-2">
@@ -180,108 +314,164 @@
         <!--end::Toolbar-->
 
 
-        <!--begin::Content Table -->
-        <div id="kt_app_content" class="app-content flex-column-fluid">
-            <!--begin::Content container-->
-            <div id="kt_app_content_container" class="app-container container-xxl">
 
-            @if(!$Requisition->isEmpty())
-                <!--begin::Card-->
-                    <div class="card">
-                        <!--begin::Card body-->
-                        <div class="card-body py-4">
-                            <!--begin::Table-->
-                            <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
-                                <!--begin::Table head-->
-                                <thead class="text-start header-space">
-                                <!--begin::Table row-->
-                                <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-                                    <th class="w-10px pe-2">SL.</th>
-                                    <th class="min-w-125px">Date</th>
-                                    <th class="min-w-125px">User</th>
-                                    <th class="min-w-125px">Department</th>
-                                    <th class="min-w-125px">Store</th>
-                                    <th class="min-w-125px">Quantity</th>
-                                    <th class="min-w-125px">Status</th>
-                                    <th class="text-end min-w-100px">Details</th>
-                                </tr>
-                                <!--end::Table row-->
-                                </thead>
-                                <!--end::Table head-->
-                                <!--begin::Table body-->
-                                <tbody class="text-gray-600 fw-semibold text-start">
 
-                                @foreach($Requisition as $key => $RequisitionI)
-                                    <tr>
-                                        <td>{{ $key+1 }}</td>
-                                        <td>{{ date("d-m-Y", strtotime($RequisitionI->created_date)) }}</td>
-                                        <td>{{ $RequisitionI->name }}</td>
-                                        <td>{{ $RequisitionI->department_name }}</td>
-                                        <td>{{ $RequisitionI->store_name }}</td>
-                                        <td>{{ $RequisitionI->total_quantity }}</td>
-                                        @if($RequisitionI->status == 1)
-                                            <td><div class="badge badge-light-info fw-bold">Pending</div></td>
-                                        @elseif($RequisitionI->status == 2)
-                                            <td><div class="badge badge-light-success fw-bold">Approved</div></td>
-                                        @elseif($RequisitionI->status == 3)
-                                            <td><div class="badge badge-light-primary fw-bold">Delivered</div></td>
-                                        @elseif($RequisitionI->status == 5)
-                                            <td><div class="badge badge-light-danger fw-bold">Approved Confirm</div></td>
-                                        @elseif($RequisitionI->status == 4)
-                                            <td><div class="badge badge-light-danger fw-bold">Canceled</div></td>
-                                        @endif
-                                        <td class="text-end">
-                                            <a href="/requisition-report-details/{{ $RequisitionI->requisition_id }}" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Details</a>
-                                        </td>
+        <table width="100%">
 
-{{--                                        Nexted Table--}}
-{{--                                        <table>--}}
-{{--                                            <div class="">--}}
-{{--                                                <tr>--}}
-{{--                                                    <th class="w-10px pe-2">SL.</th>--}}
-{{--                                                    <th class="min-w-125px">Product</th>--}}
-{{--                                                    <th class="min-w-125px">Quantity</th>--}}
-{{--                                                </tr>--}}
-{{--                                                @foreach($RequisitionI->req_log as $pItem => $product)--}}
-{{--                                                    <tr>--}}
-{{--                                                        <td class="w-10px pe-2">{{ $pItem+1 }}</td>--}}
-{{--                                                        <td class="min-w-125px">{{ $product->product->product_name }}</td>--}}
-{{--                                                        <td class="min-w-125px">{{ $product->quantity }}</td>--}}
-{{--                                                    </tr>--}}
-{{--                                                @endforeach--}}
-{{--                                            </div>--}}
-{{--                                        </table>--}}
+            <thead>
+            <tr>
+                <td class="headerGroup">
+                    <div class="header-block"></div>
+                </td>
+            </tr>
+            </thead>
 
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
 
-{{--                            <div class="row">--}}
-{{--                                <div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div>--}}
-{{--                                <div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">--}}
-{{--                                    <div class="dataTables_paginate paging_simple_numbers" id="kt_table_users_paginate">--}}
+            <tfoot>
+            <tr>
+                <td class="footerGroup">
+                    <div class="footer-block"></div>
+                </td>
+            </tr>
+            </tfoot>
 
-{{--                                        {{ $Requisition->onEachSide(3)->links('Admin.Common.Paginate') }}--}}
 
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
+
+            <tbody>
+            <tr>
+                <td>
+
+                    <!--begin::Content Table -->
+                    <div id="kt_app_content" class="app-content flex-column-fluid">
+                        <!--begin::Content container-->
+                        <div id="kt_app_content_container" class="app-container container-xxl">
+
+                        @if(!$Requisition->isEmpty())
+                            <!--begin::Card-->
+                                <div class="card">
+                                    <!--begin::Card body-->
+                                    <div class="card-body py-4">
+                                        <!--begin::Table-->
+                                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
+                                            <!--begin::Table head-->
+                                            <thead class="text-start">
+                                            <!--begin::Table row-->
+                                            <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                                                <th class="w-10px pe-2">SL.</th>
+                                                <th class="min-w-125px">Date</th>
+                                                <th class="min-w-125px">User</th>
+                                                <th class="min-w-125px">Department</th>
+                                                <th class="min-w-125px">Store</th>
+                                                <th class="min-w-125px">Quantity</th>
+                                                <th class="min-w-125px">Status</th>
+                                                <th class="text-end min-w-100px">Details</th>
+                                            </tr>
+                                            <!--end::Table row-->
+                                            </thead>
+                                            <!--end::Table head-->
+                                            <!--begin::Table body-->
+                                            <tbody class="text-gray-600 fw-semibold text-start">
+
+                                            @foreach($Requisition as $key => $RequisitionI)
+                                                <tr>
+                                                    <td>{{ $key+1 }}</td>
+                                                    <td>{{ date("d-m-Y", strtotime($RequisitionI->created_date)) }}</td>
+                                                    <td>{{ $RequisitionI->name }}</td>
+                                                    <td>{{ $RequisitionI->department_name }}</td>
+                                                    <td>{{ $RequisitionI->store_name }}</td>
+                                                    <td>{{ $RequisitionI->total_quantity }}</td>
+                                                    @if($RequisitionI->status == 1)
+                                                        <td><div class="badge badge-light-info fw-bold">Pending</div></td>
+                                                    @elseif($RequisitionI->status == 2)
+                                                        <td><div class="badge badge-light-success fw-bold">Approved</div></td>
+                                                    @elseif($RequisitionI->status == 3)
+                                                        <td><div class="badge badge-light-primary fw-bold">Delivered</div></td>
+                                                    @elseif($RequisitionI->status == 5)
+                                                        <td><div class="badge badge-light-danger fw-bold">Approved Confirm</div></td>
+                                                    @elseif($RequisitionI->status == 4)
+                                                        <td><div class="badge badge-light-danger fw-bold">Canceled</div></td>
+                                                    @endif
+                                                    <td class="text-end">
+                                                        <a href="/requisition-report-details/{{ $RequisitionI->requisition_id }}" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Details</a>
+                                                    </td>
+
+                                                    {{--                                        Nexted Table--}}
+                                                    {{--                                        <table>--}}
+                                                    {{--                                            <div class="">--}}
+                                                    {{--                                                <tr>--}}
+                                                    {{--                                                    <th class="w-10px pe-2">SL.</th>--}}
+                                                    {{--                                                    <th class="min-w-125px">Product</th>--}}
+                                                    {{--                                                    <th class="min-w-125px">Quantity</th>--}}
+                                                    {{--                                                </tr>--}}
+                                                    {{--                                                @foreach($RequisitionI->req_log as $pItem => $product)--}}
+                                                    {{--                                                    <tr>--}}
+                                                    {{--                                                        <td class="w-10px pe-2">{{ $pItem+1 }}</td>--}}
+                                                    {{--                                                        <td class="min-w-125px">{{ $product->product->product_name }}</td>--}}
+                                                    {{--                                                        <td class="min-w-125px">{{ $product->quantity }}</td>--}}
+                                                    {{--                                                    </tr>--}}
+                                                    {{--                                                @endforeach--}}
+                                                    {{--                                            </div>--}}
+                                                    {{--                                        </table>--}}
+
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+
+                                        {{--                            <div class="row">--}}
+                                        {{--                                <div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div>--}}
+                                        {{--                                <div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">--}}
+                                        {{--                                    <div class="dataTables_paginate paging_simple_numbers" id="kt_table_users_paginate">--}}
+
+                                        {{--                                        {{ $Requisition->onEachSide(3)->links('Admin.Common.Paginate') }}--}}
+
+                                        {{--                                    </div>--}}
+                                        {{--                                </div>--}}
+                                        {{--                            </div>--}}
+
+                                    </div>
+                                    <!--end::Card body-->
+                                </div>
+                                <!--end::Card-->
+                            @else
+                                @include('Admin.Common.DataNotFound')
+                            @endif
 
                         </div>
-                        <!--end::Card body-->
+                        <!--end::Content container-->
                     </div>
-                    <!--end::Card-->
-                @else
-                    @include('Admin.Common.DataNotFound')
-                @endif
+                    <!--end::Content table -->
 
-            </div>
-            <!--end::Content container-->
-        </div>
-        <!--end::Content table -->
+                </td>
+            </tr>
+            </tbody>
+
+
+        </table>
+
+
+
+
     </div>
     <!--end::Content wrapper-->
+
+
+
+    <!-- ============ srtart absolute header/footer image========== -->
+    <div class="header">
+        <img src="{{asset('Images/logo-sm.png')}}" alt="Logo image" style="background-size: cover; margin-top: 15px; width: 40px; height:40px;">
+        <h1 style="font-size: 20px;">Stock Register of Divisional Commissioner's Office, Sylhet</h1>
+        <h1 style="font-size: 20px;">Requisition Report</h1>
+        <hr>
+    </div>
+    <div class="footer">
+        <hr>
+        <p style="font-size: 16px; margin-right: 25px;">Date: {{ date("d-M-y h:i a") }}</p>
+    </div>
+    <!-- ============ end absolute header/footer image========== -->
+
+
+
 
 @endsection
 

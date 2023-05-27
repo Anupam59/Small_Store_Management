@@ -46,7 +46,7 @@
                             <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8 d-none">
                                 <div></div>
                                 <!--begin::Link-->
-                                <a href="{{ route('forget.password.get') }}" class="link-primary">Forgot Password ?</a>
+{{--                                <a href="{{ route('forget.password.get') }}" class="link-primary">Forgot Password ?</a>--}}
                                 <!--end::Link-->
                             </div>
 

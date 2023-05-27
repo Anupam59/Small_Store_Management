@@ -5,7 +5,7 @@
         <!--begin::Copyright-->
         <div class="text-dark order-2 order-md-1">
             <span class="text-muted fw-semibold me-1"><?= date('Y'); ?>&copy;</span>
-            <a href="https://www.itlabsolutions.com" target="_blank" class="text-gray-800 text-hover-primary">It Lab Solution Ltd.</a>
+            <a href="https://www.itlabsolutions.com" target="_blank" title="IT Lab Solutions Ltd." class="text-gray-800 text-hover-primary">It Lab Solution Ltd.</a>
         </div>
         <!--end::Copyright-->
         <!--begin::Menu-->

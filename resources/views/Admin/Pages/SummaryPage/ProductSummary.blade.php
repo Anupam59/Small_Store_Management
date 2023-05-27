@@ -72,7 +72,7 @@
             }
 
             .header, .header-block {
-                height: 80px;
+                height: 100px;
                 background-color: #fff;
                 padding: 0;
                 margin: 0;
@@ -262,8 +262,6 @@
 
 
 
-
-
         <table width="100%">
 
             <thead>
@@ -398,13 +396,6 @@
 
 
 
-
-
-
-
-
-
-
     </div>
     <!--end::Content wrapper-->
 
@@ -414,13 +405,15 @@
     <div class="header">
         <img src="{{asset('Images/logo-sm.png')}}" alt="Logo image" style="background-size: cover; margin-top: 15px; width: 40px; height:40px;">
         <h1 style="font-size: 20px;">Stock Register of Divisional Commissioner's Office, Sylhet</h1>
+        @if($ProductName)
+        <h1 id="ProductName" style="font-size: 20px;">Product Summary - {{ $ProductName->product_name }}</h1>
+        @endif
         <hr>
     </div>
     <div class="footer">
         <hr>
-        <p style="font-size: 16px; margin-right: 25px;">Date: {{ date("d-M-y") }}</p>
+        <p style="font-size: 16px; margin-right: 25px;">Date: {{ date("d-M-y h:i a") }}</p>
     </div>
-
     <!-- ============ end absolute header/footer image========== -->
 
 

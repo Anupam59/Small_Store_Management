@@ -21,6 +21,8 @@ class ProductSummaryController extends Controller
         $filter_status  = '';
         $refData  = '';
 
+        $ProductName = ProductModel::where('product_id',$product_id)->where('status',1)->select('product_name')->first();
+
         if($product_id){
             $fixed_date = "2023-01-01";
 
@@ -79,7 +81,7 @@ class ProductSummaryController extends Controller
 
 
         }
-        return view('Admin/Pages/SummaryPage/ProductSummary',compact('Product','TodayTotal','ProductSummary','refData','filter_status'));
+        return view('Admin/Pages/SummaryPage/ProductSummary',compact('Product','TodayTotal','ProductSummary','refData','filter_status','ProductName'));
     }
 
 

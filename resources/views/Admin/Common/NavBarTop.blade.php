@@ -37,7 +37,7 @@
                     <!--begin:Menu item-->
                     <div class="menu-item here show menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
                         <!--begin:Menu link-->
-                        <a href="/"><span class="menu-link"><span class="menu-title">Dashboards</span></span></a>
+                        <a href="/"><span class="menu-link"><span class="menu-title">Dashboard</span></span></a>
                         <!--end:Menu link-->
                     </div>
                     <!--end:Menu item-->

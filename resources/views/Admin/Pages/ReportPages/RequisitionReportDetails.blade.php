@@ -25,14 +25,7 @@
                             <a href="/" class="text-muted text-hover-primary">Home</a>
                         </li>
                         <!--end::Item-->
-                        <!--begin::Item-->
-                        <li class="breadcrumb-item">
-                            <span class="bullet bg-gray-400 w-5px h-2px"></span>
-                        </li>
-                        <!--end::Item-->
-                        <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Invoice Manager</li>
-                        <!--end::Item-->
+
                     </ul>
                     <!--end::Breadcrumb-->
                 </div>
@@ -92,7 +85,7 @@
 
                                     <!--begin::Message-->
                                     <div class="fw-bold fs-2">{{ $Requisition->creator_by }}
-                                        <span class="fs-6">({{ $Requisition->email }})</span>,
+                                        <span class="fs-6">({{ $Requisition->creator_email }})</span>,
                                         <br />
                                         <span class="text-muted fs-5">{{ $Requisition->note }}</span></div>
                                     <!--begin::Message-->
@@ -131,32 +124,58 @@
                                         <div class="col-md-4 mt-3 colBlock">
                                             <div class="flex-root d-flex flex-column flexPrint">
                                                 <span class="text-muted">Create Date</span>
-                                                <span class="fs-5">{{ date('d M, Y',strtotime($Requisition->created_date))}}</span>
+                                                <span class="fs-5">{{ date('d M, Y',strtotime($Requisition->requisition_date))}}</span>
                                             </div>
                                         </div>
 
                                         <div class="col-md-4 mt-3 colBlock">
                                             <div class="flex-root d-flex flex-column flexPrint">
-                                                <span class="text-muted">Approved By</span>
-                                                <span class="fs-5">{{ $Requisition->department_name }}</span>
-                                                <span class="fs-5">{{ date('d M, Y',strtotime($Requisition->created_date))}}</span>
+                                                <span class="text-muted">Approved By:</span>
+                                                @if($Requisition->approved_by != null)
+                                                    <span class="fs-5">{{ $Requisition->approved_by }}</span>
+                                                    <span class="fs-5">{{ date('d M, Y',strtotime($Requisition->approved_date))}}</span>
+                                                @else
+                                                    <span class="fs-5">-------</span>
+                                                @endif
                                             </div>
                                         </div>
 
                                         <div class="col-md-4 mt-3 colBlock">
                                             <div class="flex-root d-flex flex-column flexPrint">
-                                                <span class="text-muted">Approved Confirm By</span>
-                                                <span class="fs-5">{{ $Requisition->department_name }}</span>
-                                                <span class="fs-5">{{ date('d M, Y',strtotime($Requisition->created_date))}}</span>
+                                                <span class="text-muted">Approved Confirm: </span>
+                                                @if($Requisition->approved_conf_by != null)
+                                                    <span class="fs-5">{{ $Requisition->approved_conf_by }}</span>
+                                                    <span class="fs-5">{{ date('d M, Y',strtotime($Requisition->approved_conf_date))}}</span>
+                                                @else
+                                                    <span class="fs-5">-------</span>
+                                                @endif
                                             </div>
                                         </div>
 
 
                                         <div class="col-md-4 mt-3 colBlock">
                                             <div class="flex-root d-flex flex-column flexPrint">
-                                                <span class="text-muted">Delivered By</span>
-                                                <span class="fs-5">{{ $Requisition->department_name }}</span>
-                                                <span class="fs-5">{{ date('d M, Y',strtotime($Requisition->created_date))}}</span>
+                                                <span class="text-muted">Canceled By:</span>
+                                                @if($Requisition->canceled_by != null)
+                                                    <span class="fs-5">{{ $Requisition->canceled_by }}</span>
+                                                    <span class="fs-5">{{ date('d M, Y',strtotime($Requisition->canceled_date))}}</span>
+                                                @else
+                                                    <span class="fs-5">-------</span>
+                                                @endif
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="col-md-4 mt-3 colBlock">
+                                            <div class="flex-root d-flex flex-column flexPrint">
+                                                <span class="text-muted">Delivered By:</span>
+                                                @if($Requisition->delivered_by != null)
+                                                    <span class="fs-5">{{ $Requisition->delivered_by }}</span>
+                                                    <span class="fs-5">{{ date('d M, Y',strtotime($Requisition->delivered_date))}}</span>
+                                                @else
+                                                    <span class="fs-5">-------</span>
+                                                @endif
                                             </div>
                                         </div>
 

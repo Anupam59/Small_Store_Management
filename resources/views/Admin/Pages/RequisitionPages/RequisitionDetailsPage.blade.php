@@ -246,29 +246,40 @@
 
 
 
-
-
                                         <!--end::Table-->
-                                        @if($Requisition->file)
-                                        <div class="col-md-12">
-                                            <a href="/File/ReqFile/{{ $Requisition->file }}" download class="btn btn-sm fw-bold btn-success">Download File</a>
-                                        </div>
-                                        @endif
+
+
 
                                         @if($Requisition->status == 1 && auth()->user()->role == 3)
                                             <div class="col-md-12">
+                                                @if($Requisition->file)
+                                                    <a href="/File/ReqFile/{{ $Requisition->file }}" download class="btn btn-sm fw-bold btn-success">Download File</a>
+                                                @endif
                                                 <a id="ApprovedBtnId" class="btn btn-sm fw-bold btn-success">Approved</a>
                                                 <a id="CanceledBtnId" class="btn btn-sm fw-bold btn-danger">Canceled</a>
                                             </div>
                                         @elseif($Requisition->status == 2 && auth()->user()->role == 6)
                                             <div class="col-md-12">
+                                                @if($Requisition->file)
+                                                    <a href="/File/ReqFile/{{ $Requisition->file }}" download class="btn btn-sm fw-bold btn-success">Download File</a>
+                                                @endif
                                                 <a id="ApprovedConfirmBtnId" class="btn btn-sm fw-bold btn-success">Approved Confirm</a>
                                                 <a id="CanceledBtnId" class="btn btn-sm fw-bold btn-danger">Canceled</a>
                                                 <a id="EditBtnId" class="btn btn-sm fw-bold btn-primary">Edit</a>
                                             </div>
                                         @elseif($Requisition->status == 5 && auth()->user()->role == 5)
                                             <div class="col-md-12">
+                                                @if($Requisition->file)
+                                                    <a href="/File/ReqFile/{{ $Requisition->file }}" download class="btn btn-sm fw-bold btn-success">Download File</a>
+                                                @endif
                                                 <a id="DeliveredBtnId" class="btn btn-sm fw-bold btn-primary">Delivered</a>
+                                            </div>
+
+                                        @else
+                                            <div class="col-md-12">
+                                                @if($Requisition->file)
+                                                    <a href="/File/ReqFile/{{ $Requisition->file }}" download class="btn btn-sm fw-bold btn-success">Download File</a>
+                                                @endif
                                             </div>
                                         @endif
 

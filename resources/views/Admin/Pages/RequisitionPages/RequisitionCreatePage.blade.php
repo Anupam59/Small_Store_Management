@@ -218,12 +218,14 @@
                                             <span>Requisition File</span>
                                         </label>
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-5">
                                                 <input class="form-control" type="text" id="RequisitionFileNameId" placeholder="File Name --"/>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-5">
                                                 <input class="form-control" type="file" id="RequisitionFileId" accept="application/pdf, application/vnd.ms-excel"/>
+                                                <small class="m-0 p-0">( File Size maximum 1 MB.)</small>
                                             </div>
+
                                         </div>
 
 
@@ -508,7 +510,14 @@
             let creator = $('#UserId').val();
             let purItem = $('#PurItem').html();
 
-            if (department_id == " "){
+
+
+            if(file){
+                if(file.size > 1048580){
+                    toastr.warning("File Size Maximum 1mb!");
+                }
+            }
+            else if (department_id == " "){
                 toastr.warning("Department Id NoT Empty!");
             }
             else if(store_id == " "){

@@ -131,20 +131,25 @@ class ReportController extends Controller
 
 
     public function RequisitionReportDetails($requisition_id){
-        $Requisition = RequisitionModel::leftJoin('users as creator', 'creator.id', '=', 'requisition.creator')
+
+        $Requisition = RequisitionModel::join('users as creator_by', 'creator_by.id', '=', 'requisition.creator')
             ->leftJoin('users as approved_by', 'approved_by.id', '=', 'requisition.approved_by')
             ->leftJoin('users as approved_conf_by', 'approved_conf_by.id', '=', 'requisition.approved_conf_by')
+            ->leftJoin('users as canceled_by', 'canceled_by.id', '=', 'requisition.canceled_by')
             ->leftJoin('users as delivered_by', 'delivered_by.id', '=', 'requisition.delivered_by')
 
             ->leftJoin('department', 'department.department_id', '=', 'requisition.department_id')
             ->leftJoin('store', 'store.store_id', '=', 'requisition.store_id')
-            ->select(
-                'creator.name as creator_by',
-                'creator.email as email',
+
+            ->select('department.department_name','store.store_name','requisition.*',
+                'creator_by.name as creator_by',
+                'creator_by.email as creator_email',
                 'approved_by.name as approved_by',
                 'approved_conf_by.name as approved_conf_by',
+                'canceled_by.name as canceled_by',
                 'delivered_by.name as delivered_by',
-                'store.store_name','department.department_name','requisition.*')
+            )
+
             ->where('requisition_id',$requisition_id)->first();
 
 //        dd($Requisition);
@@ -198,8 +203,6 @@ class ReportController extends Controller
         return view('Admin/Pages/ReportPages/PurchaseReportDetails',compact('Purchase','PurProduct'));
 
     }
-
-
 
 
 }
